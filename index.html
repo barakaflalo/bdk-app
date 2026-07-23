@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d0d0f">
+<title>בדק — בדיקת רכב לפני קנייה</title>
+<meta name="description" content="ניהול בדיקת רכב לצרכי קנייה ומכירה לפי הוראת נוהל 127">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root{
+  --gold:#c9a227; --gold-soft:#e6c85c;
+  --bg:#0d0d0f; --bg2:#151518; --card:#17171b; --line:#2a2a31;
+  --tx:#f2f2f4; --tx2:#a0a0ab; --tx3:#6c6c78;
+  --ok:#3f9d5a; --bad:#d1483f; --warn:#d99a2b; --info:#3b7dd8;
+  --r:14px; --pad:16px;
+  --font:"Assistant","Heebo","Segoe UI",system-ui,-apple-system,"Noto Sans Hebrew",sans-serif;
+}
+[data-theme="blue"]{--gold:#4a90d9;--gold-soft:#7fb4ec;--bg:#0b1220;--bg2:#111b2e;--card:#131f35;--line:#24344f;}
+[data-theme="green"]{--gold:#3fa66a;--gold-soft:#6fce97;--bg:#0a1310;--bg2:#0f1d17;--card:#12211b;--line:#20372c;}
+[data-theme="steel"]{--gold:#8f9bb3;--gold-soft:#b9c3d6;--bg:#101114;--bg2:#181a1f;--card:#1b1d23;--line:#2d3038;}
+[data-theme="rust"]{--gold:#c96f3f;--gold-soft:#e39366;--bg:#130f0d;--bg2:#1d1714;--card:#211a16;--line:#3a2c24;}
+
+[data-mode="light"]{
+  --bg:#f4f4f6; --bg2:#ffffff; --card:#ffffff; --line:#dcdce2;
+  --tx:#16161a; --tx2:#5b5b66; --tx3:#8a8a95;
+}
+[data-mode="light"][data-theme="black"]{--gold:#8a6f10;--gold-soft:#a8891f;}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);font-family:var(--font);font-size:16px;line-height:1.5}
+body{padding-bottom:env(safe-area-inset-bottom)}
+[dir="ltr"] body{text-align:left}
+button,input,select,textarea{font-family:inherit;font-size:16px;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:var(--gold-soft)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:760px;margin:0 auto;padding:0 var(--pad) 90px}
+.topbar{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;padding:12px var(--pad);max-width:760px;margin:0 auto}
+.topbar h1{font-size:18px;margin:0;flex:1;font-weight:700;letter-spacing:-.2px}
+.iconbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);
+  display:grid;place-items:center;font-size:17px;color:var(--tx2);flex:none}
+.iconbtn:active{background:var(--card)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);margin:12px 0}
+.card.tight{padding:12px}
+.muted{color:var(--tx2);font-size:14px}
+.tiny{color:var(--tx3);font-size:12.5px}
+.sec{font-size:12.5px;letter-spacing:.08em;color:var(--tx3);text-transform:uppercase;margin:22px 0 8px}
+
+/* ---------- buttons ---------- */
+.btn{display:block;width:100%;padding:14px 16px;border-radius:12px;background:var(--bg2);
+  border:1px solid var(--line);color:var(--tx);font-weight:600;text-align:center;margin:8px 0}
+.btn:active{transform:scale(.985)}
+.btn.primary{border:1.5px solid var(--gold);color:var(--gold-soft);background:transparent}
+.btn.solid{background:var(--gold);color:#0d0d0f;border-color:var(--gold);font-weight:700}
+.btn.danger{border-color:var(--bad);color:var(--bad)}
+.btn.sm{width:auto;display:inline-block;padding:9px 14px;font-size:14px;margin:4px 4px 4px 0}
+.row{display:flex;gap:8px}
+.row>*{flex:1}
+
+/* ---------- home ---------- */
+.hero{padding:26px 0 6px}
+.hero .mark{font-size:34px;font-weight:800;letter-spacing:-1px;color:var(--gold)}
+.hero .sub{color:var(--tx2);font-size:14px;margin-top:2px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 16px;text-align:start;
+  display:flex;flex-direction:column;gap:6px;min-height:104px;justify-content:flex-end}
+.tile .ic{font-size:24px;line-height:1}
+.tile .t{font-weight:700;font-size:16px}
+.tile .d{font-size:12.5px;color:var(--tx3)}
+.tile.wide{grid-column:1/-1;min-height:auto;flex-direction:row;align-items:center;gap:12px;justify-content:flex-start}
+.tile.go{border-color:var(--gold)}
+.tile.go .t{color:var(--gold-soft)}
+
+/* ---------- fields ---------- */
+.f{margin:14px 0}
+.f>label{display:block;font-size:13.5px;color:var(--tx2);margin-bottom:6px;font-weight:600}
+.f input,.f select,.f textarea{width:100%;padding:12px;border-radius:10px;background:var(--bg2);
+  border:1px solid var(--line);color:var(--tx)}
+.f input:focus,.f select,.f textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.f textarea{min-height:88px;resize:vertical}
+.f .hint{font-size:12px;color:var(--tx3);margin-top:4px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chk{display:flex;align-items:center;gap:10px;padding:10px 0}
+.chk input{width:22px;height:22px;accent-color:var(--gold);flex:none}
+
+/* dual field: license vs actual */
+.dual{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg2)}
+.dual .lbl{font-size:13.5px;font-weight:700;margin-bottom:8px}
+.dual .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dual .pair label{font-size:11.5px;color:var(--tx3);display:block;margin-bottom:4px}
+.dual input{width:100%;padding:10px;border-radius:9px;background:var(--card);border:1px solid var(--line);color:var(--tx)}
+.dual.mismatch{border-color:var(--bad)}
+.dual .flag{margin-top:8px;font-size:12.5px;color:var(--bad);font-weight:600}
+.dual.blocked{border-color:var(--bad);background:rgba(209,72,63,.07)}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0;position:sticky;top:62px;background:var(--bg);z-index:30;
+  border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:8px 13px;border-radius:20px;border:1px solid var(--line);background:var(--bg2);
+  font-size:13.5px;color:var(--tx2);white-space:nowrap}
+.tab.on{border-color:var(--gold);color:var(--gold-soft);background:transparent;font-weight:700}
+.tab .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--bad);margin-inline-start:5px;vertical-align:middle}
+
+/* ---------- defects ---------- */
+.sysrow{border:1px solid var(--line);border-radius:12px;margin:8px 0;background:var(--card);overflow:hidden}
+.sysrow>.head{display:flex;align-items:center;gap:10px;padding:13px 14px;width:100%;text-align:start}
+.sysrow .num{font-size:11.5px;color:var(--tx3);min-width:20px;font-variant-numeric:tabular-nums}
+.sysrow .nm{flex:1;font-weight:600;font-size:15px}
+.pill{font-size:11.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line);color:var(--tx3);white-space:nowrap}
+.pill.ok{color:var(--ok);border-color:var(--ok)}
+.pill.bad{color:var(--bad);border-color:var(--bad)}
+.pill.na{color:var(--tx3)}
+.pill.rec{color:var(--info);border-color:var(--info)}
+.sysrow.isbad{border-color:var(--bad)}
+.sysrow.safety{border-color:var(--bad);box-shadow:inset 0 0 0 1px var(--bad)}
+.sysbody{border-top:1px solid var(--line);padding:14px;background:var(--bg2)}
+.statepick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.statepick button{padding:9px 4px;border-radius:9px;border:1px solid var(--line);font-size:12.5px;color:var(--tx2);background:var(--card)}
+.statepick button.on{border-color:var(--gold);color:var(--gold-soft);font-weight:700}
+.dsearch{width:100%;padding:11px;border-radius:10px;background:var(--card);border:1px solid var(--line);color:var(--tx);margin-bottom:8px}
+.dlist{max-height:270px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.ditem{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border-bottom:1px solid var(--line);cursor:pointer}
+.ditem:last-child{border-bottom:none}
+.ditem input{margin-top:3px;width:18px;height:18px;accent-color:var(--gold);flex:none}
+.ditem.on{background:rgba(201,162,39,.09)}
+.ditem span{font-size:14px}
+.dgroup{padding:7px 12px;font-size:11.5px;letter-spacing:.06em;color:var(--tx3);background:var(--bg2);
+  border-bottom:1px solid var(--line);position:sticky;top:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:5px 10px;border-radius:20px;
+  border:1px solid var(--gold);color:var(--gold-soft)}
+.chip b{cursor:pointer;color:var(--tx3);font-weight:400}
+
+/* photos */
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-top:10px}
+.ph{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--bg2)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .x{position:absolute;top:3px;inset-inline-end:3px;width:24px;height:24px;border-radius:50%;
+  background:rgba(0,0,0,.65);color:#fff;font-size:14px;display:grid;place-items:center}
+.ph.add{display:grid;place-items:center;border-style:dashed;color:var(--tx3);font-size:22px}
+.ph .cap{position:absolute;bottom:0;inset-inline:0;background:rgba(0,0,0,.6);color:#fff;font-size:9.5px;padding:2px 4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* misc */
+.alert{border-radius:12px;padding:12px 14px;font-size:13.5px;margin:10px 0;border:1px solid}
+.alert.bad{border-color:var(--bad);background:rgba(209,72,63,.08);color:#ff9c94}
+.alert.warn{border-color:var(--warn);background:rgba(217,154,43,.08);color:#f0c274}
+.alert.ok{border-color:var(--ok);background:rgba(63,157,90,.08);color:#8fdca6}
+.alert.info{border-color:var(--info);background:rgba(59,125,216,.08);color:#9dc3f5}
+[data-mode="light"] .alert.bad{color:#9c2f27}
+[data-mode="light"] .alert.warn{color:#8a6113}
+[data-mode="light"] .alert.ok{color:#256b3a}
+[data-mode="light"] .alert.info{color:#1e5199}
+
+.list .it{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--line);
+  border-radius:12px;margin:8px 0;background:var(--card);text-align:start;width:100%}
+.list .it .main{flex:1;min-width:0}
+.list .it .t{font-weight:600;font-size:15px}
+.list .it .d{font-size:12.5px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.empty{text-align:center;padding:44px 20px;color:var(--tx3)}
+.empty .ic{font-size:38px;opacity:.5;margin-bottom:10px}
+
+.sheet{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.6);display:flex;align-items:flex-end}
+.sheet .inner{background:var(--bg2);border-radius:18px 18px 0 0;width:100%;max-width:760px;margin:0 auto;
+  max-height:90vh;overflow-y:auto;padding:18px var(--pad) 28px;border-top:1px solid var(--line)}
+.sheet h3{margin:0 0 12px;font-size:17px}
+
+.sig{border:1px dashed var(--line);border-radius:10px;background:var(--bg2);touch-action:none;width:100%;height:150px;display:block}
+
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat .b{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.stat .b .n{font-size:26px;font-weight:800;color:var(--gold-soft);font-variant-numeric:tabular-nums}
+.stat .b .l{font-size:12.5px;color:var(--tx3)}
+
+.toast{position:fixed;bottom:22px;inset-inline:0;margin:0 auto;width:max-content;max-width:88%;
+  background:var(--card);border:1px solid var(--gold);color:var(--tx);padding:11px 18px;border-radius:24px;
+  z-index:200;font-size:14px;box-shadow:0 8px 26px rgba(0,0,0,.4)}
+
+.spin{width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--gold);border-radius:50%;
+  animation:sp .7s linear infinite;display:inline-block;vertical-align:-3px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.fade{animation:fd .18s ease}
+@keyframes fd{from{opacity:0;transform:translateY(5px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- print ---------- */
+#printarea{display:none}
+@media print{
+  body>*{display:none!important}
+  #printarea{display:block!important;color:#000;background:#fff;font-size:10.5pt}
+  @page{size:A4;margin:12mm}
+}
+#printarea .pform{font-family:var(--font)}
+#printarea table{width:100%;border-collapse:collapse;margin-top:6px}
+#printarea th,#printarea td{border:1px solid #000;padding:3px 5px;font-size:9pt;vertical-align:top}
+#printarea th{background:#e8e8e8;font-size:8.5pt}
+#printarea h2{font-size:13pt;margin:0 0 4px;text-align:center}
+#printarea .banner{border:2px solid #000;padding:5px;text-align:center;font-weight:bold;font-size:11pt;margin-bottom:8px}
+#printarea .draft{color:#b00;border-color:#b00}
+#printarea .kv{font-size:9pt;line-height:1.7}
+#printarea .notes{font-size:7.5pt;line-height:1.35;margin-top:8px}
+#printarea .sigrow{display:flex;gap:14px;margin-top:14px;font-size:9pt}
+#printarea .sigrow>div{flex:1;text-align:center}
+#printarea .sigrow img{max-width:100%;height:52px;object-fit:contain;border-bottom:1px solid #000;display:block}
+#printarea .pagebreak{page-break-before:always}
+#printarea .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#printarea .pgrid figure{margin:0}
+#printarea .pgrid img{width:100%;border:1px solid #000}
+#printarea .pgrid figcaption{font-size:8pt;padding-top:2px}
+#printarea .safety{border:2px solid #b00;color:#b00;padding:6px;font-weight:bold;margin:8px 0;font-size:10pt}
+</style>
+</head>
+<body data-theme="black" data-mode="dark">
+<div id="app"></div>
+<div id="printarea"></div>
+<input type="file" id="picker" accept="image/*" capture="environment" hidden>
+<script>
+/* =====================================================================
+   בדק — נתוני נוהל 127 (נספח 5): נוסח האבחנות המחייב
+   הטקסטים כאן הם לשון משרד התחבורה ואין לשנותם.
+   ===================================================================== */
+const D = {
+engine:["בלאי פנימי גבוה","שריפות שמן ממובילי שסתומים","פולי מנוע זורק","מנוע שורף שמן","לחץ שמן נמוך","לחץ עוקה גבוה (מבלאי)","מנוע נכבה באיחור","צינור נשם מנותק","מנוע לפני שיפוץ","רטיבות שמן במסנן אויר","דליפות לחץ גבוהות בצילינדרים","מצתים רטובים בשמן","דליפות לחץ בינוניות בצילינדרים","הברגות פגומות בראש מנוע","לחץ דחיסה נמוך","מעבר לחץ למערכת קירור","לחץ דחיסה גבוה","הספק מנוע ירוד","לחץ דחיסה לא זהה","סימני דליפה בין ראש מנוע והבלוק","מנוע מצלצל","נוזל קירור בשמן","רעש מערכת שסתומים","סימני מים בנשם מנוע","רעש מערכת תזמון","סדק בגוף המנוע","רעש מערכת תזמון ושסתומים","פקקי מים פגומים","רעשים במנוע","נזילת מים מפקקי מים","רעשים ונקישות פנימיים","תושבות מנוע פגומות","רעש פנימי ממסבים","מדיד שמן פגום","נקישות גל זיזים","מעיכות אגן שמן","חוסר שמן במנוע","הלחמות בבלוק המנוע","נזילות שמן","חופש גל ארכובה"],
+
+cooling:["נזילות מים ממצנן","ריקבון במצנן","רשת מצנן פגומה","מסגרת מצנן שבורה","מכסה מצנן פגום","מיכל עיבוי פגום","ניקוי מערכת הקירור","התחממות יתר במנוע","קורוזיה וסימני נזילה בחיבורים","נזילות מים","צינורות מים פגומים","פקקי מים נוזלים","נזילה ממשאבת מים","רעש ממשאבת מים","קורוזיה בית תרמוסטט","מערכת חימום לקויה","ברז מערכת חימום פגום","מאוורר פגום","מצמד מאוורר פגום","כונס אויר פגום","רצועה פגומה","שמן במים","קיים אויר במערכת הקירור","מערכת קירור לקויה"],
+
+fuel:["תצרוכת דלק גבוהה","מאייד לא תקין","דוושת דלק נתפסת","כבל גז פגום","צינורות דלק פגומים","מעיכות במיכל הדלק","תיקונים במיכל הדלק","נזילה במיכל הדלק","מסנן אויר לקוי","ריח דלק בתא נוסעים","משנק לא תקין","משאבת דלק פגומה","סיבובי מנוע לא יציבים","חסר צינורות לחימום תערובת","מחשב מערכת דלק לא נבדק","מדגש טורבו לא תקין","הזרקת דלק לקויה","מערכת הזרקת דלק לא נבדקה","מגדש טורבו לא נבדק"],
+
+ignition:["לתאם מנוע","מנוע מזייף","מצתים לא תקינים","חוטי הצתה פגומים","מצתים שונים","קיימים מאריכי מצתים","התנעה קשה","מנוע מצלצל","מנוע נכבה באיחור","מפלג רועש","מתג התנעה פגום","מערכת הצתה פגומה"],
+
+exhaust:["דוד עמעם אחורי פגום","דוד עמעם מרכזי פגום","דוד עמעם קדמי פגום","קצה צינור רקוב","דליפה בחיבורי צינורות","מעיכות במערכת","מתלים פגומים","צנרת פגומה","ריקבון כללי במערכת","סעפת סדוקה","דליפות מהסעפת","חסרים ברגים","מערכת פליטה רועשת","ממיר קטליטי לא תקין"],
+
+steering:["זוויות היגוי (כיוון)","חופש מייצב קדמי","שחיקת צמיגים","נקישות במתלה","סטיות הגה (בנסיעה)","חריקות במתלה","רעידות בגלגלים","גשר קדמי עקום","נקישה בתיבת הגה","גשר קדמי סדוק","חופש ונקישה בתיבת הגה","מעיכות בגשר","גומיות מגן להגה פגומות","משולש עקום","קופלונג הגה פגום","מעיכה במשולש","משאבת הגה פגומה","גשר אחורי עקום","נזילת שמן במערכת הידראולית","מוט מייצב אחורי עקום","בולם זעזועים להגה פגום","חופש תותבים ציר קדמי","חופש מוט הגה בתא נהג","חופש תותבים ציר אחורי","חופש במערכת היגוי","חופש מסבי גלגלים","חופש זרוע עזר","מסבי גלגלים רועשים","תיבת הגה פגומה","תומך סרן אחורי עקום","הגה קשה ולא חוזר","גלגל הגה אינו ממורכז","חוסר יציבות","סטיות במקביליות ומרחקי צירים","חופש חיבורי ציר קדמי","מידות מרכב אינם עפ״י הוראת יצרן","חופש משולשים במתלה","חופש במסרק הגה","זווית ציר אחורי פגומה","גומיות מגן קרועות"],
+
+springs:["בולמי זעזועים קדמיים חלשים","בולמי זעזועים אחוריים חלשים","תותבים לבולמי זעזועים","אוגר לחץ פגום","אוגר לחץ רועש","בומבות קשות","נזילת שמן במערכת הידראולית","קפיצים קדמיים נמוכים","קפיצים אחוריים נמוכים","קפיצים קדמיים אינם זהים","קפיצים אחוריים אינם זהים","קפיץ קדמי ימני שבור","קפיץ קדמי שמאלי שבור","קפיץ אחורי ימני שבור","קפיץ אחורי שמאלי שבור","תותבים לקפיצים","תותבים לקפיצים קדמיים","תותבים לקפיצים אחוריים","קיימות טבעות הגבהה בקפיצים","פין מרכזי לקפיצים שבור"],
+
+brakes:["רפידות שחוקות","צלחות שחוקות","בלימה לקויה","מתקן בקורת בלמים לקוי","רעידות בבלימה","סטיות בבלימה","חריקות בבלימה","נקישות בבלימה","דוושת בלם נמוכה","דוושת בלם יורדת","רעידות בלחיצת דוושת בלם","חופש דוושת בלם","נזילה במשאבת וויסות","משאבת וויסות פגומה","לפרק גלגלים לבדיקה","נזילה משאבת אופן קדמית ימין","נזילה משאבת אופן קדמית שמאל","נזילה משאבת אופן אחורית ימין","נזילה משאבת אופן אחורית שמאל","מנגנון בלם עזר פגום","כבל בלם עזר פגום","צינורות גמישים קדמיים פגומים","צינורות גמישים אחוריים פגומים","צינורות מתכת פגומים","מגבר בלם פגום","חסר ביטחונית לרפידות בלם","בלם יד אינו תקין","מערכת בלמים לקויה","מערכת ABS אינה פועלת","חסר נוזל בלמים"],
+
+tires:["צמיג חילוף פגום","צמיגים קדמיים פגומים","צמיגים אחוריים פגומים","שחיקת צמיגים בינונית","צמיג קדמי ימני פגום","צמיג קדמי שמאלי פגום","צמיג אחורי ימני פגום","צמיג אחורי שמאלי פגום","צמיגים יבשים","צמיגים לא זהים","צמיגים מחודשים","מידת צמיגים לא חוקית","חסר גלגל חילוף","כיפוף בחישוק","רעידה בצמיגים","חישוק לא מתאים לגודל הצמיגים"],
+
+electric:["תאריך ייצור מצבר","אין תאריך ייצור על המצבר","מצבר חלש","מצבר פגום","מצבר אינו מטופל","תושבת מצבר שבורה","חופש קוטבי מצבר","מתנע פגום-רועש","לבדוק זר שיניים בגלגל תנופה","אלטרנטור רועש","תומך אלטרנטור פגום","אין טעינה","פנס אחורי שבור","פנס חזית שבור","פנס סדוק","פנס חזית משוחרר","פנסי חזית פגומים","פנסים אחוריים פגומים","לתקן אור בלם","לתקן מערכת איתות","אור חניה אינו פועל","החלפת אורות אינה פועלת","מערכת אוורור פנימית אינה פועלת","מערכת מגבים אינה פועלת","צופר אינו פועל","מזגן אוויר אינו פועל","מזגן אוויר מנותק","חסר גז במזגן","חוטי חשמל גלויים","קצרים במערכת חשמל","הפעלת חלונות חשמל לקויה","נעילת דלתות אינה תקינה"],
+
+power:{"מצמד":["מצמד מפריד גבוה (בלאי)","מצמד מחליק","מצמד קשה","רעידות במצמד","כבל מצמד פגום","נזילת משאבת מצמד","מסב לחץ רועש","חסר מכסה בית מצמד","בית מצמד שבור ומתוקן"],
+"תיבה אוטומטית":["שמן כהה בלאי דסקיות הילוכים","החלפת הילוכים לקויה","נקישה בשילוב הילוכים","החלקה בתאוצה","רעידות בתאוצה","כבל הילוך חוזר פגום","מנגנון חניה לקוי","חדירת מים לשמן בתיבת ההילוכים"],
+"תיבת הילוכים":["נזילת שמן תיבת הילוכים","רעש מתיבת הילוכים","חופשים במנגנוני הילוכים","חריקות בשילוב הילוכים","שילוב הילוכים קשה","הילוך קופץ","תיבת הילוכים פגומה","תושבת תיבת הילוכים פגומה"],
+"גלי הינע":["גומיות מגן לציריות פגומות","חופש ונקישות בציריות","חופש ונקישות ציריה שמאלית","חופש ונקישות ציריה ימנית","חופש צלבים","קופלונג גל-הינע פגום","חופש תושבת גל-הינע"],
+"דיפרנציאל והנעה":["חופש דיפרנציאל","נזילת שמן בדיפרנציאל","דיפרנציאל רועש","נקישה בדיפרנציאל","נזילות שמן מערכת הנעה","רעידות בנסיעה","מערכת 4X4 אינה פועלת","נזילת שמן ציריות","רעש מסבי גלגלים"]},
+
+gauges:["מד חום פגום","מד דלק פגום","מד לחץ שמן פגום","מד טעינה פגום","מד מהירות פגום","מונה ק״מ פגום","מד תת-לחץ פגום","מד סיבובי מנוע פגום","ביקורת לחץ שמן לקויה","ביקורת בלמים לקויה","ביקורת טעינה לקויה","לוח מחוונים פגום","הבקרה בלוח שעונים פגומה","ריפוד לוח שעונים קרוע / סדוק","רעשים בלוח שעונים","טכוגרף פגום"],
+
+remarks:["הרכב לא נבדק בנסיעה","מצב כללי ברכב ירוד","לחזור להמשך בדיקה לאחר תיקון","לבדוק תצרוכת שמן בנסיעה","לבדוק לחץ שמן באמצעות מנומטר חיצוני","להחליף שמן מנוע ולחזור לבדיקה","מנוע לאחר תיקון","ראש מנוע לאחר תיקון","להוריד ראש מנוע ולחזור לבדיקה","לפרק גלגלים ולבדוק עובי רפידות","מס׳ המנוע אינו תואם לרישיון שהוצג בעת הבדיקה","שינוי מבנה"],
+
+ecu:["מערכת ניהול מנוע בנזין/דיזל (MED/EDC)","תיבת הילוכים אוטומטית/רובוטית (TCM)","תיבת העברה והינע סופי (4X4)","מערכת בקרת אקלים (HVAC)","מערכת בקרת מרכב (BCM/BSI)","מערכת כריות אויר ומותחני חגורות (AIR BAG)","מערכת תאורה ממוחשבת","מערכת מדיה וסטריאו","מערכת בלמים ממוחשבת ובקרת יציבות (ABS/ASR/ESP)","מערכת בקרת לחץ אויר בצמיגים (TPMS)","מערכת התראת טיפולים","מערכת בקרת לוח שעונים","מערכת בקרת הגה חשמלי (EPS)","מערכת כיוון אורות אוטומטי","מערכת שמירת נתיב וזיהוי שטח מת","מערכת תצוגת מידע בלוח שעונים","מערכת ראיית לילה","מערכת הכנה לתאונה (PRE-SAFE)","מערכת עזר לבלם (BAS)","מערכת בקרת שיוט אדפטיבית","מערכת זיהוי הולכי רגל","מערכת חנייה אוטומטית"]
+};
+
+/* --- שלדה: 6 רשימות לפי סוג שלדה × חומרה --- */
+const CH_MINOR=["חסר פינות לפגוש","חגורת בטיחות פגומה","פתיחת מכסה מנוע לקויה","פתיחת תא מטען לקויה","תומך מכסה מנוע פגום","דלתות אינם מכוונות","חופש צירים בדלתות","עצר ביטחון לדלת","גומיות לדלתות וחלונות פגומות","מנעול לדלת פגום","ריפוד פגום","מנגנוני שמשות אינם תקינים","כיפוף בפגוש","הפרש מקביליות מבעיה טכנית","שמשה פגומה"];
+const CH_HIGH_CORE=["קורה אורכית אחורית מעבר לנקודת רתום המתלה","כנף פנימית אחורית נושאת בולם זעזועים","עמודים — אמצעי / קדמי / אחורי","ריצפת תא נוסעים","דופן פנימית","גג כולל חיזוקים ומשקופים","פח חזית כולל גשר חזית עליון מולחם","כנף קדמית מולחמת","דופן פנימית בתא מנוע","קורה אורכית מעבר לתושבת רתום המתלה / מנוע","קורת רוחב מעבר לנקודת רתום המתלה / מנוע","קיר אש","בית גלגל קדמי המהווה חלק ממבנה המרכב"];
+const CH_HIGH_TAIL=["החלפה או איכול: פח דופן אחורי","החלפה או איכול: כנף אחורי מולחמת","הפרש במקביליות כתוצאה מעוות בשלדה","החלפה או איכול: פח סף פנימי","החלפה או איכול: פח חזית מולחם","צבע ופחחות כללית במצב ירוד","תיקונים כלליים בגוף המרכב","חיבורים לא מקוריים לרוחב הרכב"];
+const CH_LOW_CORE=["מכסה מנוע","כנף קדמי ימין המחוברת עם ברגים","כנף קדמי שמאלי המחוברת עם ברגים","דלתות קדמיות ימין או שמאל","דלת אחורית ימין או שמאל","מכסה תא מטען","רצפה אחורית בחלק הסמוך לפגוש","קורה אורכית קדמית עד לנקודת רתום המתלה / מנוע"];
+const CH_LOW_TAIL=["תיקון או פגיעה: קורות אורך אחוריות עד לנקודת רתום המתלה / מנוע","תיקון או פגיעה: כנף קדמית ימנית / שמאלית מולחמת","תיקון או פגיעה: כנף אחורית ימנית / שמאלית מולחמת","תיקון או פגיעה: פח דופן אחורית","תיקון או פגיעה: קורת רוחב אחורית עד לנקודת רתום המתלה / מנוע","תיקון או פגיעה: פח סף חיצוני","תיקון או פגיעה: פח חזית מולחם","חדירת מים לתא הנוסעים / תא מטען"];
+const P="פגיעה, תיקון, איכול ו/או החלפה: ";
+const RIZPA_NEAR="ריצפה אחורית בחלק הסמוך לקו ציר רוחב האופנים";
+const RIZPA_BEYOND="ריצפה אחורית מעבר לקו ציר רוחב האופנים";
+
+D.chassis={
+ body:{ high:[P+RIZPA_NEAR,P+RIZPA_BEYOND,...CH_HIGH_CORE.map(x=>P+x),...CH_HIGH_TAIL],
+        low:[...CH_LOW_CORE.map(x=>P+x),...CH_LOW_TAIL], minor:CH_MINOR },
+ separate:{ high:[P+RIZPA_BEYOND,...CH_HIGH_CORE.map(x=>P+x),...CH_HIGH_TAIL],
+        low:[...CH_LOW_CORE.map(x=>P+x),P+RIZPA_NEAR,...CH_LOW_TAIL], minor:CH_MINOR }
+};
+
+/* =====================================================================
+   טפסי הסיכום האחיד — נספח 1 (מלא) ונספח 2 (ללא מערכות ממוחשבות)
+   src = מפתח רשימת האבחנות בנספח 5
+   ===================================================================== */
+const FORM_FULL=[
+ {n:1,t:"מנוע",src:"engine"},
+ {n:2,t:"מערכת ניהול המנוע",src:"engine",ecu:1},
+ {n:3,t:"מערכת הקירור",src:"cooling"},
+ {n:4,t:"מערכת דלק",src:"fuel"},
+ {n:5,t:"מערכת הצתה / הזרקה",src:"ignition"},
+ {n:6,t:"מערכת גדוש מנוע",src:"fuel"},
+ {n:7,t:"מערכות הנעה של רכב היברידי / חשמלי",src:"power",ecu:1},
+ {n:8,t:"מערכת טעינה",src:"electric"},
+ {n:9,t:"מערכת ההתנעה (כולל מצבר)",src:"electric"},
+ {n:10,t:"מצמד",src:"power"},
+ {n:11,t:"תיבת הילוכים",src:"power"},
+ {n:12,t:"תיבת העברת הכוח",src:"power"},
+ {n:13,t:"ציריות / גל הינע",src:"power"},
+ {n:14,t:"סרן הנעה",src:"steering"},
+ {n:15,t:"מערכת מתלה קדמי / אקטיבית",src:"springs"},
+ {n:16,t:"מערכת מתלה אחורי / אקטיבית",src:"springs"},
+ {n:17,t:"מערכת ההיגוי (חשמלי / הידראולי)",src:"steering"},
+ {n:18,t:"מערכת הבלמים (ללא פירוק גלגלים) כולל ABS, ESP",src:"brakes"},
+ {n:19,t:"צמיגים וחישוקים (כולל TPMS)",src:"tires"},
+ {n:20,t:"מערכת הפליטה ומערכות למניעת זיהום אוויר",src:"exhaust"},
+ {n:21,t:"מערכות בטיחות פסיביות לסוגיהן",src:"ecu"},
+ {n:22,t:"שילדת מרכב או שילדה נפרדת",src:"CHASSIS"},
+ {n:23,t:"מערכת התאורה ומחוונים",src:"gauges",also:"electric"},
+ {n:24,t:"מערכות ממוחשבות ואלקטרוניות כלליות",src:"ecu"},
+ {n:25,t:"הערות כלליות",src:"remarks",notesonly:1}
+];
+const FORM_BASIC=[
+ {n:1,t:"מנוע",src:"engine"},
+ {n:2,t:"מערכת הקירור",src:"cooling"},
+ {n:3,t:"מערכת דלק",src:"fuel"},
+ {n:4,t:"מערכת הצתה",src:"ignition"},
+ {n:5,t:"מערכת גידוש המנוע",src:"fuel"},
+ {n:6,t:"מערכות הנעה",src:"power"},
+ {n:7,t:"מערכת הטעינה",src:"electric"},
+ {n:8,t:"מערכת הפליטה ומערכות למניעת זיהום אוויר",src:"exhaust"},
+ {n:9,t:"מערכת ההתנעה (כולל מצבר)",src:"electric"},
+ {n:10,t:"מצמד",src:"power"},
+ {n:11,t:"תיבת הילוכים",src:"power"},
+ {n:12,t:"תיבת העברת הכוח",src:"power"},
+ {n:13,t:"ציריות / גל הינע",src:"power"},
+ {n:14,t:"מערכת מתלה קדמי",src:"springs"},
+ {n:15,t:"מערכת מתלה אחורי",src:"springs"},
+ {n:16,t:"מערכת ההיגוי",src:"steering"},
+ {n:17,t:"מערכת הבלמים (ללא פירוק גלגלים)",src:"brakes"},
+ {n:18,t:"צמיגים וחישוקים",src:"tires"},
+ {n:19,t:"שילדת מרכב או שילדה נפרדת",src:"CHASSIS"},
+ {n:20,t:"מערכת תאורה",src:"electric"},
+ {n:21,t:"הערות כלליות",src:"remarks",notesonly:1}
+];
+
+const PHOTO_SLOTS=[
+ {k:"lic_veh",t:"רישיון רכב מקורי",req:1},{k:"lic_drv",t:"תעודה מזהה / רישיון נהיגה",req:1},
+ {k:"front",t:"חזית"},{k:"rear",t:"אחור"},{k:"side_r",t:"דופן ימין"},{k:"side_l",t:"דופן שמאל"},
+ {k:"roof",t:"גג"},{k:"interior",t:"פנים הרכב"},{k:"dash",t:"לוח שעונים (ק״מ)"},
+ {k:"engine",t:"תא מנוע"},{k:"chassis",t:"שלדה מלמטה"},
+ {k:"tire_fr",t:"צמיג קדמי ימין"},{k:"tire_fl",t:"צמיג קדמי שמאל"},
+ {k:"tire_rr",t:"צמיג אחורי ימין"},{k:"tire_rl",t:"צמיג אחורי שמאל"},
+ {k:"vin",t:"מספר שלדה מוטבע"},{k:"engno",t:"מספר מנוע מוטבע"},
+ {k:"tests",t:"פלטי בדיקה ממוחשבים"}
+];
+
+/* ===================== i18n ===================== */
+const LANG={
+he:{dir:"rtl",name:"עברית",
+app:"בדק",tag:"בדיקת רכב לצרכי קנייה ומכירה",
+home:"דף הבית",back:"חזרה לדף הבית",newins:"בדיקה חדשה",newins_d:"פתיחת רשומה",
+diary:"יומן הזמנות",diary_d:"מועדים קרובים",archive:"ארכיון",archive_d:"בדיקות קודמות",
+dash:"דשבורד",dash_d:"נתונים וסיכומים",settings:"הגדרות",about:"אודות",guide:"מדריך",
+save:"שמירה",cancel:"ביטול",del:"מחיקה",edit:"עריכה",close:"סגירה",add:"הוספה",ok:"אישור",
+next:"המשך",prev:"הקודם",search:"חיפוש",none:"אין",yes:"כן",no:"לא",
+t_veh:"פרטי רכב",t_ins:"פרטי בדיקה",t_buy:"קונה",t_sel:"מוכר",t_pay:"תשלום",
+t_pho:"תעודות וצילומים",t_def:"ליקויים",t_sum:"סיכום",
+kind:"סוג הבדיקה",kind_full:"כללית מלאה — כולל מערכות אלקטרוניות וממוחשבות",
+kind_basic:"כללית — ללא מערכות אלקטרוניות וממוחשבות",
+plate:"מספר רכב",fetch:"שליפה ממשרד התחבורה",fetching:"שולף נתונים…",
+make:"תוצר",model:"דגם",year:"שנת ייצור",vin:"מספר שלדה",engno:"מספר מנוע",km:"קילומטראז׳",
+vtype:"סוג הרכב",color:"צבע",chtype:"סוג השלדה",ch_body:"שלדת מרכב",ch_sep:"שלדה נפרדת",
+onlic:"רשום ברישיון",actual:"נמצא בפועל",mismatch:"אי-התאמה — נרשם בהערות כלליות",
+vinblock:"אי-התאמה במספר השלדה — אין לבצע בדיקה לרכב (סעיף ה.24)",
+insdate:"תאריך",instime:"שעה",insplace:"מקום הבדיקה",inspector:"שם הבודק",certno:"מס׳ תעודת בודק",
+roadtest:"בוצע מבחן דרך",orderer:"מזמין הבדיקה",name:"שם",idno:"תעודת זהות",phone:"טלפון",addr:"כתובת",
+amount:"סכום",paid:"שולם",method:"אמצעי תשלום",
+st_ok:"תקין",st_bad:"לא תקין",st_na:"לא קיים ברכב",st_rec:"המלצה",
+notes:"הערת בוחן",findings:"אבחנות",addphoto:"צילום",safety:"ליקוי בטיחותי",
+safety_w:"ליקוי בטיחותי — חובה ליידע את מזמין הבדיקה מיידית (תקנה 27א)",
+searchdef:"חיפוש אבחנה…",aihelp:"הצע אבחנות",
+declare:"תצהיר מזמין הבדיקה",sign:"חתימה",clearsig:"ניקוי",
+sig_ins:"חתימת הבודק",sig_ord:"חתימת מזמין הבדיקה",
+pdf:"הפקת דוח",draft:"טיוטת בדיקה — אינה תעודה רשמית",
+missing:"חסרים פרטים",complete:"הושלם",inprog:"בתהליך",
+username:"שם משתמש",lang:"שפה",theme:"ערכת צבע",mode:"מצב תצוגה",dark:"לילה",light:"יום",
+inst:"פרטי מכון הבדיקה",instname:"שם המכון",instlic:"מס׳ רישיון מפעל",
+backup:"גיבוי",restore:"שחזור",wipe:"מחיקת כל הנתונים",
+aiconn:"חיבור בינה",provider:"ספק",apikey:"מפתח API",test:"בדיקת חיבור",
+conn_ok:"מחובר",conn_no:"לא מחובר",motest:"בדיקת חיבור למשרד התחבורה",
+proxy:"כתובת proxy (אופציונלי)",pin:"נעילת PIN",
+saved:"נשמר",deleted:"נמחק",confirm:"למחוק? הפעולה אינה הפיכה.",
+e_noplate:"הזן מספר רכב",e_notfound:"לא נמצא במאגר — מלא ידנית",e_net:"אין חיבור — מלא ידנית",
+e_req:"שדה חובה",nodata:"אין עדיין נתונים",
+rollback:"חשד לגלגול מד-אוץ",recall:"ריקול פתוח",risk:"ממצאי מאגר"},
+
+en:{dir:"ltr",name:"English",app:"BDK",tag:"Pre-purchase vehicle inspection",
+home:"Home",back:"Back to home",newins:"New inspection",newins_d:"Open a record",
+diary:"Appointments",diary_d:"Upcoming",archive:"Archive",archive_d:"Past inspections",
+dash:"Dashboard",dash_d:"Figures and summaries",settings:"Settings",about:"About",guide:"Guide",
+save:"Save",cancel:"Cancel",del:"Delete",edit:"Edit",close:"Close",add:"Add",ok:"OK",
+next:"Next",prev:"Back",search:"Search",none:"None",yes:"Yes",no:"No",
+t_veh:"Vehicle",t_ins:"Inspection",t_buy:"Buyer",t_sel:"Seller",t_pay:"Payment",
+t_pho:"Documents & photos",t_def:"Defects",t_sum:"Summary",
+kind:"Inspection type",kind_full:"Full — including electronic systems",kind_basic:"Standard — without electronic systems",
+plate:"Plate number",fetch:"Fetch from registry",fetching:"Fetching…",
+make:"Make",model:"Model",year:"Year",vin:"VIN",engno:"Engine no.",km:"Odometer",
+vtype:"Vehicle type",color:"Colour",chtype:"Chassis type",ch_body:"Unibody",ch_sep:"Body-on-frame",
+onlic:"On licence",actual:"Actual",mismatch:"Mismatch — recorded in general remarks",
+vinblock:"VIN mismatch — inspection must not proceed",
+insdate:"Date",instime:"Time",insplace:"Location",inspector:"Inspector",certno:"Certificate no.",
+roadtest:"Road test performed",orderer:"Ordered by",name:"Name",idno:"ID number",phone:"Phone",addr:"Address",
+amount:"Amount",paid:"Paid",method:"Method",
+st_ok:"Pass",st_bad:"Fail",st_na:"Not fitted",st_rec:"Recommendation",
+notes:"Inspector notes",findings:"Findings",addphoto:"Photo",safety:"Safety defect",
+safety_w:"Safety defect — the customer must be informed immediately",
+searchdef:"Search findings…",aihelp:"Suggest findings",
+declare:"Customer declaration",sign:"Signature",clearsig:"Clear",
+sig_ins:"Inspector signature",sig_ord:"Customer signature",
+pdf:"Generate report",draft:"Draft — not an official certificate",
+missing:"Missing details",complete:"Complete",inprog:"In progress",
+username:"User name",lang:"Language",theme:"Colour theme",mode:"Display",dark:"Dark",light:"Light",
+inst:"Inspection centre",instname:"Centre name",instlic:"Licence no.",
+backup:"Backup",restore:"Restore",wipe:"Erase all data",
+aiconn:"AI connection",provider:"Provider",apikey:"API key",test:"Test connection",
+conn_ok:"Connected",conn_no:"Not connected",motest:"Test registry connection",
+proxy:"Proxy URL (optional)",pin:"PIN lock",
+saved:"Saved",deleted:"Deleted",confirm:"Delete? This cannot be undone.",
+e_noplate:"Enter a plate number",e_notfound:"Not found — fill in manually",e_net:"Offline — fill in manually",
+e_req:"Required",nodata:"Nothing here yet",
+rollback:"Possible odometer rollback",recall:"Open recall",risk:"Registry findings"},
+
+ar:{dir:"rtl",name:"العربية",app:"BDK",tag:"فحص المركبة قبل الشراء",
+home:"الرئيسية",back:"العودة للرئيسية",newins:"فحص جديد",newins_d:"فتح سجل",
+diary:"المواعيد",diary_d:"القادمة",archive:"الأرشيف",archive_d:"فحوصات سابقة",
+dash:"لوحة البيانات",dash_d:"ملخصات",settings:"الإعدادات",about:"حول",guide:"دليل",
+save:"حفظ",cancel:"إلغاء",del:"حذف",edit:"تعديل",close:"إغلاق",add:"إضافة",ok:"موافق",
+next:"التالي",prev:"السابق",search:"بحث",none:"لا يوجد",yes:"نعم",no:"لا",
+t_veh:"المركبة",t_ins:"الفحص",t_buy:"المشتري",t_sel:"البائع",t_pay:"الدفع",
+t_pho:"وثائق وصور",t_def:"الأعطال",t_sum:"الملخص",
+kind:"نوع الفحص",kind_full:"شامل — يشمل الأنظمة الإلكترونية",kind_basic:"عادي — بدون الأنظمة الإلكترونية",
+plate:"رقم اللوحة",fetch:"جلب من السجل",fetching:"جارٍ الجلب…",
+make:"الصانع",model:"الطراز",year:"سنة الصنع",vin:"رقم الهيكل",engno:"رقم المحرك",km:"العداد",
+vtype:"نوع المركبة",color:"اللون",chtype:"نوع الهيكل",ch_body:"هيكل موحد",ch_sep:"هيكل منفصل",
+onlic:"حسب الرخصة",actual:"الواقع",mismatch:"عدم تطابق — يُسجل في الملاحظات",
+vinblock:"عدم تطابق رقم الهيكل — لا يجوز إجراء الفحص",
+insdate:"التاريخ",instime:"الساعة",insplace:"المكان",inspector:"الفاحص",certno:"رقم الشهادة",
+roadtest:"تم اختبار الطريق",orderer:"طالب الفحص",name:"الاسم",idno:"رقم الهوية",phone:"الهاتف",addr:"العنوان",
+amount:"المبلغ",paid:"مدفوع",method:"طريقة الدفع",
+st_ok:"سليم",st_bad:"غير سليم",st_na:"غير موجود",st_rec:"توصية",
+notes:"ملاحظات الفاحص",findings:"التشخيص",addphoto:"صورة",safety:"عطل أماني",
+safety_w:"عطل أماني — يجب إبلاغ الزبون فوراً",
+searchdef:"بحث في التشخيصات…",aihelp:"اقتراح تشخيصات",
+declare:"إقرار طالب الفحص",sign:"توقيع",clearsig:"مسح",
+sig_ins:"توقيع الفاحص",sig_ord:"توقيع الزبون",
+pdf:"إصدار التقرير",draft:"مسودة — ليست شهادة رسمية",
+missing:"تفاصيل ناقصة",complete:"مكتمل",inprog:"قيد العمل",
+username:"اسم المستخدم",lang:"اللغة",theme:"الألوان",mode:"العرض",dark:"ليلي",light:"نهاري",
+inst:"مركز الفحص",instname:"اسم المركز",instlic:"رقم الترخيص",
+backup:"نسخة احتياطية",restore:"استعادة",wipe:"حذف كل البيانات",
+aiconn:"اتصال الذكاء",provider:"المزود",apikey:"مفتاح API",test:"اختبار الاتصال",
+conn_ok:"متصل",conn_no:"غير متصل",motest:"اختبار الاتصال بالسجل",
+proxy:"عنوان proxy (اختياري)",pin:"قفل PIN",
+saved:"تم الحفظ",deleted:"تم الحذف",confirm:"حذف؟ لا يمكن التراجع.",
+e_noplate:"أدخل رقم اللوحة",e_notfound:"غير موجود — املأ يدوياً",e_net:"لا اتصال — املأ يدوياً",
+e_req:"حقل مطلوب",nodata:"لا توجد بيانات بعد",
+rollback:"شبهة تلاعب بالعداد",recall:"استدعاء مفتوح",risk:"نتائج السجل"},
+
+ru:{dir:"ltr",name:"Русский",app:"BDK",tag:"Проверка авто перед покупкой",
+home:"Главная",back:"На главную",newins:"Новая проверка",newins_d:"Открыть запись",
+diary:"Записи",diary_d:"Ближайшие",archive:"Архив",archive_d:"Прошлые проверки",
+dash:"Панель",dash_d:"Сводка",settings:"Настройки",about:"О программе",guide:"Инструкция",
+save:"Сохранить",cancel:"Отмена",del:"Удалить",edit:"Изменить",close:"Закрыть",add:"Добавить",ok:"OK",
+next:"Далее",prev:"Назад",search:"Поиск",none:"Нет",yes:"Да",no:"Нет",
+t_veh:"Автомобиль",t_ins:"Проверка",t_buy:"Покупатель",t_sel:"Продавец",t_pay:"Оплата",
+t_pho:"Документы и фото",t_def:"Дефекты",t_sum:"Итог",
+kind:"Тип проверки",kind_full:"Полная — с электронными системами",kind_basic:"Обычная — без электронных систем",
+plate:"Гос. номер",fetch:"Запрос в реестр",fetching:"Запрос…",
+make:"Марка",model:"Модель",year:"Год выпуска",vin:"VIN",engno:"№ двигателя",km:"Пробег",
+vtype:"Тип ТС",color:"Цвет",chtype:"Тип кузова",ch_body:"Несущий кузов",ch_sep:"Рама",
+onlic:"По документу",actual:"Фактически",mismatch:"Несовпадение — внесено в примечания",
+vinblock:"Несовпадение VIN — проверку проводить нельзя",
+insdate:"Дата",instime:"Время",insplace:"Место",inspector:"Инспектор",certno:"№ сертификата",
+roadtest:"Тест-драйв выполнен",orderer:"Заказчик",name:"Имя",idno:"Удостоверение",phone:"Телефон",addr:"Адрес",
+amount:"Сумма",paid:"Оплачено",method:"Способ",
+st_ok:"Исправно",st_bad:"Неисправно",st_na:"Отсутствует",st_rec:"Рекомендация",
+notes:"Заметки инспектора",findings:"Диагноз",addphoto:"Фото",safety:"Опасный дефект",
+safety_w:"Опасный дефект — заказчик должен быть уведомлён немедленно",
+searchdef:"Поиск диагноза…",aihelp:"Предложить диагноз",
+declare:"Заявление заказчика",sign:"Подпись",clearsig:"Очистить",
+sig_ins:"Подпись инспектора",sig_ord:"Подпись заказчика",
+pdf:"Сформировать отчёт",draft:"Черновик — не официальный документ",
+missing:"Не заполнено",complete:"Готово",inprog:"В работе",
+username:"Имя пользователя",lang:"Язык",theme:"Цвета",mode:"Режим",dark:"Тёмный",light:"Светлый",
+inst:"Станция проверки",instname:"Название",instlic:"№ лицензии",
+backup:"Резервная копия",restore:"Восстановить",wipe:"Удалить все данные",
+aiconn:"Подключение ИИ",provider:"Провайдер",apikey:"Ключ API",test:"Проверить связь",
+conn_ok:"Подключено",conn_no:"Не подключено",motest:"Проверить связь с реестром",
+proxy:"Адрес proxy (необязательно)",pin:"PIN-код",
+saved:"Сохранено",deleted:"Удалено",confirm:"Удалить? Отменить нельзя.",
+e_noplate:"Введите номер",e_notfound:"Не найдено — заполните вручную",e_net:"Нет сети — заполните вручную",
+e_req:"Обязательно",nodata:"Пока пусто",
+rollback:"Подозрение на скрутку пробега",recall:"Открытый отзыв",risk:"Данные реестра"},
+
+es:{dir:"ltr",name:"Español",app:"BDK",tag:"Inspección previa a la compra",
+home:"Inicio",back:"Volver al inicio",newins:"Nueva inspección",newins_d:"Abrir registro",
+diary:"Citas",diary_d:"Próximas",archive:"Archivo",archive_d:"Inspecciones previas",
+dash:"Panel",dash_d:"Resumen",settings:"Ajustes",about:"Acerca de",guide:"Guía",
+save:"Guardar",cancel:"Cancelar",del:"Eliminar",edit:"Editar",close:"Cerrar",add:"Añadir",ok:"OK",
+next:"Siguiente",prev:"Atrás",search:"Buscar",none:"Ninguno",yes:"Sí",no:"No",
+t_veh:"Vehículo",t_ins:"Inspección",t_buy:"Comprador",t_sel:"Vendedor",t_pay:"Pago",
+t_pho:"Documentos y fotos",t_def:"Defectos",t_sum:"Resumen",
+kind:"Tipo de inspección",kind_full:"Completa — con sistemas electrónicos",kind_basic:"Estándar — sin sistemas electrónicos",
+plate:"Matrícula",fetch:"Consultar registro",fetching:"Consultando…",
+make:"Marca",model:"Modelo",year:"Año",vin:"Bastidor",engno:"N.º motor",km:"Kilometraje",
+vtype:"Tipo de vehículo",color:"Color",chtype:"Tipo de chasis",ch_body:"Monocasco",ch_sep:"Chasis independiente",
+onlic:"Según permiso",actual:"Real",mismatch:"Discrepancia — anotada en observaciones",
+vinblock:"Discrepancia de bastidor — no debe inspeccionarse",
+insdate:"Fecha",instime:"Hora",insplace:"Lugar",inspector:"Inspector",certno:"N.º de certificado",
+roadtest:"Prueba en carretera realizada",orderer:"Solicitante",name:"Nombre",idno:"Documento",phone:"Teléfono",addr:"Dirección",
+amount:"Importe",paid:"Pagado",method:"Método",
+st_ok:"Correcto",st_bad:"Defectuoso",st_na:"No equipado",st_rec:"Recomendación",
+notes:"Notas del inspector",findings:"Diagnóstico",addphoto:"Foto",safety:"Defecto de seguridad",
+safety_w:"Defecto de seguridad — informar al cliente de inmediato",
+searchdef:"Buscar diagnóstico…",aihelp:"Sugerir diagnóstico",
+declare:"Declaración del cliente",sign:"Firma",clearsig:"Borrar",
+sig_ins:"Firma del inspector",sig_ord:"Firma del cliente",
+pdf:"Generar informe",draft:"Borrador — no es certificado oficial",
+missing:"Faltan datos",complete:"Completo",inprog:"En curso",
+username:"Nombre de usuario",lang:"Idioma",theme:"Colores",mode:"Pantalla",dark:"Oscuro",light:"Claro",
+inst:"Centro de inspección",instname:"Nombre",instlic:"N.º de licencia",
+backup:"Copia de seguridad",restore:"Restaurar",wipe:"Borrar todos los datos",
+aiconn:"Conexión IA",provider:"Proveedor",apikey:"Clave API",test:"Probar conexión",
+conn_ok:"Conectado",conn_no:"Sin conexión",motest:"Probar conexión con el registro",
+proxy:"URL de proxy (opcional)",pin:"Bloqueo PIN",
+saved:"Guardado",deleted:"Eliminado",confirm:"¿Eliminar? No se puede deshacer.",
+e_noplate:"Introduce la matrícula",e_notfound:"No encontrado — rellena a mano",e_net:"Sin conexión — rellena a mano",
+e_req:"Obligatorio",nodata:"Todavía no hay nada",
+rollback:"Posible manipulación del cuentakilómetros",recall:"Llamada a revisión abierta",risk:"Datos del registro"}
+};
+function T(k){const L=LANG[S.lang]||LANG.he;return L[k]!==undefined?L[k]:(LANG.en[k]!==undefined?LANG.en[k]:k)}
+
+/* ===================== state & storage ===================== */
+const K="bdk_";
+const store={
+  get(k,d){try{const v=localStorage.getItem(K+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(K+k,JSON.stringify(v));return true}
+    catch(e){toast("השמירה נכשלה — ייתכן שהאחסון מלא. ייצא גיבוי ומחק בדיקות ישנות.",5000);return false}},
+  del(k){localStorage.removeItem(K+k)}
+};
+let S={
+  lang:store.get("lang","he"), theme:store.get("theme","black"), mode:store.get("mode","dark"),
+  user:store.get("user",{name:"",cert:""}),
+  inst:store.get("inst",{name:"",lic:"",addr:"",phone:""}),
+  ai:store.get("ai",{provider:"",key:"",url:"",model:""}),
+  mo:store.get("mo",{proxy:""}),
+  recs:store.get("recs",[]), appts:store.get("appts",[]), km:store.get("km",{}),
+  cur:null, tab:0, screen:"home", seen:store.get("seen",false)
+};
+function persist(){store.set("recs",S.recs);store.set("appts",S.appts);store.set("km",S.km)}
+
+/* --- IndexedDB for photos (blobs are far too big for localStorage) --- */
+let _db=null;
+function db(){return new Promise((res,rej)=>{
+  if(_db)return res(_db);
+  const r=indexedDB.open("bdk_photos",1);
+  r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains("ph"))d.createObjectStore("ph")};
+  r.onsuccess=e=>{_db=e.target.result;res(_db)}; r.onerror=()=>rej(r.error);
+})}
+async function phPut(id,dataUrl){const d=await db();return new Promise((res,rej)=>{
+  const t=d.transaction("ph","readwrite");t.objectStore("ph").put(dataUrl,id);t.oncomplete=res;t.onerror=()=>rej(t.error)})}
+async function phGet(id){const d=await db();return new Promise(res=>{
+  const t=d.transaction("ph","readonly");const q=t.objectStore("ph").get(id);q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)})}
+async function phDel(id){const d=await db();return new Promise(res=>{
+  const t=d.transaction("ph","readwrite");t.objectStore("ph").delete(id);t.oncomplete=res;t.onerror=res})}
+async function phAll(ids){const out={};for(const i of ids)out[i]=await phGet(i);return out}
+
+/* compress before storing — a raw phone photo is 4–8 MB */
+function compress(file,max=1400,q=.72){return new Promise((res,rej)=>{
+  const fr=new FileReader();
+  fr.onload=()=>{const im=new Image();
+    im.onload=()=>{let{width:w,height:h}=im;const s=Math.min(1,max/Math.max(w,h));
+      const c=document.createElement("canvas");c.width=Math.round(w*s);c.height=Math.round(h*s);
+      c.getContext("2d").drawImage(im,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",q))};
+    im.onerror=rej;im.src=fr.result};
+  fr.onerror=rej;fr.readAsDataURL(file)})}
+
+/* ===================== helpers ===================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const today=()=>new Date().toISOString().slice(0,10);
+const nowTime=()=>new Date().toTimeString().slice(0,5);
+function toast(m,ms=2200){const e=document.createElement("div");e.className="toast";e.textContent=m;
+  document.body.appendChild(e);setTimeout(()=>e.remove(),ms)}
+function applyChrome(){
+  document.body.dataset.theme=S.theme; document.body.dataset.mode=S.mode;
+  const L=LANG[S.lang]||LANG.he;
+  document.documentElement.lang=S.lang; document.documentElement.dir=L.dir;
+}
+
+/* ===================== משרד התחבורה — data.gov.il ===================== */
+const MO_API="https://data.gov.il/api/3/action/datastore_search";
+const RES={veh:"053cea08-09bc-40ec-8f7a-156f0677aff3",hist:"56063a99-8a3e-4ff4-912e-5966c0279bad",
+  own:"bb2355dc-9ec7-4f06-9c3f-3344672171da",recall:"36bf1404-0be4-49d2-82dc-2f1ead4a8b93"};
+function moURL(rid,filters,limit=50){
+  const u=MO_API+"?resource_id="+rid+"&limit="+limit+"&filters="+encodeURIComponent(JSON.stringify(filters));
+  return S.mo.proxy?S.mo.proxy.replace(/\/$/,"")+"/"+encodeURIComponent(u):u;
+}
+async function moFetch(rid,filters,limit){
+  const r=await fetch(moURL(rid,filters,limit));
+  if(!r.ok)throw new Error("HTTP "+r.status);
+  const j=await r.json(); return (j.result&&j.result.records)||[];
+}
+function plateVariants(p){const c=String(p).replace(/\D/g,"");const v=[c];
+  if(c.length===7)v.push("0"+c); else if(c.length===8&&c[0]==="0")v.push(c.slice(1)); return v}
+
+async function lookupPlate(plate){
+  const vars=plateVariants(plate); let veh=null,used=null;
+  for(const p of vars){const r=await moFetch(RES.veh,{mispar_rechev:p},1);if(r.length){veh=r[0];used=p;break}}
+  if(!veh)return null;
+  let hist=[],recall=[];
+  try{for(const p of vars)hist=hist.concat(await moFetch(RES.hist,{mispar_rechev:p},200))}catch(e){}
+  try{for(const p of vars)recall=recall.concat(await moFetch(RES.recall,{mispar_rechev:p},20))}catch(e){}
+  const kmH=hist.map(r=>({date:String(r.mivchan_acharon_dt||r.rishum_rishon_dt||"").split("T")[0],
+      km:parseInt(String(r.kilometer_test_aharon||"").replace(/\D/g,""))||null}))
+    .filter(x=>x.date||x.km).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  const h0=hist[0]||{};
+  const flags=[];
+  if(hist.some(r=>String(r.shinui_mivne_ind||"").trim()==="1"))flags.push({lv:"bad",t:"שינוי מבנה רשום במאגר"});
+  if(hist.some(r=>String(r.shnui_zeva_ind||"").trim()==="1"))flags.push({lv:"warn",t:"שינוי צבע רשום במאגר"});
+  if(hist.some(r=>String(r.shinui_zmig_ind||"").trim()==="1"))flags.push({lv:"info",t:"שינוי מידות צמיגים רשום במאגר"});
+  const mk=String(h0.mkoriut_nm||"").trim();
+  if(mk&&!["","None","מקורי","חדש"].includes(mk))flags.push({lv:"warn",t:"מקוריות: "+mk});
+  if(recall.length)flags.push({lv:"bad",t:"ריקול פתוח: "+recall.length});
+  return {plate:used,
+    make:veh.tozeret_nm||"",model:veh.kinuy_mishari||veh.degem_nm||"",year:veh.shnat_yitzur||"",
+    vin:veh.misgeret||veh.mispar_shilda||"",color:veh.tzeva_rechev||"",vtype:veh.sug_degem||veh.sug_rechev||"",
+    tireF:veh.zmig_kidmi||"",tireR:veh.zmig_ahori||"",fuel:veh.sug_delek_nm||"",
+    engno:h0.mispar_manoa||"",lastKm:kmH.length?kmH[0].km:null,kmHistory:kmH.slice(0,12),
+    flags,recalls:recall.map(r=>r.recall_description||r.recall_number||"").filter(Boolean).slice(0,5)}
+}
+
+/* ===================== מנוע התאמת אבחנות ===================== */
+/* חינם: התאמת מילים. Pro: שכבת API עם ספק לבחירת המשתמש. */
+function normalize(s){return String(s).replace(/[״"׳'.,()\/]/g," ").replace(/\s+/g," ").trim()}
+const STOP=new Set(["של","עם","על","יש","אין","את","לא","כן","זה","היא","הוא","וגם","גם","או","ב","ל","מ","ה"]);
+function ruleSuggest(text,pool){
+  const words=normalize(text).split(" ").filter(w=>w.length>2&&!STOP.has(w));
+  if(!words.length)return [];
+  const scored=pool.map(item=>{
+    const n=normalize(item);let sc=0;
+    for(const w of words){
+      if(n.includes(w))sc+=w.length>=4?3:2;
+      else{const stem=w.slice(0,Math.max(3,w.length-2));if(stem.length>=3&&n.includes(stem))sc+=1}
+    }
+    return{item,sc}}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc);
+  return scored.slice(0,6).map(x=>x.item);
+}
+async function aiCall(prompt){
+  const a=S.ai;
+  if(a.provider==="claude"){
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",
+      headers:{"Content-Type":"application/json","x-api-key":a.key,"anthropic-version":"2023-06-01",
+        "anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:a.model||"claude-sonnet-4-6",max_tokens:800,messages:[{role:"user",content:prompt}]})});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    const d=await r.json();return (d.content&&d.content[0]&&d.content[0].text)||"";
+  }
+  if(a.provider==="gemini"){
+    const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+(a.model||"gemini-2.5-flash")+":generateContent?key="+a.key,
+      {method:"POST",headers:{"Content-Type":"application/json"},
+       body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:.2,maxOutputTokens:800}})});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    const d=await r.json();return d?.candidates?.[0]?.content?.parts?.[0]?.text||"";
+  }
+  /* openai / local (ollama, lm studio) / custom — כולם תואמי OpenAI */
+  const url=a.url||"https://api.openai.com/v1/chat/completions";
+  const h={"Content-Type":"application/json"}; if(a.key)h.Authorization="Bearer "+a.key;
+  const r=await fetch(url,{method:"POST",headers:h,
+    body:JSON.stringify({model:a.model||"gpt-4o-mini",max_tokens:800,messages:[{role:"user",content:prompt}]})});
+  if(!r.ok)throw new Error("HTTP "+r.status);
+  const d=await r.json();return d?.choices?.[0]?.message?.content||"";
+}
+/* הבינה בוחרת מתוך הרשימה הסגורה — לעולם לא מנסחת אבחנה חדשה */
+async function aiSuggest(text,pool){
+  if(!S.ai.provider||(!S.ai.key&&!S.ai.url))return ruleSuggest(text,pool);
+  const numbered=pool.map((x,i)=>(i+1)+". "+x).join("\n");
+  const prompt="אתה עוזר לבוחן רכב בישראל. להלן רשימה סגורה וממוספרת של אבחנות מתוך נספח 5 להוראת נוהל 127 של משרד התחבורה.\n\n"+
+    numbered+"\n\nתיאור הבוחן: \""+text+"\"\n\nבחר עד 6 מספרים מהרשימה שמתאימים לתיאור, לפי סדר התאמה יורד. "+
+    "החזר אך ורק את המספרים מופרדים בפסיקים, בלי טקסט נוסף. אם שום פריט לא מתאים — החזר ריק. "+
+    "אל תמציא ניסוח חדש ואל תחזיר פריט שאינו ברשימה.";
+  try{
+    const out=await aiCall(prompt);
+    const idx=(out.match(/\d+/g)||[]).map(n=>parseInt(n)-1).filter(i=>i>=0&&i<pool.length);
+    const uniq=[...new Set(idx)].slice(0,6).map(i=>pool[i]);
+    return uniq.length?uniq:ruleSuggest(text,pool);
+  }catch(e){toast("הבינה לא זמינה — עברתי למנוע החוקים");return ruleSuggest(text,pool)}
+}
+
+/* ===================== מודל רשומה ===================== */
+function newRec(kind){return{
+  id:uid(),created:Date.now(),updated:Date.now(),status:"open",kind:kind||"full",
+  veh:{plate:"",make:"",model:"",year:"",vinLic:"",vinAct:"",engLic:"",engAct:"",km:"",vtype:"",
+       colorLic:"",colorAct:"",tireLic:"",tireAct:"",chassis:"body"},
+  mo:null,
+  ins:{date:today(),time:nowTime(),place:"",inspector:S.user.name,cert:S.user.cert,roadtest:false},
+  buyer:{name:"",id:"",phone:"",addr:""},seller:{name:"",id:"",phone:"",addr:""},orderer:"buyer",
+  pay:{amount:"",method:"",paid:false},
+  photos:{},defects:{},sigIns:null,sigOrd:null,decl:false
+}}
+function form(){return (S.cur&&S.cur.kind==="basic")?FORM_BASIC:FORM_FULL}
+function poolFor(row,rec){
+  if(row.src==="CHASSIS"){const c=D.chassis[rec.veh.chassis==="separate"?"separate":"body"];
+    return{grouped:{"משמעות גבוהה":c.high,"משמעות נמוכה":c.low,"ליקויים שוליים":c.minor}}}
+  if(row.src==="power")return{grouped:D.power};
+  let flat=(D[row.src]||[]).slice();
+  if(row.also)flat=flat.concat(D[row.also]||[]);
+  return{flat}
+}
+function flatPool(row,rec){const p=poolFor(row,rec);
+  return p.flat?p.flat:Object.values(p.grouped).flat()}
+function dget(rec,n){if(!rec.defects[n])rec.defects[n]={st:"",items:[],notes:"",safety:false,photos:[]};return rec.defects[n]}
+function saveCur(){if(!S.cur)return;S.cur.updated=Date.now();
+  const i=S.recs.findIndex(r=>r.id===S.cur.id);
+  if(i<0)S.recs.unshift(S.cur);else S.recs[i]=S.cur; persist()}
+function counts(rec){let ok=0,bad=0,na=0,rec_=0,safety=0,done=0;
+  form().forEach(row=>{const d=rec.defects[row.n];if(row.notesonly)return;
+    if(!d||!d.st)return;done++;
+    if(d.st==="ok")ok++;else if(d.st==="bad"){bad++;if(d.safety)safety++}else if(d.st==="na")na++;else rec_++});
+  const total=form().filter(r=>!r.notesonly).length;
+  return{ok,bad,na,rec:rec_,safety,done,total}}
+function score(rec){const c=counts(rec);if(!c.done)return null;
+  let s=100-c.bad*6-c.safety*10; return Math.max(0,Math.min(100,Math.round(s)))}
+
+/* ===================== ניווט ===================== */
+function go(scr,arg){S.screen=scr;if(scr==="rec"&&arg)S.cur=arg;window.scrollTo(0,0);render()}
+function home(){S.cur=null;S.tab=0;go("home")}
+
+/* ===================== רינדור ===================== */
+function render(){applyChrome();const a=$("#app");
+  const m={home:vHome,gate:vGate,rec:vRec,archive:vArchive,diary:vDiary,dash:vDash,settings:vSettings}[S.screen]||vHome;
+  a.className="fade";a.innerHTML=m();
+  if(S.screen==="rec")afterRec();
+  if(S.screen==="gate")afterGate();
+}
+function bar(title,extra){return `<div class="topbar">
+  <button class="iconbtn" data-act="home" aria-label="${esc(T('back'))}">✕</button>
+  <h1>${esc(title)}</h1>${extra||""}
+  <button class="iconbtn" data-act="theme" aria-label="${esc(T('theme'))}">◑</button></div>`}
+
+/* ---------- דף הבית ---------- */
+function vHome(){
+  const open=S.recs.filter(r=>r.status==="open");
+  const up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  return `<div class="topbar"><h1 style="color:var(--gold)">${esc(T('app'))}</h1>
+    <button class="iconbtn" data-act="theme">◑</button>
+    <button class="iconbtn" data-act="langmenu">⌘</button>
+    <button class="iconbtn" data-act="settings">⚙</button></div>
+  <div class="wrap">
+    <div class="hero"><div class="mark">${esc(T('app'))}</div><div class="sub">${esc(T('tag'))}</div></div>
+    ${open.length?`<div class="alert info">יש ${open.length} בדיקות פתוחות. <button class="btn sm" data-act="open" data-id="${esc(open[0].id)}">המשך את האחרונה</button></div>`:""}
+    <div class="tiles">
+      <button class="tile wide go" data-act="new"><div class="ic">＋</div>
+        <div><div class="t">${esc(T('newins'))}</div><div class="d">${esc(T('newins_d'))}</div></div></button>
+      <button class="tile" data-act="diary"><div class="ic">🗓</div><div class="t">${esc(T('diary'))}</div>
+        <div class="d">${up.length?up.length+" מועדים":T('nodata')}</div></button>
+      <button class="tile" data-act="archive"><div class="ic">🗂</div><div class="t">${esc(T('archive'))}</div>
+        <div class="d">${S.recs.length?S.recs.length+" בדיקות":T('nodata')}</div></button>
+      <button class="tile" data-act="dash"><div class="ic">📊</div><div class="t">${esc(T('dash'))}</div>
+        <div class="d">${esc(T('dash_d'))}</div></button>
+      <button class="tile" data-act="settings"><div class="ic">⚙</div><div class="t">${esc(T('settings'))}</div>
+        <div class="d">${esc(S.user.name||T('username'))}</div></button>
+    </div>
+    <div class="tiny" style="text-align:center;margin-top:26px">
+      גרסה 1.0 · ${esc(S.inst.name||T('draft'))}</div>
+  </div>`}
+
+/* ---------- שער פתיחת בדיקה ---------- */
+let gate={kind:"full",lic:null,drv:null,sig:null};
+function vGate(){
+  return bar(T('newins'))+`<div class="wrap">
+  <div class="sec">1 · ${esc(T('kind'))}</div>
+  <div class="card tight">
+    <label class="chk"><input type="radio" name="kd" value="full" ${gate.kind==="full"?"checked":""}>
+      <span>${esc(T('kind_full'))}</span></label>
+    <label class="chk"><input type="radio" name="kd" value="basic" ${gate.kind==="basic"?"checked":""}>
+      <span>${esc(T('kind_basic'))}</span></label>
+    <div class="tiny">הבחירה נדפסת מודגשת בראש טופס הסיכום ומשנה את רשימת המערכות הנבדקות.</div>
+  </div>
+
+  <div class="sec">2 · צילומי חובה</div>
+  <div class="card tight">
+    <div class="tiny" style="margin-bottom:8px">סעיף ה.4 לנוהל מחייב צילום רישיון הרכב המקורי ותעודה מזהה של מביא הרכב.</div>
+    <div class="photos">
+      <div class="ph ${gate.lic?"":"add"}" data-act="gph" data-k="lic">${gate.lic?`<img src="${gate.lic}">`:"＋"}
+        <div class="cap">${esc(T('vin')?"רישיון רכב":"")}</div></div>
+      <div class="ph ${gate.drv?"":"add"}" data-act="gph" data-k="drv">${gate.drv?`<img src="${gate.drv}">`:"＋"}
+        <div class="cap">תעודה מזהה</div></div>
+    </div>
+  </div>
+
+  <div class="sec">3 · ${esc(T('declare'))}</div>
+  <div class="card tight">
+    <div class="tiny" style="line-height:1.65">אני מזמין בזאת את בדיקת הרכב שפרטיו ברישיון הרכב המצולם. ידוע לי כי הבדיקה היא
+      <b>${gate.kind==="full"?"בדיקה כללית הכוללת בדיקה מכנית וממוחשבת":"בדיקה מכנית בלבד, ללא מערכות אלקטרוניות וממוחשבות"}</b>.
+      ידוע לי כי האחריות על הבדיקה היא לשלושה חודשים או 6,000 ק״מ, לפי המוקדם. ידוע לי כי מכון הבדיקה אינו אחראי
+      לזיופים או שינויים בנתוני הרכב ובמסמכיו.</div>
+    <canvas class="sig" id="gsig"></canvas>
+    <button class="btn sm" data-act="gsigclear">${esc(T('clearsig'))}</button>
+  </div>
+  <button class="btn solid" data-act="gstart">${esc(T('next'))}</button>
+  <div class="tiny" style="text-align:center">בלי שני הצילומים והחתימה אי אפשר להמשיך.</div>
+  </div>`}
+function afterGate(){
+  document.querySelectorAll('input[name=kd]').forEach(r=>r.onchange=()=>{gate.kind=r.value;render()});
+  sigPad($("#gsig"),d=>gate.sig=d);
+}
+
+/* ---------- כרית חתימה ---------- */
+function sigPad(cv,onEnd,existing){
+  if(!cv)return; const r=cv.getBoundingClientRect();
+  cv.width=Math.max(1,r.width*2);cv.height=Math.max(1,r.height*2);
+  const c=cv.getContext&&cv.getContext("2d"); if(!c){cv._clear=()=>{};return}
+  c.scale(2,2);c.lineWidth=2;c.lineCap="round";
+  c.strokeStyle=getComputedStyle(document.body).getPropertyValue("--tx").trim()||"#fff";
+  if(existing){const im=new Image();im.onload=()=>c.drawImage(im,0,0,r.width,r.height);im.src=existing}
+  let dr=false;
+  const pt=e=>{const b=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;
+    return[t.clientX-b.left,t.clientY-b.top]};
+  const down=e=>{e.preventDefault();dr=true;const[x,y]=pt(e);c.beginPath();c.moveTo(x,y)};
+  const move=e=>{if(!dr)return;e.preventDefault();const[x,y]=pt(e);c.lineTo(x,y);c.stroke()};
+  const up=()=>{if(!dr)return;dr=false;onEnd&&onEnd(cv.toDataURL("image/png"))};
+  cv.onpointerdown=down;cv.onpointermove=move;cv.onpointerup=up;cv.onpointerleave=up;
+  cv._clear=()=>{c.clearRect(0,0,cv.width,cv.height);onEnd&&onEnd(null)};
+}
+
+/* ---------- רשומת בדיקה ---------- */
+const TABS=["t_veh","t_ins","t_buy","t_sel","t_pay","t_pho","t_def","t_sum"];
+function vRec(){
+  const r=S.cur; if(!r)return vHome();
+  const c=counts(r);
+  const tabs=TABS.map((k,i)=>`<button class="tab ${i===S.tab?"on":""}" data-act="tab" data-i="${i}">${esc(T(k))}${
+    k==="t_def"&&c.bad?`<span class="dot"></span>`:""}</button>`).join("");
+  const body=[vTVeh,vTIns,vTBuy,vTSel,vTPay,vTPho,vTDef,vTSum][S.tab](r);
+  return bar((r.veh.plate||T('newins'))+(r.veh.make?" · "+r.veh.make:""))+
+    `<div class="wrap"><div class="tabs">${tabs}</div>${body}</div>`}
+
+function fld(label,path,type,hint){const v=getP(S.cur,path)||"";
+  return `<div class="f"><label>${esc(label)}</label>
+   <input type="${type||"text"}" data-p="${esc(path)}" value="${esc(v)}" ${type==="number"?'inputmode="numeric"':""}>
+   ${hint?`<div class="hint">${esc(hint)}</div>`:""}</div>`}
+function getP(o,p){return p.split(".").reduce((a,k)=>a&&a[k],o)}
+function setP(o,p,v){const ks=p.split(".");const last=ks.pop();ks.reduce((a,k)=>a[k],o)[last]=v}
+
+/* --- טאב 1: פרטי רכב --- */
+function dual(label,pLic,pAct,blocking){
+  const a=(getP(S.cur,pLic)||"").trim(),b=(getP(S.cur,pAct)||"").trim();
+  const bad=a&&b&&a!==b;
+  return `<div class="dual ${bad?(blocking?"blocked":"mismatch"):""}">
+    <div class="lbl">${esc(label)}</div>
+    <div class="pair">
+      <div><label>${esc(T('onlic'))}</label><input data-p="${esc(pLic)}" value="${esc(a)}"></div>
+      <div><label>${esc(T('actual'))}</label><input data-p="${esc(pAct)}" value="${esc(b)}"></div>
+    </div>
+    ${bad?`<div class="flag">${esc(blocking?T('vinblock'):T('mismatch'))}</div>`:""}</div>`}
+function vTVeh(r){
+  const mo=r.mo;
+  return `<div class="card">
+    <div class="f"><label>${esc(T('plate'))}</label>
+      <input data-p="veh.plate" value="${esc(r.veh.plate)}" inputmode="numeric" placeholder="12-345-67">
+      <div class="hint">הזן מספר ולחץ שליפה — שאר השדות יתמלאו לבד.</div></div>
+    <button class="btn primary" data-act="lookup">${esc(T('fetch'))}</button>
+    ${mo?moPanel(mo,r):""}
+  </div>
+  <div class="sec">נתוני זיהוי</div>
+  ${dual(T('vin'),"veh.vinLic","veh.vinAct",true)}
+  <div style="height:10px"></div>
+  ${dual(T('engno'),"veh.engLic","veh.engAct",false)}
+  <div style="height:10px"></div>
+  ${dual(T('color'),"veh.colorLic","veh.colorAct",false)}
+  <div style="height:10px"></div>
+  ${dual("מידות צמיגים","veh.tireLic","veh.tireAct",false)}
+  <div class="card">
+    <div class="f2">${fld(T('make'),"veh.make")}${fld(T('model'),"veh.model")}</div>
+    <div class="f2">${fld(T('year'),"veh.year")}${fld(T('vtype'),"veh.vtype")}</div>
+    ${fld(T('km'),"veh.km","number")}
+    <div class="f"><label>${esc(T('chtype'))}</label>
+      <select data-p="veh.chassis">
+        <option value="body" ${r.veh.chassis==="body"?"selected":""}>${esc(T('ch_body'))}</option>
+        <option value="separate" ${r.veh.chassis==="separate"?"selected":""}>${esc(T('ch_sep'))}</option>
+      </select><div class="hint">קובע איזו רשימת ליקויי שלדה תיפתח בסעיף השלדה.</div></div>
+  </div>`}
+function moPanel(mo,r){
+  const cur=parseInt(String(r.veh.km).replace(/\D/g,""))||0;
+  const roll=mo.lastKm&&cur&&cur<mo.lastKm-500;
+  return `<div style="margin-top:12px">
+   ${roll?`<div class="alert bad"><b>${esc(T('rollback'))}</b><br>במאגר נרשמו ${mo.lastKm.toLocaleString()} ק״מ בבדיקה האחרונה, והזנת ${cur.toLocaleString()}.</div>`:""}
+   ${mo.flags.map(f=>`<div class="alert ${f.lv}">${esc(f.t)}</div>`).join("")}
+   ${mo.kmHistory.length?`<div class="tiny" style="margin-top:6px"><b>${esc(T('risk'))} — היסטוריית ק״מ:</b><br>${
+     mo.kmHistory.slice(0,6).map(h=>esc((h.date||"?")+" — "+(h.km?h.km.toLocaleString():"?"))).join(" · ")}</div>`:""}
+   ${mo.recalls.length?`<div class="tiny" style="margin-top:6px"><b>${esc(T('recall'))}:</b> ${esc(mo.recalls.join(" · "))}</div>`:""}
+  </div>`}
+
+/* --- טאבים 2–5 --- */
+function vTIns(r){return `<div class="card">
+  <div class="f2">${fld(T('insdate'),"ins.date","date")}${fld(T('instime'),"ins.time","time")}</div>
+  ${fld(T('insplace'),"ins.place")}
+  <div class="f2">${fld(T('inspector'),"ins.inspector")}${fld(T('certno'),"ins.cert")}</div>
+  <label class="chk"><input type="checkbox" data-chk="ins.roadtest" ${r.ins.roadtest?"checked":""}>
+    <span>${esc(T('roadtest'))}</span></label>
+  <div class="tiny">הנוהל מחייב מבחן דרך לפני חתימה על טופס הסיכום.</div>
+  <div class="f"><label>${esc(T('orderer'))}</label><select data-p="orderer">
+    <option value="buyer" ${r.orderer==="buyer"?"selected":""}>${esc(T('t_buy'))}</option>
+    <option value="seller" ${r.orderer==="seller"?"selected":""}>${esc(T('t_sel'))}</option></select>
+    <div class="hint">שמו מודפס בטופס כמזמין הבדיקה.</div></div></div>`}
+function person(pre){return `<div class="card">${fld(T('name'),pre+".name")}${fld(T('idno'),pre+".id")}
+  <div class="f2">${fld(T('phone'),pre+".phone","tel")}${fld(T('addr'),pre+".addr")}</div></div>`}
+function vTBuy(){return person("buyer")}
+function vTSel(){return person("seller")}
+function vTPay(r){return `<div class="card">
+  <div class="f2">${fld(T('amount'),"pay.amount","number")}${fld(T('method'),"pay.method")}</div>
+  <label class="chk"><input type="checkbox" data-chk="pay.paid" ${r.pay.paid?"checked":""}><span>${esc(T('paid'))}</span></label>
+  <div class="tiny">פנימי בלבד — לא מודפס בטופס הסיכום.</div></div>`}
+
+/* --- טאב 6: צילומים --- */
+function vTPho(r){
+  return `<div class="card"><div class="tiny">כל צילום נדחס אוטומטית לפני שמירה ונשמר על המכשיר בלבד.</div>
+  <div class="photos" style="margin-top:12px">${PHOTO_SLOTS.map(s=>{
+    const ids=r.photos[s.k]||[];
+    return ids.map(id=>`<div class="ph" data-act="phview" data-id="${id}"><img data-ph="${id}">
+        <button class="x" data-act="phdel" data-slot="${s.k}" data-id="${id}">✕</button>
+        <div class="cap">${esc(s.t)}</div></div>`).join("")+
+      `<div class="ph add" data-act="phadd" data-slot="${s.k}">＋<div class="cap">${esc(s.t)}${s.req?" *":""}</div></div>`
+  }).join("")}</div></div>`}
+
+/* --- טאב 7: ליקויים --- */
+let openRow=null,dq="";
+function vTDef(r){
+  const c=counts(r);
+  return `<div class="card tight"><div class="row">
+      <div><div class="tiny">${esc(T('st_ok'))}</div><b style="color:var(--ok)">${c.ok}</b></div>
+      <div><div class="tiny">${esc(T('st_bad'))}</div><b style="color:var(--bad)">${c.bad}</b></div>
+      <div><div class="tiny">${esc(T('safety'))}</div><b style="color:var(--bad)">${c.safety}</b></div>
+      <div><div class="tiny">${esc(T('complete'))}</div><b>${c.done}/${c.total}</b></div></div></div>`+
+    form().map(row=>sysRow(r,row)).join("")}
+function sysRow(r,row){
+  const d=dget(r,row.n),on=openRow===row.n;
+  const st=d.st?`<span class="pill ${d.st==="ok"?"ok":d.st==="bad"?"bad":d.st==="rec"?"rec":"na"}">${
+    esc(T(d.st==="ok"?"st_ok":d.st==="bad"?"st_bad":d.st==="rec"?"st_rec":"st_na"))}</span>`:
+    `<span class="pill">—</span>`;
+  return `<div class="sysrow ${d.st==="bad"?"isbad":""} ${d.safety?"safety":""}">
+    <button class="head" data-act="sys" data-n="${row.n}">
+      <span class="num">${row.n}</span><span class="nm">${esc(row.t)}</span>
+      ${d.items.length?`<span class="pill">${d.items.length}</span>`:""}
+      ${d.photos.length?`<span class="pill">📷${d.photos.length}</span>`:""}${st}</button>
+    ${on?sysBody(r,row,d):""}</div>`}
+function sysBody(r,row,d){
+  const pool=poolFor(row,r);
+  const mk=(list,gname)=>list.map(x=>{const on=d.items.includes(x);
+    if(dq&&!normalize(x).includes(normalize(dq)))return "";
+    return `<label class="ditem ${on?"on":""}"><input type="checkbox" data-act="pick" data-n="${row.n}"
+      data-v="${esc(x)}" ${on?"checked":""}><span>${esc(x)}</span></label>`}).join("");
+  const list=pool.flat?mk(pool.flat):Object.entries(pool.grouped).map(([g,items])=>{
+    const inner=mk(items,g);return inner.trim()?`<div class="dgroup">${esc(g)}</div>`+inner:""}).join("");
+  return `<div class="sysbody">
+    ${row.notesonly?"":`<div class="statepick">
+      ${["ok","bad","na","rec"].map(s=>`<button data-act="st" data-n="${row.n}" data-s="${s}"
+        class="${d.st===s?"on":""}">${esc(T("st_"+s))}</button>`).join("")}</div>`}
+    ${d.st==="bad"||row.notesonly?`
+      <input class="dsearch" data-act="dq" placeholder="${esc(T('searchdef'))}" value="${esc(dq)}">
+      <div class="dlist">${list||`<div class="ditem"><span class="tiny">אין התאמה לחיפוש</span></div>`}</div>
+      ${d.items.length?`<div class="chips">${d.items.map(x=>`<span class="chip">${esc(x)}
+        <b data-act="unpick" data-n="${row.n}" data-v="${esc(x)}">✕</b></span>`).join("")}</div>`:""}
+      <label class="chk"><input type="checkbox" data-act="safety" data-n="${row.n}" ${d.safety?"checked":""}>
+        <span style="color:var(--bad);font-weight:700">${esc(T('safety'))}</span></label>
+      ${d.safety?`<div class="alert bad">${esc(T('safety_w'))}</div>`:""}`:""}
+    <div class="f"><label>${esc(T('notes'))}</label>
+      <textarea data-act="dnote" data-n="${row.n}" placeholder="תיאור חופשי — נדפס בנספח הממצאים">${esc(d.notes)}</textarea>
+      <div class="row"><button class="btn sm" data-act="aisug" data-n="${row.n}">✨ ${esc(T('aihelp'))}</button>
+      <button class="btn sm" data-act="dphoto" data-n="${row.n}">📷 ${esc(T('addphoto'))}</button></div></div>
+    ${d.photos.length?`<div class="photos">${d.photos.map(id=>`<div class="ph"><img data-ph="${id}">
+      <button class="x" data-act="dphdel" data-n="${row.n}" data-id="${id}">✕</button></div>`).join("")}</div>`:""}
+  </div>`}
+
+/* --- טאב 8: סיכום --- */
+function vTSum(r){
+  const c=counts(r),sc=score(r),miss=[];
+  if(!r.veh.plate)miss.push(T('plate'));
+  if(!r.ins.inspector||!r.ins.cert)miss.push(T('inspector')+" / "+T('certno'));
+  if(!r.ins.roadtest)miss.push(T('roadtest'));
+  if(c.done<c.total)miss.push(`${c.total-c.done} מערכות ללא סימון`);
+  if(!(r.photos.lic_veh||[]).length)miss.push("צילום רישיון רכב");
+  if(!(r.photos.lic_drv||[]).length)miss.push("צילום תעודה מזהה");
+  if(!r.sigIns)miss.push(T('sig_ins'));
+  if(!r.sigOrd)miss.push(T('sig_ord'));
+  const vinBad=r.veh.vinLic&&r.veh.vinAct&&r.veh.vinLic!==r.veh.vinAct;
+  return `${vinBad?`<div class="alert bad"><b>${esc(T('vinblock'))}</b></div>`:""}
+  ${c.safety?`<div class="alert bad"><b>נמצאו ${c.safety} ליקויים בטיחותיים.</b> חובה ליידע את מזמין הבדיקה מיידית ולציין זאת בטופס.</div>`:""}
+  <div class="stat">
+    <div class="b"><div class="n">${c.bad}</div><div class="l">${esc(T('st_bad'))}</div></div>
+    <div class="b"><div class="n">${c.ok}</div><div class="l">${esc(T('st_ok'))}</div></div>
+    <div class="b"><div class="n">${c.done}/${c.total}</div><div class="l">${esc(T('complete'))}</div></div>
+    <div class="b"><div class="n">${sc===null?"—":sc}</div><div class="l">ציון פנימי (לא בטופס)</div></div>
+  </div>
+  ${miss.length?`<div class="alert warn"><b>${esc(T('missing'))}:</b><br>${miss.map(esc).join(" · ")}</div>`
+    :`<div class="alert ok">כל הפרטים הנדרשים מולאו.</div>`}
+  <div class="sec">${esc(T('sig_ins'))}</div>
+  <div class="card tight"><canvas class="sig" id="sig1"></canvas>
+    <button class="btn sm" data-act="sigclear" data-w="1">${esc(T('clearsig'))}</button></div>
+  <div class="sec">${esc(T('sig_ord'))}</div>
+  <div class="card tight"><div class="tiny">סעיף ה.11 מחייב להחתים את מזמין הבדיקה על הממצאים.</div>
+    <canvas class="sig" id="sig2"></canvas>
+    <button class="btn sm" data-act="sigclear" data-w="2">${esc(T('clearsig'))}</button></div>
+  <button class="btn solid" data-act="print">${esc(T('pdf'))}</button>
+  <button class="btn" data-act="finish">${r.status==="done"?"בדיקה סגורה":"סגירת הבדיקה"}</button>
+  <button class="btn danger" data-act="delrec">${esc(T('del'))}</button>`}
+function afterRec(){
+  loadImgs();
+  if(S.tab===7){
+    sigPad($("#sig1"),d=>{S.cur.sigIns=d;saveCur()},S.cur.sigIns);
+    sigPad($("#sig2"),d=>{S.cur.sigOrd=d;saveCur()},S.cur.sigOrd);
+  }
+}
+async function loadImgs(){
+  const els=document.querySelectorAll("img[data-ph]");
+  for(const el of els){const d=await phGet(el.dataset.ph);if(d)el.src=d}
+}
+
+/* ---------- ארכיון ---------- */
+let aq="";
+function vArchive(){
+  const q=normalize(aq);
+  const list=S.recs.filter(r=>!q||[r.veh.plate,r.veh.make,r.veh.model,r.buyer.name,r.seller.name,r.ins.date]
+    .some(x=>normalize(x||"").includes(q)));
+  return bar(T('archive'))+`<div class="wrap">
+   <div class="f"><input data-act="aq" placeholder="${esc(T('search'))} — מספר רכב, שם, תאריך" value="${esc(aq)}"></div>
+   <div class="tiny">הנוהל מחייב שמירת עותקי טפסים 24 חודשים לפחות. ייצא גיבוי בקביעות.</div>
+   <div class="list">${list.length?list.map(r=>{const c=counts(r);
+     return `<button class="it" data-act="open" data-id="${esc(r.id)}">
+       <div class="main"><div class="t">${esc(r.veh.plate||"ללא מספר")} · ${esc(r.veh.make||"")} ${esc(r.veh.model||"")}</div>
+       <div class="d">${esc(r.ins.date)} · ${esc(r.buyer.name||r.seller.name||"")} · ${c.bad} ליקויים</div></div>
+       <span class="pill ${r.status==="done"?"ok":""}">${esc(r.status==="done"?T('complete'):T('inprog'))}</span></button>`}).join("")
+     :`<div class="empty"><div class="ic">🗂</div>${esc(T('nodata'))}</div>`}</div></div>`}
+
+/* ---------- יומן ---------- */
+function vDiary(){
+  const list=S.appts.slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  return bar(T('diary'))+`<div class="wrap">
+   <button class="btn primary" data-act="apptnew">＋ ${esc(T('add'))}</button>
+   <div class="list">${list.length?list.map(a=>`<div class="it">
+     <div class="main"><div class="t">${esc(a.time)} · ${esc(a.plate||"")}</div>
+     <div class="d">${esc(a.date)} · ${esc(a.name||"")} · ${esc(a.kind==="basic"?T('kind_basic'):T('kind_full'))}</div></div>
+     <button class="btn sm" data-act="apptgo" data-id="${esc(a.id)}">${esc(T('newins'))}</button>
+     <button class="iconbtn" data-act="apptdel" data-id="${esc(a.id)}">✕</button></div>`).join("")
+    :`<div class="empty"><div class="ic">🗓</div>${esc(T('nodata'))}</div>`}</div>
+   <div class="tiny">טיפ: פתח את ההזמנה מראש כדי שנתוני משרד התחבורה יישלפו בזמן שיש רשת — בבור הם כבר יהיו שמורים.</div></div>`}
+
+/* ---------- דשבורד ---------- */
+function vDash(){
+  const now=new Date(),m=now.toISOString().slice(0,7);
+  const mon=S.recs.filter(r=>(r.ins.date||"").startsWith(m));
+  const tot={};S.recs.forEach(r=>Object.values(r.defects).forEach(d=>(d.items||[]).forEach(i=>tot[i]=(tot[i]||0)+1)));
+  const top=Object.entries(tot).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const income=mon.reduce((s,r)=>s+(parseFloat(r.pay.amount)||0),0);
+  return bar(T('dash'))+`<div class="wrap">
+   <div class="stat">
+     <div class="b"><div class="n">${S.recs.length}</div><div class="l">סה״כ בדיקות</div></div>
+     <div class="b"><div class="n">${mon.length}</div><div class="l">החודש</div></div>
+     <div class="b"><div class="n">${S.recs.filter(r=>r.kind==="full").length}</div><div class="l">בדיקות מלאות</div></div>
+     <div class="b"><div class="n">${income?"₪"+income.toLocaleString():"—"}</div><div class="l">הכנסות החודש</div></div>
+   </div>
+   <div class="sec">הליקויים הנפוצים אצלך</div>
+   <div class="card tight">${top.length?top.map(([k,v])=>`<div style="display:flex;gap:10px;padding:6px 0;font-size:14px">
+     <span style="flex:1">${esc(k)}</span><b style="color:var(--gold-soft)">${v}</b></div>`).join("")
+     :`<div class="tiny">${esc(T('nodata'))}</div>`}</div></div>`}
+
+/* ---------- הגדרות ---------- */
+function vSettings(){
+  const th=[["black","שחור וזהב"],["blue","כחול כהה"],["green","ירוק"],["steel","פלדה"],["rust","חלודה"]];
+  return bar(T('settings'))+`<div class="wrap">
+  <div class="sec">${esc(T('username'))}</div>
+  <div class="card"><div class="f2">
+    <div class="f"><label>${esc(T('inspector'))}</label><input data-s="user.name" value="${esc(S.user.name)}"></div>
+    <div class="f"><label>${esc(T('certno'))}</label><input data-s="user.cert" value="${esc(S.user.cert)}"></div>
+  </div><div class="tiny">מופיע בכל דוח, ייצוא ושיתוף.</div></div>
+
+  <div class="sec">${esc(T('inst'))}</div>
+  <div class="card">
+    <div class="f"><label>${esc(T('instname'))}</label><input data-s="inst.name" value="${esc(S.inst.name)}"></div>
+    <div class="f2">
+      <div class="f"><label>${esc(T('instlic'))}</label><input data-s="inst.lic" value="${esc(S.inst.lic)}"></div>
+      <div class="f"><label>${esc(T('phone'))}</label><input data-s="inst.phone" value="${esc(S.inst.phone)}"></div>
+    </div>
+    <div class="f"><label>${esc(T('addr'))}</label><input data-s="inst.addr" value="${esc(S.inst.addr)}"></div>
+    <div class="alert ${S.inst.lic?"ok":"warn"}">${S.inst.lic
+      ?"פרטי מכון מולאו — הדוח יופק כטופס סיכום."
+      :"בלי מספר רישיון מפעל הדוח מסומן כטיוטה. הטופס האחיד מחייב לוגו ומספר רישיון של מכון מורשה."}</div>
+  </div>
+
+  <div class="sec">${esc(T('lang'))} · ${esc(T('theme'))}</div>
+  <div class="card">
+    <div class="f"><label>${esc(T('lang'))}</label><select data-s="lang">${Object.entries(LANG)
+      .map(([k,v])=>`<option value="${k}" ${S.lang===k?"selected":""}>${esc(v.name)}</option>`).join("")}</select></div>
+    <div class="f"><label>${esc(T('theme'))}</label><select data-s="theme">${th
+      .map(([k,n])=>`<option value="${k}" ${S.theme===k?"selected":""}>${esc(n)}</option>`).join("")}</select></div>
+    <div class="f"><label>${esc(T('mode'))}</label><select data-s="mode">
+      <option value="dark" ${S.mode==="dark"?"selected":""}>${esc(T('dark'))}</option>
+      <option value="light" ${S.mode==="light"?"selected":""}>${esc(T('light'))}</option></select></div>
+  </div>
+
+  <div class="sec">משרד התחבורה</div>
+  <div class="card">
+    <div class="f"><label>${esc(T('proxy'))}</label><input data-s="mo.proxy" value="${esc(S.mo.proxy)}"
+      placeholder="ריק = פנייה ישירה"></div>
+    <button class="btn primary" data-act="motest">${esc(T('motest'))}</button>
+    <div class="tiny" id="motestout">בדוק פעם אחת מהטלפון. אם הפנייה הישירה נחסמת, הזן כתובת proxy כאן.</div>
+  </div>
+
+  <div class="sec">${esc(T('aiconn'))}</div>
+  <div class="card">
+    <div class="f"><label>${esc(T('provider'))}</label><select data-s="ai.provider">
+      <option value="">מנוע חוקים בלבד (חינם, אופליין)</option>
+      <option value="claude" ${S.ai.provider==="claude"?"selected":""}>Anthropic Claude</option>
+      <option value="gemini" ${S.ai.provider==="gemini"?"selected":""}>Google Gemini</option>
+      <option value="openai" ${S.ai.provider==="openai"?"selected":""}>OpenAI</option>
+      <option value="local" ${S.ai.provider==="local"?"selected":""}>מודל מקומי (Ollama / LM Studio)</option>
+    </select></div>
+    ${S.ai.provider&&S.ai.provider!=="local"?`<div class="f"><label>${esc(T('apikey'))}</label>
+      <input type="password" data-s="ai.key" value="${esc(S.ai.key)}" placeholder="sk-…"></div>`:""}
+    ${S.ai.provider==="local"?`<div class="f"><label>כתובת מקומית</label>
+      <input data-s="ai.url" value="${esc(S.ai.url)}" placeholder="http://localhost:11434/v1/chat/completions"></div>
+      <div class="f"><label>מודל</label><input data-s="ai.model" value="${esc(S.ai.model)}" placeholder="llama3"></div>`:""}
+    <div class="tiny">הבינה בוחרת אבחנות מתוך רשימת נספח 5 בלבד ואינה מנסחת טקסט חדש. בלי חיבור — מנוע החוקים עובד אופליין.</div>
+  </div>
+
+  <div class="sec">${esc(T('backup'))}</div>
+  <div class="card">
+    <button class="btn primary" data-act="export">⬇ ${esc(T('backup'))} (JSON)</button>
+    <button class="btn" data-act="csv">⬇ ייצוא רשימת בדיקות (CSV)</button>
+    <button class="btn" data-act="import">⬆ ${esc(T('restore'))}</button>
+    <button class="btn danger" data-act="wipe">${esc(T('wipe'))}</button>
+  </div>
+
+  <div class="sec">${esc(T('about'))}</div>
+  <div class="card tight"><div class="tiny">
+    ${esc(T('app'))} · גרסה 1.0<br>בנוי לפי הוראת נוהל 127 של משרד התחבורה (עדכון 1.10.2014).<br>
+    Barak Aflalo · © AppNest 2026<br><br>
+    כל הנתונים נשמרים על המכשיר בלבד ואינם עוברים לשום שרת. פניות למשרד התחבורה ולספק הבינה
+    יוצאות רק כשאתה מבקש זאת.</div></div></div>`}
+
+/* ---------- הדפסה: טופס אחיד + נספח ממצאים ---------- */
+async function buildPrint(){
+  const r=S.cur,rows=form(),c=counts(r);
+  const ord=r.orderer==="seller"?r.seller:r.buyer;
+  const official=!!S.inst.lic;
+  const ph=await phAll([...new Set([].concat(...Object.values(r.photos||{}),
+    ...rows.map(x=>(r.defects[x.n]||{}).photos||[]).flat()))]);
+  const tr=rows.filter(x=>!x.notesonly).map(x=>{const d=r.defects[x.n]||{};
+    const diag=d.st==="na"?"המערכת לא קיימת ברכב זה":
+      d.st==="rec"?(d.notes?"המלצה: "+d.notes:"המלצה"):
+      (d.items||[]).join("; ");
+    return `<tr><td style="text-align:center">${x.n}</td><td>${esc(x.t)}</td>
+      <td style="text-align:center">${d.st==="ok"?"✔":""}</td>
+      <td style="text-align:center">${d.st==="bad"?"✔":""}</td>
+      <td>${esc(diag)}</td></tr>`}).join("");
+  const gen=rows.find(x=>x.notesonly),gd=gen?(r.defects[gen.n]||{}):{};
+  const genTxt=[...(gd.items||[]),gd.notes||"",
+    (r.veh.engLic&&r.veh.engAct&&r.veh.engLic!==r.veh.engAct)?"אי-התאמה במספר המנוע בין הרשום ברישיון לבין המוטבע ברכב":"",
+    (r.veh.colorLic&&r.veh.colorAct&&r.veh.colorLic!==r.veh.colorAct)?"אי-התאמה בצבע הרכב לעומת הרשום ברישיון":"",
+    (r.veh.tireLic&&r.veh.tireAct&&r.veh.tireLic!==r.veh.tireAct)?"אי-התאמה במידות הצמיגים לעומת הרשום ברישיון":""
+  ].filter(Boolean).join(" · ");
+  const safeties=rows.filter(x=>(r.defects[x.n]||{}).safety)
+    .map(x=>x.t+": "+((r.defects[x.n].items||[]).join("; "))).join(" | ");
+  const notes=["הממצאים המחייבים את מכון הבדיקה הם המפורטים בכתב בטופס זה בכפוף לתוצאות הבדיקה.",
+   "מידע על חומרת הליקויים והצעת מחיר לתיקון יש לקבל ממוסך מורשה או שמאי רכב, באחריות קונה הרכב.",
+   "אחריות מכון הבדיקה היא על המכללים שנבדקו והמצוינים בטופס בלבד.",
+   "האחריות על תוצאות הבדיקה היא לשלושה חודשים או 6,000 ק״מ, לפי המוקדם.",
+   "צילום רישיון הרכב ורישיון הנהיגה שהוצגו בעת הבדיקה נשמרים יחד עם הטופס למשך 24 חודשים.",
+   "מזמין הבדיקה מאשר שקרא והובאו לידיעתו הממצאים הרשומים בטופס זה.",
+   "בעת העברת בעלות מומלץ לוודא שמספרי המנוע והשלדה ברישיון תואמים לרשום בטופס זה."];
+  const photoPages=Object.entries(r.photos||{}).map(([k,ids])=>{const t=(PHOTO_SLOTS.find(s=>s.k===k)||{}).t||k;
+    return ids.map(id=>ph[id]?`<figure><img src="${ph[id]}"><figcaption>${esc(t)}</figcaption></figure>`:"").join("")}).join("");
+  const defPages=rows.map(x=>{const d=r.defects[x.n]||{};
+    if(!(d.notes||(d.photos||[]).length))return "";
+    return `<div style="margin:8px 0"><b>${x.n}. ${esc(x.t)}</b>${d.notes?`<div>${esc(d.notes)}</div>`:""}
+      <div class="pgrid">${(d.photos||[]).map(id=>ph[id]?`<figure><img src="${ph[id]}">
+      <figcaption>${esc(x.t)}</figcaption></figure>`:"").join("")}</div></div>`}).join("");
+  $("#printarea").innerHTML=`<div class="pform" dir="rtl">
+    ${official?`<div style="text-align:center;font-size:9pt">${esc(S.inst.name)} · ${esc(S.inst.addr)} ·
+      ${esc(S.inst.phone)} · רישיון מפעל ${esc(S.inst.lic)}</div>`:
+      `<div class="banner draft">${esc(T('draft'))}</div>`}
+    <h2>טופס סיכום ${r.kind==="full"?"של בדיקה כללית כולל מערכות אלקטרוניות וממוחשבות":"של בדיקה כללית ללא מערכות אלקטרוניות וממוחשבות"}</h2>
+    <div style="text-align:center;font-size:8.5pt">(עפ״י הוראות משרד התחבורה — הוראת נוהל 127)</div>
+    <div class="kv" style="margin-top:6px">
+      מס׳ הרכב: <b>${esc(r.veh.plate)}</b> · תוצר: ${esc(r.veh.make)} · דגם: ${esc(r.veh.model)} ·
+      שנת ייצור: ${esc(r.veh.year)} · מס׳ שילדה: ${esc(r.veh.vinAct||r.veh.vinLic)}<br>
+      מס׳ מנוע: ${esc(r.veh.engAct||r.veh.engLic)} · ק״מ: ${esc(r.veh.km)} · סוג הרכב: ${esc(r.veh.vtype)} ·
+      צבע: ${esc(r.veh.colorAct||r.veh.colorLic)} · סוג השלדה: ${r.veh.chassis==="separate"?"שלדה נפרדת":"שלדת מרכב"}<br>
+      מזמין הבדיקה: ${esc(ord.name)} · ת.ז. ${esc(ord.id)} · כתובת: ${esc(ord.addr)}
+    </div>
+    ${safeties?`<div class="safety">ליקוי בטיחותי אשר עלול לסכן עוברי דרך: ${esc(safeties)}</div>`:""}
+    <table><thead><tr><th style="width:26px">מס״ד</th><th>המערכת</th><th style="width:34px">תקין</th>
+      <th style="width:40px">לא תקין</th><th style="width:44%">האבחנה</th></tr></thead><tbody>${tr}
+      <tr><td style="text-align:center">${gen?gen.n:""}</td><td>הערות כלליות</td><td></td><td></td>
+      <td>${esc(genTxt)}</td></tr></tbody></table>
+    <div class="notes">${notes.map((t,i)=>`${i+1}. ${esc(t)}`).join("<br>")}</div>
+    <div class="kv" style="margin-top:8px">אני הח״מ ${esc(r.ins.inspector)}, בודק רכב בעל מס׳ תעודה ${esc(r.ins.cert)},
+      מאשר כי בדקתי את הרכב בתאריך ${esc(r.ins.date)} ובמקום ${esc(r.ins.place)}
+      ${r.ins.roadtest?"וביצעתי מבחן דרך ברכב":"<b>ללא מבחן דרך</b>"}.</div>
+    <div class="sigrow">
+      <div>${r.sigOrd?`<img src="${r.sigOrd}">`:"<div style='border-bottom:1px solid #000;height:52px'></div>"}
+        שם מזמין הבדיקה וחתימתו</div>
+      <div>${r.sigIns?`<img src="${r.sigIns}">`:"<div style='border-bottom:1px solid #000;height:52px'></div>"}
+        חתימה וחותמת הבודק</div>
+      <div><div style="border-bottom:1px solid #000;height:52px"></div>חותמת מכון הבדיקה</div>
+    </div>
+    ${(defPages||photoPages)?`<div class="pagebreak"><h2>נספח ממצאים וצילומים</h2>
+      <div style="font-size:8.5pt;text-align:center">נספח זה אינו חלק מטופס הסיכום האחיד ומצורף כתיעוד נוסף.</div>
+      ${defPages}<div class="pgrid">${photoPages}</div></div>`:""}
+    <div style="text-align:center;font-size:7.5pt;margin-top:10px">הופק ב-${esc(T('app'))} · ${esc(S.user.name)} · ${esc(today())}</div>
+  </div>`;
+}
+
+/* ===================== אירועים ===================== */
+let pickTarget=null;
+$("#picker").addEventListener("change",async e=>{
+  const f=e.target.files&&e.target.files[0]; e.target.value="";
+  if(!f||!pickTarget)return;
+  let data; try{data=await compress(f)}catch(err){return toast("הצילום נכשל")}
+  const t=pickTarget; pickTarget=null;
+  if(t.kind==="gate"){gate[t.k]=data;return render()}
+  const id=uid(); await phPut(id,data);
+  if(t.kind==="slot"){(S.cur.photos[t.slot]=S.cur.photos[t.slot]||[]).push(id)}
+  else{const d=dget(S.cur,t.n);d.photos.push(id)}
+  saveCur();render();
+});
+function pick(target){pickTarget=target;$("#picker").click()}
+
+document.addEventListener("click",async e=>{
+  const t=e.target.closest("[data-act]"); if(!t)return;
+  const a=t.dataset.act, r=S.cur;
+  switch(a){
+    case "home":home();break;
+    case "settings":go("settings");break;
+    case "archive":go("archive");break;
+    case "diary":go("diary");break;
+    case "dash":go("dash");break;
+    case "theme":{const o=["black","blue","green","steel","rust"];
+      S.theme=o[(o.indexOf(S.theme)+1)%o.length];store.set("theme",S.theme);applyChrome();break}
+    case "langmenu":{const ks=Object.keys(LANG);S.lang=ks[(ks.indexOf(S.lang)+1)%ks.length];
+      store.set("lang",S.lang);render();break}
+    case "new":gate={kind:"full",lic:null,drv:null,sig:null};go("gate");break;
+    case "gph":pick({kind:"gate",k:t.dataset.k});break;
+    case "gsigclear":{const g=$("#gsig");if(g&&g._clear)g._clear();gate.sig=null;break}
+    case "gstart":{
+      if(!gate.lic||!gate.drv)return toast("נדרשים שני הצילומים");
+      if(!gate.sig)return toast("נדרשת חתימת מזמין הבדיקה");
+      const rec=newRec(gate.kind);rec.decl=true;
+      const a1=uid(),a2=uid();await phPut(a1,gate.lic);await phPut(a2,gate.drv);
+      rec.photos.lic_veh=[a1];rec.photos.lic_drv=[a2];rec.sigOrd=gate.sig;
+      S.cur=rec;S.tab=0;saveCur();go("rec",rec);break}
+    case "open":{const rec=S.recs.find(x=>x.id===t.dataset.id);if(rec){S.tab=0;go("rec",rec)}break}
+    case "tab":S.tab=+t.dataset.i;openRow=null;dq="";render();break;
+    case "sys":{const n=+t.dataset.n;openRow=openRow===n?null:n;dq="";render();break}
+    case "st":{const d=dget(r,+t.dataset.n);d.st=d.st===t.dataset.s?"":t.dataset.s;
+      if(d.st!=="bad"){d.items=[];d.safety=false}saveCur();render();break}
+    case "unpick":{const d=dget(r,+t.dataset.n);d.items=d.items.filter(x=>x!==t.dataset.v);saveCur();render();break}
+    case "safety":break;
+    case "dphoto":pick({kind:"def",n:+t.dataset.n});break;
+    case "dphdel":{const d=dget(r,+t.dataset.n);d.photos=d.photos.filter(x=>x!==t.dataset.id);
+      await phDel(t.dataset.id);saveCur();render();break}
+    case "phadd":pick({kind:"slot",slot:t.dataset.slot});break;
+    case "phdel":{e.stopPropagation();const s=t.dataset.slot;
+      r.photos[s]=(r.photos[s]||[]).filter(x=>x!==t.dataset.id);await phDel(t.dataset.id);saveCur();render();break}
+    case "aisug":{const n=+t.dataset.n,row=form().find(x=>x.n===n),d=dget(r,n);
+      if(!d.notes.trim())return toast("כתוב תיאור חופשי ואז לחץ");
+      t.innerHTML='<span class="spin"></span>';
+      const sug=await aiSuggest(d.notes,flatPool(row,r));
+      if(!sug.length){render();return toast("לא נמצאה אבחנה מתאימה")}
+      sheet("אבחנות מוצעות",`<div class="tiny">בחר מה להוסיף. הניסוח קבוע לפי נספח 5.</div>
+        <div class="dlist" style="margin-top:10px">${sug.map(x=>`<label class="ditem">
+        <input type="checkbox" data-sug="${esc(x)}" checked><span>${esc(x)}</span></label>`).join("")}</div>
+        <button class="btn solid" data-act="sugok" data-n="${n}">${esc(T('add'))}</button>`);
+      break}
+    case "sugok":{const n=+t.dataset.n,d=dget(r,n);
+      document.querySelectorAll("[data-sug]:checked").forEach(i=>{
+        if(!d.items.includes(i.dataset.sug))d.items.push(i.dataset.sug)});
+      if(!d.st)d.st="bad"; saveCur();closeSheet();render();break}
+    case "lookup":{
+      const p=(r.veh.plate||"").replace(/\D/g,""); if(!p)return toast(T('e_noplate'));
+      t.innerHTML='<span class="spin"></span> '+T('fetching');
+      try{
+        const m=await lookupPlate(p);
+        if(!m){render();return toast(T('e_notfound'))}
+        r.mo=m; r.veh.plate=m.plate;
+        r.veh.make=r.veh.make||m.make; r.veh.model=r.veh.model||m.model;
+        r.veh.year=r.veh.year||m.year; r.veh.vtype=r.veh.vtype||m.vtype;
+        r.veh.vinLic=r.veh.vinLic||m.vin; r.veh.engLic=r.veh.engLic||m.engno;
+        r.veh.colorLic=r.veh.colorLic||m.color;
+        r.veh.tireLic=r.veh.tireLic||[m.tireF,m.tireR].filter(Boolean).join(" / ");
+        saveCur();render();toast("הנתונים נטענו — השלם את עמודת ״נמצא בפועל״");
+      }catch(err){render();toast(T('e_net'))}
+      break}
+    case "motest":{const o=$("#motestout");o.innerHTML='<span class="spin"></span> בודק…';
+      try{const rec=await moFetch(RES.veh,{mispar_rechev:"1"},1);
+        o.innerHTML='<span style="color:var(--ok)">✔ החיבור עובד. השליפה האוטומטית זמינה.</span>'}
+      catch(err){o.innerHTML='<span style="color:var(--bad)">✕ הפנייה הישירה נחסמה ('+esc(err.message)+
+        '). הזן כתובת proxy או המשך במילוי ידני.</span>'}
+      break}
+    case "sigclear":{const cv=$(t.dataset.w==="1"?"#sig1":"#sig2");if(cv&&cv._clear)cv._clear();
+      if(t.dataset.w==="1")r.sigIns=null;else r.sigOrd=null;saveCur();break}
+    case "print":await buildPrint();setTimeout(()=>window.print(),120);break;
+    case "finish":r.status=r.status==="done"?"open":"done";saveCur();render();
+      toast(r.status==="done"?"הבדיקה נסגרה":"הבדיקה נפתחה מחדש");break;
+    case "delrec":if(confirm(T('confirm'))){S.recs=S.recs.filter(x=>x.id!==r.id);persist();home();toast(T('deleted'))}break;
+    case "apptnew":{
+      sheet(T('add'),`<div class="f"><label>${esc(T('plate'))}</label><input id="ap"></div>
+        <div class="f"><label>${esc(T('name'))}</label><input id="an"></div>
+        <div class="f2"><div class="f"><label>${esc(T('insdate'))}</label><input id="ad" type="date" value="${today()}"></div>
+        <div class="f"><label>${esc(T('instime'))}</label><input id="at" type="time" value="09:00"></div></div>
+        <div class="f"><label>${esc(T('kind'))}</label><select id="ak">
+          <option value="full">${esc(T('kind_full'))}</option><option value="basic">${esc(T('kind_basic'))}</option></select></div>
+        <button class="btn solid" data-act="apptsave">${esc(T('save'))}</button>`);break}
+    case "apptsave":{S.appts.push({id:uid(),plate:$("#ap").value,name:$("#an").value,
+      date:$("#ad").value,time:$("#at").value,kind:$("#ak").value});persist();closeSheet();render();break}
+    case "apptdel":S.appts=S.appts.filter(x=>x.id!==t.dataset.id);persist();render();break;
+    case "apptgo":{const ap=S.appts.find(x=>x.id===t.dataset.id);
+      gate={kind:ap.kind,lic:null,drv:null,sig:null};go("gate");break}
+    case "export":{const data={v:1,exported:new Date().toISOString(),user:S.user,inst:S.inst,
+        recs:S.recs,appts:S.appts,km:S.km};
+      dl("bdk-backup-"+today()+".json",JSON.stringify(data),"application/json");break}
+    case "csv":{const rows=[["מספר רכב","תאריך","תוצר","דגם","סוג בדיקה","ליקויים","בטיחותי","מזמין","סכום","בודק"]];
+      S.recs.forEach(x=>{const c=counts(x);rows.push([x.veh.plate,x.ins.date,x.veh.make,x.veh.model,
+        x.kind==="full"?"מלאה":"ללא אלקטרוניקה",c.bad,c.safety,(x.orderer==="seller"?x.seller:x.buyer).name,
+        x.pay.amount,x.ins.inspector])});
+      dl("bdk-"+today()+".csv","\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"').join(",")).join("\n"),"text/csv");break}
+    case "import":{const i=document.createElement("input");i.type="file";i.accept=".json";
+      i.onchange=()=>{const f=i.files[0];const fr=new FileReader();
+        fr.onload=()=>{try{const d=JSON.parse(fr.result);
+          if(!confirm("השחזור יחליף את כל הנתונים הקיימים. להמשיך?"))return;
+          S.recs=d.recs||[];S.appts=d.appts||[];S.km=d.km||{};
+          if(d.user)S.user=d.user;if(d.inst)S.inst=d.inst;
+          store.set("user",S.user);store.set("inst",S.inst);persist();render();toast("שוחזר")}
+          catch(e){toast("הקובץ אינו תקין")}};
+        fr.readAsText(f)};i.click();break}
+    case "wipe":if(confirm("למחוק את כל הבדיקות, ההזמנות והצילומים? אין דרך חזרה.")){
+      if(confirm("אישור אחרון — ייצאת גיבוי?")){
+        S.recs=[];S.appts=[];persist();indexedDB.deleteDatabase("bdk_photos");_db=null;home();toast(T('deleted'))}}break;
+    case "sheetclose":closeSheet();break;
+  }
+});
+document.addEventListener("change",e=>{
+  const el=e.target;
+  if(el.dataset.p&&S.cur){setP(S.cur,el.dataset.p,el.value);saveCur();
+    if(/vin|eng|color|tire|chassis/.test(el.dataset.p))render();return}
+  if(el.dataset.chk&&S.cur){setP(S.cur,el.dataset.chk,el.checked);saveCur();return}
+  if(el.dataset.act==="pick"&&S.cur){const d=dget(S.cur,+el.dataset.n);
+    const v=el.dataset.v; if(el.checked){if(!d.items.includes(v))d.items.push(v)}
+    else d.items=d.items.filter(x=>x!==v); if(!d.st)d.st="bad"; saveCur();render();return}
+  if(el.dataset.act==="safety"&&S.cur){dget(S.cur,+el.dataset.n).safety=el.checked;saveCur();render();return}
+  if(el.dataset.s){const p=el.dataset.s,v=el.value;
+    if(p.includes(".")){const[a,b]=p.split(".");S[a][b]=v;store.set(a,S[a])}
+    else{S[p]=v;store.set(p,v)}
+    render();return}
+});
+document.addEventListener("input",e=>{
+  const el=e.target;
+  if(el.dataset.act==="dq"){dq=el.value;const pos=el.selectionStart;render();
+    const n=document.querySelector("[data-act=dq]");if(n){n.focus();n.setSelectionRange(pos,pos)}return}
+  if(el.dataset.act==="aq"){aq=el.value;const pos=el.selectionStart;render();
+    const n=document.querySelector("[data-act=aq]");if(n){n.focus();n.setSelectionRange(pos,pos)}return}
+  if(el.dataset.act==="dnote"&&S.cur){dget(S.cur,+el.dataset.n).notes=el.value;saveCur();return}
+});
+function dl(name,content,type){const b=new Blob([content],{type});const u=URL.createObjectURL(b);
+  const a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)}
+function sheet(title,html){const d=document.createElement("div");d.className="sheet";d.id="sheet";
+  d.innerHTML=`<div class="inner"><h3>${esc(title)}</h3>${html}
+    <button class="btn" data-act="sheetclose">${esc(T('close'))}</button></div>`;
+  d.onclick=e=>{if(e.target===d)closeSheet()};document.body.appendChild(d)}
+function closeSheet(){const s=$("#sheet");if(s)s.remove()}
+
+/* ===================== התחלה ===================== */
+applyChrome();render();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
