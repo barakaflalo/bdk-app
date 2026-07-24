@@ -237,7 +237,7 @@ ignition:["לתאם מנוע","מנוע מזייף","מצתים לא תקיני�
 
 exhaust:["דוד עמעם אחורי פגום","דוד עמעם מרכזי פגום","דוד עמעם קדמי פגום","קצה צינור רקוב","דליפה בחיבורי צינורות","מעיכות במערכת","מתלים פגומים","צנרת פגומה","ריקבון כללי במערכת","סעפת סדוקה","דליפות מהסעפת","חסרים ברגים","מערכת פליטה רועשת","ממיר קטליטי לא תקין"],
 
-steering:["זוויות היגוי (כיוון)","חופש מייצב קדמי","שחיקת צמיגים","נקישות במתלה","סטיות הגה (בנסיעה)","חריקות במתלה","רעידות בגלגלים","גשר קדמי עקום","נקישה בתיבת הגה","גשר קדמי סדוק","חופש ונקישה בתיבת הגה","מעיכות בגשר","גומיות מגן להגה פגומות","משולש עקום","קופלונג הגה פגום","מעיכה במשולש","משאבת הגה פגומה","גשר אחורי עקום","נזילת שמן במערכת הידראולית","מוט מייצב אחורי עקום","בולם זעזועים להגה פגום","חופש תותבים ציר קדמי","חופש מוט הגה בתא נהג","חופש תותבים ציר אחורי","חופש במערכת היגוי","חופש מסבי גלגלים","חופש זרוע עזר","מסבי גלגלים רועשים","תיבת הגה פגומה","תומך סרן אחורי עקום","הגה קשה ולא חוזר","גלגל הגה אינו ממורכז","חוסר יציבות","סטיות במקביליות ומרחקי צירים","חופש חיבורי ציר קדמי","מידות מרכב אינם עפ״י הוראת יצרן","חופש משולשים במתלה","חופש במסרק הגה","זווית ציר אחורי פגומה","גומיות מגן קרועות"],
+steering:["זוויות היגוי (כיוון)","שחיקת צמיגים","סטיות הגה (בנסיעה)","רעידות בגלגלים","נקישה בתיבת הגה","חופש ונקישה בתיבת הגה","גומיות מגן להגה פגומות","קופלונג הגה פגום","משאבת הגה פגומה","נזילת שמן במערכת הידראולית","בולם זעזועים להגה פגום","חופש מוט הגה בתא נהג","חופש במערכת היגוי","חופש זרוע עזר","תיבת הגה פגומה","הגה קשה ולא חוזר","חוסר יציבות","חופש חיבורי ציר קדמי","חופש משולשים במתלה","זווית ציר אחורי פגומה","חופש במסרק הגה","חופש מייצב קדמי","נקישות במתלה","חריקות במתלה","גשר קדמי עקום","גשר קדמי סדוק","מעיכות בגשר","משולש עקום","מעיכה במשולש","גשר אחורי עקום","מוט מייצב אחורי עקום","חופש תותבים ציר קדמי","חופש תותבים ציר אחורי","חופש מסבי גלגלים","מסבי גלגלים רועשים","תומך סרן אחורי עקום","גלגל הגה אינו ממורכז","סטיות במקביליות ומרחקי צירים","מידות מרכב אינם עפ״י הוראת יצרן","גומיות מגן קרועות"],
 
 springs:["בולמי זעזועים קדמיים חלשים","בולמי זעזועים אחוריים חלשים","תותבים לבולמי זעזועים","אוגר לחץ פגום","אוגר לחץ רועש","בומבות קשות","נזילת שמן במערכת הידראולית","קפיצים קדמיים נמוכים","קפיצים אחוריים נמוכים","קפיצים קדמיים אינם זהים","קפיצים אחוריים אינם זהים","קפיץ קדמי ימני שבור","קפיץ קדמי שמאלי שבור","קפיץ אחורי ימני שבור","קפיץ אחורי שמאלי שבור","תותבים לקפיצים","תותבים לקפיצים קדמיים","תותבים לקפיצים אחוריים","קיימות טבעות הגבהה בקפיצים","פין מרכזי לקפיצים שבור"],
 
@@ -332,16 +332,25 @@ const FORM_BASIC=[
  {n:21,t:"הערות כלליות",src:"remarks",notesonly:1}
 ];
 
-const PHOTO_SLOTS=[
- {k:"lic_veh",t:"רישיון רכב מקורי",req:1},{k:"lic_drv",t:"תעודה מזהה / רישיון נהיגה",req:1},
- {k:"front",t:"חזית"},{k:"rear",t:"אחור"},{k:"side_r",t:"דופן ימין"},{k:"side_l",t:"דופן שמאל"},
- {k:"roof",t:"גג"},{k:"interior",t:"פנים הרכב"},{k:"dash",t:"לוח שעונים (ק״מ)"},
- {k:"engine",t:"תא מנוע"},{k:"chassis",t:"שלדה מלמטה"},
- {k:"tire_fr",t:"צמיג קדמי ימין"},{k:"tire_fl",t:"צמיג קדמי שמאל"},
- {k:"tire_rr",t:"צמיג אחורי ימין"},{k:"tire_rl",t:"צמיג אחורי שמאל"},
- {k:"vin",t:"מספר שלדה מוטבע"},{k:"engno",t:"מספר מנוע מוטבע"},
- {k:"tests",t:"פלטי בדיקה ממוחשבים"}
+const PHOTO_GROUPS=[
+ {k:"docs",t:"ph_docs",slots:[{k:"lic_veh",t:"רישיון רכב מקורי",req:1},{k:"lic_drv",t:"תעודה מזהה / רישיון נהיגה",req:1},
+   {k:"doc_other",t:"מסמך נוסף",multi:1}]},
+ {k:"ext",t:"ph_ext",slots:[{k:"e_front",t:"קדמי"},{k:"e_roof",t:"גג"},
+   {k:"e_rf",t:"דופן ימין קדמי"},{k:"e_lf",t:"דופן שמאל קדמי"},
+   {k:"e_rr",t:"דופן ימין אחורי"},{k:"e_lr",t:"דופן שמאל אחורי"},
+   {k:"e_rear",t:"אחורי"},{k:"e_trunk",t:"תא מטען"}]},
+ {k:"int",t:"ph_int",slots:[{k:"i_dash",t:"לוח מחוונים"},{k:"i_front",t:"מושב קדמי"},
+   {k:"i_rear",t:"מושב אחורי"},{k:"i_extra",t:"דגש נוסף",multi:1}]},
+ {k:"tire",t:"ph_tire",slots:[{k:"t_rf",t:"צמיג ימני קדמי"},{k:"t_lf",t:"צמיג שמאלי קדמי"},
+   {k:"t_rr",t:"צמיג ימני אחורי"},{k:"t_lr",t:"צמיג שמאלי אחורי"},{k:"t_spare",t:"גלגל חילוף"}]},
+ {k:"tests",t:"ph_tests",slots:[{k:"x_cyl",t:"פיקו: צילינדרים"},{k:"x_emis",t:"זיהום אוויר"},
+   {k:"x_batt",t:"פיקו: מצבר בלבד"},{k:"x_chg",t:"פיקו: טעינה בלבד"},{k:"x_bc",t:"פיקו: מצבר וטעינה"},
+   {k:"x_mini",t:"מיניליין"},{k:"x_l1",t:"לנצ׳ 1"},{k:"x_l2",t:"לנצ׳ 2"},{k:"x_l3",t:"לנצ׳ 3"},
+   {k:"x_align",t:"זוויות היגוי"},{k:"x_brake",t:"מד בלם"},{k:"x_other",t:"פלט נוסף",multi:1}]},
+ {k:"notes",t:"ph_notes",slots:[{k:"n_free",t:"הערות כלליות של הבוחן",multi:1}]}
 ];
+const PHOTO_SLOTS=PHOTO_GROUPS.flatMap(g=>g.slots.map(x=>Object.assign({grp:g.k,gt:g.t},x)));
+const slotOf=k=>PHOTO_SLOTS.find(x=>x.k===k)||{t:k};
 
 /* ===================== i18n ===================== */
 const LANG={
@@ -381,7 +390,13 @@ proxy:"כתובת proxy (אופציונלי)",pin:"נעילת PIN",
 saved:"נשמר",deleted:"נמחק",confirm:"למחוק? הפעולה אינה הפיכה.",
 e_noplate:"הזן מספר רכב",e_notfound:"לא נמצא במאגר — מלא ידנית",e_net:"אין חיבור — מלא ידנית",
 e_req:"שדה חובה",nodata:"אין עדיין נתונים",
-rollback:"חשד לגלגול מד-אוץ",recall:"ריקול פתוח",risk:"ממצאי מאגר"},
+rollback:"חשד לגלגול מד-אוץ",recall:"ריקול פתוח",risk:"ממצאי מאגר",
+kind_engine:"בדיקת מנוע בלבד",kind_chassis:"בדיקת שילדה בלבד",st_ns:"לא נבדק",
+ns_engine:"לא נבדק — בוצעה בדיקת מנוע בלבד",ns_chassis:"לא נבדק — בוצעה בדיקת שילדה בלבד",
+ph_docs:"תעודות",ph_ext:"חיצוני",ph_int:"פנים הרכב",ph_tire:"צמיגים",ph_tests:"בדיקות",ph_notes:"הערות בוחן",
+editlists:"עריכת רשימות ליקויים",moveto:"העברה לסעיף",additem:"הוספת אבחנה",resetdef:"איפוס לברירת מחדל",
+scope_e:"נכלל בבדיקת מנוע",scope_c:"נכלל בבדיקת שילדה",
+sec_buyer:"פרטי הקונה",sec_seller:"פרטי המוכר",sec_pay:"תשלום",sec_ins:"פרטי הבדיקה",selected:"נבחרו"},
 
 en:{dir:"ltr",name:"English",app:"BDK",tag:"Pre-purchase vehicle inspection",
 home:"Home",back:"Back to home",newins:"New inspection",newins_d:"Open a record",
@@ -417,7 +432,13 @@ proxy:"Proxy URL (optional)",pin:"PIN lock",
 saved:"Saved",deleted:"Deleted",confirm:"Delete? This cannot be undone.",
 e_noplate:"Enter a plate number",e_notfound:"Not found — fill in manually",e_net:"Offline — fill in manually",
 e_req:"Required",nodata:"Nothing here yet",
-rollback:"Possible odometer rollback",recall:"Open recall",risk:"Registry findings"},
+rollback:"Possible odometer rollback",recall:"Open recall",risk:"Registry findings",
+kind_engine:"Engine only",kind_chassis:"Body/chassis only",st_ns:"Not inspected",
+ns_engine:"Not inspected — engine-only inspection",ns_chassis:"Not inspected — body-only inspection",
+ph_docs:"Documents",ph_ext:"Exterior",ph_int:"Interior",ph_tire:"Tyres",ph_tests:"Test printouts",ph_notes:"Inspector photos",
+editlists:"Edit finding lists",moveto:"Move to row",additem:"Add finding",resetdef:"Reset to default",
+scope_e:"Part of engine inspection",scope_c:"Part of body inspection",
+sec_buyer:"Buyer",sec_seller:"Seller",sec_pay:"Payment",sec_ins:"Inspection",selected:"selected"},
 
 ar:{dir:"rtl",name:"العربية",app:"BDK",tag:"فحص المركبة قبل الشراء",
 home:"الرئيسية",back:"العودة للرئيسية",newins:"فحص جديد",newins_d:"فتح سجل",
@@ -453,7 +474,13 @@ proxy:"عنوان proxy (اختياري)",pin:"قفل PIN",
 saved:"تم الحفظ",deleted:"تم الحذف",confirm:"حذف؟ لا يمكن التراجع.",
 e_noplate:"أدخل رقم اللوحة",e_notfound:"غير موجود — املأ يدوياً",e_net:"لا اتصال — املأ يدوياً",
 e_req:"حقل مطلوب",nodata:"لا توجد بيانات بعد",
-rollback:"شبهة تلاعب بالعداد",recall:"استدعاء مفتوح",risk:"نتائج السجل"},
+rollback:"شبهة تلاعب بالعداد",recall:"استدعاء مفتوح",risk:"نتائج السجل",
+kind_engine:"فحص المحرك فقط",kind_chassis:"فحص الهيكل فقط",st_ns:"لم يُفحص",
+ns_engine:"لم يُفحص — تم فحص المحرك فقط",ns_chassis:"لم يُفحص — تم فحص الهيكل فقط",
+ph_docs:"وثائق",ph_ext:"خارجي",ph_int:"داخل المركبة",ph_tire:"إطارات",ph_tests:"مطبوعات",ph_notes:"صور الفاحص",
+editlists:"تعديل قوائم الأعطال",moveto:"نقل إلى بند",additem:"إضافة تشخيص",resetdef:"إعادة الضبط",
+scope_e:"ضمن فحص المحرك",scope_c:"ضمن فحص الهيكل",
+sec_buyer:"المشتري",sec_seller:"البائع",sec_pay:"الدفع",sec_ins:"الفحص",selected:"محدد"},
 
 ru:{dir:"ltr",name:"Русский",app:"BDK",tag:"Проверка авто перед покупкой",
 home:"Главная",back:"На главную",newins:"Новая проверка",newins_d:"Открыть запись",
@@ -489,7 +516,13 @@ proxy:"Адрес proxy (необязательно)",pin:"PIN-код",
 saved:"Сохранено",deleted:"Удалено",confirm:"Удалить? Отменить нельзя.",
 e_noplate:"Введите номер",e_notfound:"Не найдено — заполните вручную",e_net:"Нет сети — заполните вручную",
 e_req:"Обязательно",nodata:"Пока пусто",
-rollback:"Подозрение на скрутку пробега",recall:"Открытый отзыв",risk:"Данные реестра"},
+rollback:"Подозрение на скрутку пробега",recall:"Открытый отзыв",risk:"Данные реестра",
+kind_engine:"Только двигатель",kind_chassis:"Только кузов",st_ns:"Не проверялось",
+ns_engine:"Не проверялось — проверка только двигателя",ns_chassis:"Не проверялось — проверка только кузова",
+ph_docs:"Документы",ph_ext:"Экстерьер",ph_int:"Салон",ph_tire:"Шины",ph_tests:"Распечатки",ph_notes:"Фото инспектора",
+editlists:"Редактор списков",moveto:"Перенести в пункт",additem:"Добавить диагноз",resetdef:"Сбросить",
+scope_e:"Входит в проверку двигателя",scope_c:"Входит в проверку кузова",
+sec_buyer:"Покупатель",sec_seller:"Продавец",sec_pay:"Оплата",sec_ins:"Проверка",selected:"выбрано"},
 
 es:{dir:"ltr",name:"Español",app:"BDK",tag:"Inspección previa a la compra",
 home:"Inicio",back:"Volver al inicio",newins:"Nueva inspección",newins_d:"Abrir registro",
@@ -525,7 +558,13 @@ proxy:"URL de proxy (opcional)",pin:"Bloqueo PIN",
 saved:"Guardado",deleted:"Eliminado",confirm:"¿Eliminar? No se puede deshacer.",
 e_noplate:"Introduce la matrícula",e_notfound:"No encontrado — rellena a mano",e_net:"Sin conexión — rellena a mano",
 e_req:"Obligatorio",nodata:"Todavía no hay nada",
-rollback:"Posible manipulación del cuentakilómetros",recall:"Llamada a revisión abierta",risk:"Datos del registro"}
+rollback:"Posible manipulación del cuentakilómetros",recall:"Llamada a revisión abierta",risk:"Datos del registro",
+kind_engine:"Solo motor",kind_chassis:"Solo carrocería",st_ns:"No inspeccionado",
+ns_engine:"No inspeccionado — inspección solo de motor",ns_chassis:"No inspeccionado — inspección solo de carrocería",
+ph_docs:"Documentos",ph_ext:"Exterior",ph_int:"Interior",ph_tire:"Neumáticos",ph_tests:"Impresiones",ph_notes:"Fotos del inspector",
+editlists:"Editar listas",moveto:"Mover al apartado",additem:"Añadir diagnóstico",resetdef:"Restablecer",
+scope_e:"Incluido en inspección de motor",scope_c:"Incluido en inspección de carrocería",
+sec_buyer:"Comprador",sec_seller:"Vendedor",sec_pay:"Pago",sec_ins:"Inspección",selected:"seleccionados"}
 };
 function T(k){const L=LANG[S.lang]||LANG.he;return L[k]!==undefined?L[k]:(LANG.en[k]!==undefined?LANG.en[k]:k)}
 
@@ -544,6 +583,7 @@ let S={
   ai:store.get("ai",{provider:"",key:"",url:"",model:""}),
   mo:store.get("mo",{proxy:""}),
   recs:store.get("recs",[]), appts:store.get("appts",[]), km:store.get("km",{}),
+  map:null, scope:store.get("scope",null),
   cur:null, tab:0, screen:"home", seen:store.get("seen",false)
 };
 function persist(){store.set("recs",S.recs);store.set("appts",S.appts);store.set("km",S.km)}
@@ -698,29 +738,53 @@ function newRec(kind){return{
   pay:{amount:"",method:"",paid:false},
   photos:{},defects:{},sigIns:null,sigOrd:null,decl:false
 }}
-function form(){return (S.cur&&S.cur.kind==="basic")?FORM_BASIC:FORM_FULL}
-function poolFor(row,rec){
-  if(row.src==="CHASSIS"){const c=D.chassis[rec.veh.chassis==="separate"?"separate":"body"];
-    return{grouped:{"משמעות גבוהה":c.high,"משמעות נמוכה":c.low,"ליקויים שוליים":c.minor}}}
-  if(row.src==="power")return{grouped:D.power};
-  let flat=(D[row.src]||[]).slice();
-  if(row.also)flat=flat.concat(D[row.also]||[]);
-  return{flat}
+function startRec(kind){const r=newRec(kind);S.cur=r;applyScope(r);return r}
+/* --- מפת האבחנות: ניתנת לעריכה מלאה ע"י הבוחן --- */
+function defaultMap(){
+  const cp=o=>JSON.parse(JSON.stringify(o)), m={full:{},basic:{}};
+  [["full",FORM_FULL],["basic",FORM_BASIC]].forEach(([k,F])=>F.forEach(row=>{
+    if(row.src==="CHASSIS")m[k][row.n]={type:"chassis",body:cp(D.chassis.body),separate:cp(D.chassis.separate)};
+    else if(row.src==="power")m[k][row.n]={type:"groups",groups:cp(D.power)};
+    else m[k][row.n]={type:"flat",items:(D[row.src]||[]).concat(row.also?(D[row.also]||[]):[])};
+  }));
+  return m;
 }
-function flatPool(row,rec){const p=poolFor(row,rec);
-  return p.flat?p.flat:Object.values(p.grouped).flat()}
+/* אילו סעיפים נבדקים בבדיקת מנוע/שילדה בלבד (על גבי הטופס המלא) */
+const SCOPE_DEF={engine:[1,2,3,4,5,6,7,8,9,20,24,25],chassis:[22,25]};
+
+function formKey(){return (S.cur&&S.cur.kind==="basic")?"basic":"full"}
+function form(){return formKey()==="basic"?FORM_BASIC:FORM_FULL}
+function limited(rec){const k=(rec||S.cur||{}).kind;return k==="engine"||k==="chassis"?k:null}
+function inScope(rec,n){const l=limited(rec);return !l||(S.scope[l]||[]).includes(n)}
+function nsText(rec){const l=limited(rec);return l?T(l==="engine"?"ns_engine":"ns_chassis"):T("st_ns")}
+function applyScope(rec){
+  const l=limited(rec); if(!l)return;
+  form().forEach(row=>{const d=dget(rec,row.n);
+    if(!inScope(rec,row.n)){d.st="ns";d.items=[];d.safety=false}
+    else if(d.st==="ns")d.st="";
+  });
+}
+function mapEntry(row){const m=(S.map&&S.map[formKey()])||{};return m[row.n]||{type:"flat",items:[]}}
+function poolFor(row,rec){
+  const e=mapEntry(row);
+  if(e.type==="chassis"){const c=e[(rec||S.cur).veh.chassis==="separate"?"separate":"body"]||{};
+    return{grouped:{"משמעות גבוהה":c.high||[],"משמעות נמוכה":c.low||[],"ליקויים שוליים":c.minor||[]}}}
+  if(e.type==="groups")return{grouped:e.groups||{}};
+  return{flat:e.items||[]}
+}
+function flatPool(row,rec){const p=poolFor(row,rec);return p.flat?p.flat:Object.values(p.grouped).flat()}
 function dget(rec,n){if(!rec.defects[n])rec.defects[n]={st:"",items:[],notes:"",safety:false,photos:[]};return rec.defects[n]}
 function saveCur(){if(!S.cur)return;S.cur.updated=Date.now();
   const i=S.recs.findIndex(r=>r.id===S.cur.id);
   if(i<0)S.recs.unshift(S.cur);else S.recs[i]=S.cur; persist()}
-function counts(rec){let ok=0,bad=0,na=0,rec_=0,safety=0,done=0;
-  form().forEach(row=>{const d=rec.defects[row.n];if(row.notesonly)return;
-    if(!d||!d.st)return;done++;
+function counts(rec){let ok=0,bad=0,na=0,rec_=0,ns=0,safety=0,done=0,total=0;
+  form().forEach(row=>{if(row.notesonly)return;const d=rec.defects[row.n];
+    if(d&&d.st==="ns"){ns++;return}
+    total++; if(!d||!d.st)return; done++;
     if(d.st==="ok")ok++;else if(d.st==="bad"){bad++;if(d.safety)safety++}else if(d.st==="na")na++;else rec_++});
-  const total=form().filter(r=>!r.notesonly).length;
-  return{ok,bad,na,rec:rec_,safety,done,total}}
+  return{ok,bad,na,rec:rec_,ns,safety,done,total}}
 function score(rec){const c=counts(rec);if(!c.done)return null;
-  let s=100-c.bad*6-c.safety*10; return Math.max(0,Math.min(100,Math.round(s)))}
+  return Math.max(0,Math.min(100,Math.round(100-c.bad*6-c.safety*10)))}
 
 /* ===================== ניווט ===================== */
 function go(scr,arg){S.screen=scr;if(scr==="rec"&&arg)S.cur=arg;window.scrollTo(0,0);render()}
@@ -728,7 +792,8 @@ function home(){S.cur=null;S.tab=0;go("home")}
 
 /* ===================== רינדור ===================== */
 function render(){applyChrome();const a=$("#app");
-  const m={home:vHome,gate:vGate,rec:vRec,archive:vArchive,diary:vDiary,dash:vDash,settings:vSettings}[S.screen]||vHome;
+  const m={home:vHome,gate:vGate,rec:vRec,archive:vArchive,diary:vDiary,dash:vDash,
+    settings:vSettings,editor:vEditor}[S.screen]||vHome;
   a.className="fade";a.innerHTML=m();
   if(S.screen==="rec")afterRec();
   if(S.screen==="gate")afterGate();
@@ -762,7 +827,7 @@ function vHome(){
         <div class="d">${esc(S.user.name||T('username'))}</div></button>
     </div>
     <div class="tiny" style="text-align:center;margin-top:26px">
-      גרסה 1.0 · ${esc(S.inst.name||T('draft'))}</div>
+      גרסה 1.1 · ${esc(S.inst.name||T('draft'))}</div>
   </div>`}
 
 /* ---------- שער פתיחת בדיקה ---------- */
@@ -771,11 +836,14 @@ function vGate(){
   return bar(T('newins'))+`<div class="wrap">
   <div class="sec">1 · ${esc(T('kind'))}</div>
   <div class="card tight">
-    <label class="chk"><input type="radio" name="kd" value="full" ${gate.kind==="full"?"checked":""}>
-      <span>${esc(T('kind_full'))}</span></label>
-    <label class="chk"><input type="radio" name="kd" value="basic" ${gate.kind==="basic"?"checked":""}>
-      <span>${esc(T('kind_basic'))}</span></label>
-    <div class="tiny">הבחירה נדפסת מודגשת בראש טופס הסיכום ומשנה את רשימת המערכות הנבדקות.</div>
+    ${[["full","kind_full"],["basic","kind_basic"],["engine","kind_engine"],["chassis","kind_chassis"]]
+      .map(([v,k])=>`<label class="chk"><input type="radio" name="kd" value="${v}" ${gate.kind===v?"checked":""}>
+      <span>${esc(T(k))}</span></label>`).join("")}
+    ${gate.kind==="engine"||gate.kind==="chassis"?`<div class="alert info">
+      כל הסעיפים שאינם ב${gate.kind==="engine"?"מנוע":"שילדה"} יסומנו אוטומטית:
+      <b>${esc(gate.kind==="engine"?T('ns_engine'):T('ns_chassis'))}</b>.
+      אפשר לשנות אילו סעיפים נכללים בהגדרות ← ${esc(T('editlists'))}.</div>`:
+      `<div class="tiny">הבחירה נדפסת מודגשת בראש טופס הסיכום ומשנה את רשימת המערכות הנבדקות.</div>`}
   </div>
 
   <div class="sec">2 · צילומי חובה</div>
@@ -792,7 +860,7 @@ function vGate(){
   <div class="sec">3 · ${esc(T('declare'))}</div>
   <div class="card tight">
     <div class="tiny" style="line-height:1.65">אני מזמין בזאת את בדיקת הרכב שפרטיו ברישיון הרכב המצולם. ידוע לי כי הבדיקה היא
-      <b>${gate.kind==="full"?"בדיקה כללית הכוללת בדיקה מכנית וממוחשבת":"בדיקה מכנית בלבד, ללא מערכות אלקטרוניות וממוחשבות"}</b>.
+      <b>${gate.kind==="full"?"בדיקה כללית הכוללת בדיקה מכנית וממוחשבת":gate.kind==="basic"?"בדיקה מכנית בלבד, ללא מערכות אלקטרוניות וממוחשבות":gate.kind==="engine"?"בדיקת מנוע בלבד":"בדיקת שילדה ומרכב בלבד"}</b>.
       ידוע לי כי האחריות על הבדיקה היא לשלושה חודשים או 6,000 ק״מ, לפי המוקדם. ידוע לי כי מכון הבדיקה אינו אחראי
       לזיופים או שינויים בנתוני הרכב ובמסמכיו.</div>
     <canvas class="sig" id="gsig"></canvas>
@@ -825,13 +893,13 @@ function sigPad(cv,onEnd,existing){
 }
 
 /* ---------- רשומת בדיקה ---------- */
-const TABS=["t_veh","t_ins","t_buy","t_sel","t_pay","t_pho","t_def","t_sum"];
+const TABS=["t_veh","t_ins","t_pho","t_def","t_sum"];
 function vRec(){
   const r=S.cur; if(!r)return vHome();
   const c=counts(r);
   const tabs=TABS.map((k,i)=>`<button class="tab ${i===S.tab?"on":""}" data-act="tab" data-i="${i}">${esc(T(k))}${
     k==="t_def"&&c.bad?`<span class="dot"></span>`:""}</button>`).join("");
-  const body=[vTVeh,vTIns,vTBuy,vTSel,vTPay,vTPho,vTDef,vTSum][S.tab](r);
+  const body=[vTVeh,vTIns,vTPho,vTDef,vTSum][S.tab](r);
   return bar((r.veh.plate||T('newins'))+(r.veh.make?" · "+r.veh.make:""))+
     `<div class="wrap"><div class="tabs">${tabs}</div>${body}</div>`}
 
@@ -892,36 +960,47 @@ function moPanel(mo,r){
   </div>`}
 
 /* --- טאבים 2–5 --- */
-function vTIns(r){return `<div class="card">
+function person(pre){return `<div class="card">${fld(T('name'),pre+".name")}${fld(T('idno'),pre+".id")}
+  <div class="f2">${fld(T('phone'),pre+".phone","tel")}${fld(T('addr'),pre+".addr")}</div></div>`}
+function vTIns(r){return `
+  <div class="sec">${esc(T('sec_ins'))}</div>
+  <div class="card">
   <div class="f2">${fld(T('insdate'),"ins.date","date")}${fld(T('instime'),"ins.time","time")}</div>
   ${fld(T('insplace'),"ins.place")}
   <div class="f2">${fld(T('inspector'),"ins.inspector")}${fld(T('certno'),"ins.cert")}</div>
-  <label class="chk"><input type="checkbox" data-chk="ins.roadtest" ${r.ins.roadtest?"checked":""}>
-    <span>${esc(T('roadtest'))}</span></label>
-  <div class="tiny">הנוהל מחייב מבחן דרך לפני חתימה על טופס הסיכום.</div>
   <div class="f"><label>${esc(T('orderer'))}</label><select data-p="orderer">
     <option value="buyer" ${r.orderer==="buyer"?"selected":""}>${esc(T('t_buy'))}</option>
     <option value="seller" ${r.orderer==="seller"?"selected":""}>${esc(T('t_sel'))}</option></select>
-    <div class="hint">שמו מודפס בטופס כמזמין הבדיקה.</div></div></div>`}
-function person(pre){return `<div class="card">${fld(T('name'),pre+".name")}${fld(T('idno'),pre+".id")}
-  <div class="f2">${fld(T('phone'),pre+".phone","tel")}${fld(T('addr'),pre+".addr")}</div></div>`}
-function vTBuy(){return person("buyer")}
-function vTSel(){return person("seller")}
-function vTPay(r){return `<div class="card">
-  <div class="f2">${fld(T('amount'),"pay.amount","number")}${fld(T('method'),"pay.method")}</div>
-  <label class="chk"><input type="checkbox" data-chk="pay.paid" ${r.pay.paid?"checked":""}><span>${esc(T('paid'))}</span></label>
-  <div class="tiny">פנימי בלבד — לא מודפס בטופס הסיכום.</div></div>`}
+    <div class="hint">שמו מודפס בטופס כמזמין הבדיקה.</div></div></div>
 
-/* --- טאב 6: צילומים --- */
+  <div class="sec">${esc(T('sec_buyer'))}</div>${person("buyer")}
+  <div class="sec">${esc(T('sec_seller'))}</div>${person("seller")}
+  <div class="sec">${esc(T('sec_pay'))}</div>
+  <div class="card">
+    <div class="f2">${fld(T('amount'),"pay.amount","number")}${fld(T('method'),"pay.method")}</div>
+    <label class="chk"><input type="checkbox" data-chk="pay.paid" ${r.pay.paid?"checked":""}><span>${esc(T('paid'))}</span></label>
+    <div class="tiny">פנימי בלבד — לא מודפס בטופס הסיכום.</div></div>`}
+
+/* --- טאב: תעודות וצילומים (מחולק לקטגוריות) --- */
+let phTab="docs";
 function vTPho(r){
-  return `<div class="card"><div class="tiny">כל צילום נדחס אוטומטית לפני שמירה ונשמר על המכשיר בלבד.</div>
-  <div class="photos" style="margin-top:12px">${PHOTO_SLOTS.map(s=>{
-    const ids=r.photos[s.k]||[];
-    return ids.map(id=>`<div class="ph" data-act="phview" data-id="${id}"><img data-ph="${id}">
-        <button class="x" data-act="phdel" data-slot="${s.k}" data-id="${id}">✕</button>
-        <div class="cap">${esc(s.t)}</div></div>`).join("")+
-      `<div class="ph add" data-act="phadd" data-slot="${s.k}">＋<div class="cap">${esc(s.t)}${s.req?" *":""}</div></div>`
-  }).join("")}</div></div>`}
+  const g=PHOTO_GROUPS.find(x=>x.k===phTab)||PHOTO_GROUPS[0];
+  const nOf=k=>(r.photos[k]||[]).length;
+  const subs=PHOTO_GROUPS.map(x=>{const c=x.slots.reduce((a,sl)=>a+nOf(sl.k),0);
+    return `<button class="tab ${x.k===phTab?"on":""}" data-act="phtab" data-k="${x.k}">${esc(T(x.t))}${
+      c?` <span class="pill">${c}</span>`:""}</button>`}).join("");
+  const cells=g.slots.map(sl=>{const ids=r.photos[sl.k]||[];
+    const shots=ids.map(id=>`<div class="ph"><img data-ph="${id}">
+      <button class="x" data-act="phdel" data-slot="${sl.k}" data-id="${id}">✕</button>
+      <div class="cap">${esc(sl.t)}</div></div>`).join("");
+    const canAdd=sl.multi||!ids.length;
+    return shots+(canAdd?`<div class="ph add" data-act="phadd" data-slot="${sl.k}">＋
+      <div class="cap">${esc(sl.t)}${sl.req?" *":""}</div></div>`:"")}).join("");
+  return `<div class="tabs" style="position:static;border:none;padding-top:0">${subs}</div>
+    <div class="card"><div class="tiny">${g.k==="notes"
+      ?"צילומים חופשיים של הבוחן. נדפסים בנספח הממצאים, לא בטופס האחיד."
+      :"כל צילום נדחס אוטומטית לפני שמירה ונשמר על המכשיר בלבד."}</div>
+    <div class="photos" style="margin-top:12px">${cells}</div></div>`}
 
 /* --- טאב 7: ליקויים --- */
 let openRow=null,dq="";
@@ -936,9 +1015,9 @@ function vTDef(r){
 function sysRow(r,row){
   const d=dget(r,row.n),on=openRow===row.n;
   const st=d.st?`<span class="pill ${d.st==="ok"?"ok":d.st==="bad"?"bad":d.st==="rec"?"rec":"na"}">${
-    esc(T(d.st==="ok"?"st_ok":d.st==="bad"?"st_bad":d.st==="rec"?"st_rec":"st_na"))}</span>`:
+    esc(d.st==="ok"?T("st_ok"):d.st==="bad"?T("st_bad"):d.st==="rec"?T("st_rec"):d.st==="ns"?T("st_ns"):T("st_na"))}</span>`:
     `<span class="pill">—</span>`;
-  return `<div class="sysrow ${d.st==="bad"?"isbad":""} ${d.safety?"safety":""}">
+  return `<div class="sysrow ${d.st==="bad"?"isbad":""} ${d.safety?"safety":""}" ${d.st==="ns"?'style="opacity:.55"':""}>
     <button class="head" data-act="sys" data-n="${row.n}">
       <span class="num">${row.n}</span><span class="nm">${esc(row.t)}</span>
       ${d.items.length?`<span class="pill">${d.items.length}</span>`:""}
@@ -953,7 +1032,9 @@ function sysBody(r,row,d){
   const list=pool.flat?mk(pool.flat):Object.entries(pool.grouped).map(([g,items])=>{
     const inner=mk(items,g);return inner.trim()?`<div class="dgroup">${esc(g)}</div>`+inner:""}).join("");
   return `<div class="sysbody">
-    ${row.notesonly?"":`<div class="statepick">
+    ${d.st==="ns"?`<div class="alert info">${esc(nsText(r))}<br>
+      <button class="btn sm" data-act="unlock" data-n="${row.n}">בכל זאת לבדוק סעיף זה</button></div>`:""}
+    ${row.notesonly||d.st==="ns"?"":`<div class="statepick">
       ${["ok","bad","na","rec"].map(s=>`<button data-act="st" data-n="${row.n}" data-s="${s}"
         class="${d.st===s?"on":""}">${esc(T("st_"+s))}</button>`).join("")}</div>`}
     ${d.st==="bad"||row.notesonly?`
@@ -975,6 +1056,10 @@ function sysBody(r,row,d){
 /* --- טאב 8: סיכום --- */
 function vTSum(r){
   const c=counts(r),sc=score(r),miss=[];
+  const head=`<div class="card tight">
+    <label class="chk"><input type="checkbox" data-chk="ins.roadtest" ${r.ins.roadtest?"checked":""}>
+      <span style="font-weight:700">${esc(T('roadtest'))}</span></label>
+    <div class="tiny">הנוהל מחייב מבחן דרך לפני חתימה על טופס הסיכום.</div></div>`;
   if(!r.veh.plate)miss.push(T('plate'));
   if(!r.ins.inspector||!r.ins.cert)miss.push(T('inspector')+" / "+T('certno'));
   if(!r.ins.roadtest)miss.push(T('roadtest'));
@@ -984,12 +1069,13 @@ function vTSum(r){
   if(!r.sigIns)miss.push(T('sig_ins'));
   if(!r.sigOrd)miss.push(T('sig_ord'));
   const vinBad=r.veh.vinLic&&r.veh.vinAct&&r.veh.vinLic!==r.veh.vinAct;
-  return `${vinBad?`<div class="alert bad"><b>${esc(T('vinblock'))}</b></div>`:""}
+  return `${head}${vinBad?`<div class="alert bad"><b>${esc(T('vinblock'))}</b></div>`:""}
   ${c.safety?`<div class="alert bad"><b>נמצאו ${c.safety} ליקויים בטיחותיים.</b> חובה ליידע את מזמין הבדיקה מיידית ולציין זאת בטופס.</div>`:""}
   <div class="stat">
     <div class="b"><div class="n">${c.bad}</div><div class="l">${esc(T('st_bad'))}</div></div>
     <div class="b"><div class="n">${c.ok}</div><div class="l">${esc(T('st_ok'))}</div></div>
-    <div class="b"><div class="n">${c.done}/${c.total}</div><div class="l">${esc(T('complete'))}</div></div>
+    <div class="b"><div class="n">${c.done}/${c.total}</div><div class="l">${esc(T('complete'))}${
+      c.ns?` · ${c.ns} ${esc(T('st_ns'))}`:""}</div></div>
     <div class="b"><div class="n">${sc===null?"—":sc}</div><div class="l">ציון פנימי (לא בטופס)</div></div>
   </div>
   ${miss.length?`<div class="alert warn"><b>${esc(T('missing'))}:</b><br>${miss.map(esc).join(" · ")}</div>`
@@ -1006,7 +1092,7 @@ function vTSum(r){
   <button class="btn danger" data-act="delrec">${esc(T('del'))}</button>`}
 function afterRec(){
   loadImgs();
-  if(S.tab===7){
+  if(S.tab===4){
     sigPad($("#sig1"),d=>{S.cur.sigIns=d;saveCur()},S.cur.sigIns);
     sigPad($("#sig2"),d=>{S.cur.sigOrd=d;saveCur()},S.cur.sigOrd);
   }
@@ -1063,6 +1149,71 @@ function vDash(){
    <div class="card tight">${top.length?top.map(([k,v])=>`<div style="display:flex;gap:10px;padding:6px 0;font-size:14px">
      <span style="flex:1">${esc(k)}</span><b style="color:var(--gold-soft)">${v}</b></div>`).join("")
      :`<div class="tiny">${esc(T('nodata'))}</div>`}</div></div>`}
+
+
+/* ---------- עורך רשימות הליקויים ---------- */
+let edForm="full",edRow=null;
+const SEV={high:"משמעות גבוהה",low:"משמעות נמוכה",minor:"ליקויים שוליים"};
+function rowsOf(f){return f==="basic"?FORM_BASIC:FORM_FULL}
+function buckets(f,n){
+  const e=(S.map[f]||{})[n]; if(!e)return [];
+  if(e.type==="flat")return[{path:["items"],label:"",items:e.items}];
+  if(e.type==="groups")return Object.keys(e.groups).map(g=>({path:["groups",g],label:g,items:e.groups[g]}));
+  const out=[];
+  ["body","separate"].forEach(ct=>["high","low","minor"].forEach(sv=>{
+    if(e[ct]&&e[ct][sv])out.push({path:[ct,sv],label:(ct==="body"?"שלדת מרכב":"שלדה נפרדת")+" · "+SEV[sv],items:e[ct][sv]})}));
+  return out;
+}
+function bucketAt(f,n,path){return path.reduce((a,k)=>a[k],S.map[f][n])}
+function vEditor(){
+  const rows=rowsOf(edForm);
+  return bar(T('editlists'))+`<div class="wrap">
+  <div class="card tight">
+    <div class="f"><label>${esc(T('kind'))}</label><select data-act="edform">
+      <option value="full" ${edForm==="full"?"selected":""}>${esc(T('kind_full'))}</option>
+      <option value="basic" ${edForm==="basic"?"selected":""}>${esc(T('kind_basic'))}</option></select></div>
+    <div class="tiny">גע בסעיף כדי לפתוח את רשימת האבחנות שלו. אפשר להעביר אבחנה לסעיף אחר, לשנות סדר,
+      למחוק ולהוסיף אבחנות משלך. השינויים נשמרים מיד ומשפיעים על כל בדיקה חדשה.</div>
+  </div>
+  ${rows.map(row=>{
+    const bs=buckets(edForm,row.n),tot=bs.reduce((a,b)=>a+b.items.length,0),on=edRow===row.n;
+    return `<div class="sysrow">
+      <button class="head" data-act="edrow" data-n="${row.n}">
+        <span class="num">${row.n}</span><span class="nm">${esc(row.t)}</span>
+        <span class="pill">${tot}</span></button>
+      ${on?`<div class="sysbody">
+        ${edForm==="full"&&!row.notesonly?`<div class="row" style="margin-bottom:10px">
+          <label class="chk"><input type="checkbox" data-act="edscope" data-l="engine" data-n="${row.n}"
+            ${S.scope.engine.includes(row.n)?"checked":""}><span class="tiny">${esc(T('scope_e'))}</span></label>
+          <label class="chk"><input type="checkbox" data-act="edscope" data-l="chassis" data-n="${row.n}"
+            ${S.scope.chassis.includes(row.n)?"checked":""}><span class="tiny">${esc(T('scope_c'))}</span></label>
+        </div>`:""}
+        ${bs.map(b=>`${b.label?`<div class="dgroup" style="position:static;border-radius:8px;margin:8px 0 4px">${esc(b.label)}</div>`:""}
+          <div class="dlist" style="max-height:none">${b.items.length?b.items.map((it,i)=>`
+            <div class="ditem" style="align-items:center">
+              <span style="flex:1">${esc(it)}</span>
+              <button class="iconbtn" style="width:30px;height:30px;font-size:13px" data-act="edup"
+                data-n="${row.n}" data-p="${esc(b.path.join('>'))}" data-i="${i}">▲</button>
+              <button class="iconbtn" style="width:30px;height:30px;font-size:13px" data-act="eddown"
+                data-n="${row.n}" data-p="${esc(b.path.join('>'))}" data-i="${i}">▼</button>
+              <button class="iconbtn" style="width:30px;height:30px;font-size:13px" data-act="edmove"
+                data-n="${row.n}" data-p="${esc(b.path.join('>'))}" data-i="${i}">⇄</button>
+              <button class="iconbtn" style="width:30px;height:30px;font-size:13px;color:var(--bad)" data-act="eddel"
+                data-n="${row.n}" data-p="${esc(b.path.join('>'))}" data-i="${i}">✕</button>
+            </div>`).join(""):`<div class="ditem"><span class="tiny">ריק</span></div>`}</div>
+          <div class="row" style="margin-top:6px">
+            <input class="dsearch" style="margin:0" placeholder="${esc(T('additem'))}…"
+              id="add_${row.n}_${b.path.join('_')}">
+            <button class="btn sm" style="flex:none" data-act="edadd" data-n="${row.n}"
+              data-p="${esc(b.path.join('>'))}">＋</button></div>`).join("")}
+      </div>`:""}</div>`}).join("")}
+  <div class="sec">${esc(T('backup'))}</div>
+  <div class="card">
+    <button class="btn primary" data-act="edexport">⬇ ייצוא הרשימות (JSON)</button>
+    <button class="btn" data-act="edimport">⬆ ייבוא רשימות</button>
+    <button class="btn danger" data-act="edreset">${esc(T('resetdef'))}</button>
+  </div></div>`}
+function saveMap(){store.set("map",S.map);store.set("scope",S.scope)}
 
 /* ---------- הגדרות ---------- */
 function vSettings(){
@@ -1123,6 +1274,12 @@ function vSettings(){
     <div class="tiny">הבינה בוחרת אבחנות מתוך רשימת נספח 5 בלבד ואינה מנסחת טקסט חדש. בלי חיבור — מנוע החוקים עובד אופליין.</div>
   </div>
 
+  <div class="sec">${esc(T('t_def'))}</div>
+  <div class="card">
+    <button class="btn primary" data-act="editor">✎ ${esc(T('editlists'))}</button>
+    <div class="tiny">שינוי מיקום האבחנות, סדר הרשימות, ואילו סעיפים נכללים בבדיקת מנוע/שילדה בלבד.</div>
+  </div>
+
   <div class="sec">${esc(T('backup'))}</div>
   <div class="card">
     <button class="btn primary" data-act="export">⬇ ${esc(T('backup'))} (JSON)</button>
@@ -1133,7 +1290,7 @@ function vSettings(){
 
   <div class="sec">${esc(T('about'))}</div>
   <div class="card tight"><div class="tiny">
-    ${esc(T('app'))} · גרסה 1.0<br>בנוי לפי הוראת נוהל 127 של משרד התחבורה (עדכון 1.10.2014).<br>
+    ${esc(T('app'))} · גרסה 1.1<br>בנוי לפי הוראת נוהל 127 של משרד התחבורה (עדכון 1.10.2014).<br>
     Barak Aflalo · © AppNest 2026<br><br>
     כל הנתונים נשמרים על המכשיר בלבד ואינם עוברים לשום שרת. פניות למשרד התחבורה ולספק הבינה
     יוצאות רק כשאתה מבקש זאת.</div></div></div>`}
@@ -1146,7 +1303,8 @@ async function buildPrint(){
   const ph=await phAll([...new Set([].concat(...Object.values(r.photos||{}),
     ...rows.map(x=>(r.defects[x.n]||{}).photos||[]).flat()))]);
   const tr=rows.filter(x=>!x.notesonly).map(x=>{const d=r.defects[x.n]||{};
-    const diag=d.st==="na"?"המערכת לא קיימת ברכב זה":
+    const diag=d.st==="ns"?nsText(r):
+      d.st==="na"?"המערכת לא קיימת ברכב זה":
       d.st==="rec"?(d.notes?"המלצה: "+d.notes:"המלצה"):
       (d.items||[]).join("; ");
     return `<tr><td style="text-align:center">${x.n}</td><td>${esc(x.t)}</td>
@@ -1168,8 +1326,11 @@ async function buildPrint(){
    "צילום רישיון הרכב ורישיון הנהיגה שהוצגו בעת הבדיקה נשמרים יחד עם הטופס למשך 24 חודשים.",
    "מזמין הבדיקה מאשר שקרא והובאו לידיעתו הממצאים הרשומים בטופס זה.",
    "בעת העברת בעלות מומלץ לוודא שמספרי המנוע והשלדה ברישיון תואמים לרשום בטופס זה."];
-  const photoPages=Object.entries(r.photos||{}).map(([k,ids])=>{const t=(PHOTO_SLOTS.find(s=>s.k===k)||{}).t||k;
-    return ids.map(id=>ph[id]?`<figure><img src="${ph[id]}"><figcaption>${esc(t)}</figcaption></figure>`:"").join("")}).join("");
+  const photoPages=PHOTO_GROUPS.map(g=>{
+    const inner=g.slots.map(sl=>(r.photos[sl.k]||[]).map(id=>ph[id]
+      ?`<figure><img src="${ph[id]}"><figcaption>${esc(sl.t)}</figcaption></figure>`:"").join("")).join("");
+    return inner.trim()?`<h3 style="font-size:11pt;margin:10px 0 4px">${esc(T(g.t))}</h3>
+      <div class="pgrid">${inner}</div>`:""}).join("");
   const defPages=rows.map(x=>{const d=r.defects[x.n]||{};
     if(!(d.notes||(d.photos||[]).length))return "";
     return `<div style="margin:8px 0"><b>${x.n}. ${esc(x.t)}</b>${d.notes?`<div>${esc(d.notes)}</div>`:""}
@@ -1179,7 +1340,9 @@ async function buildPrint(){
     ${official?`<div style="text-align:center;font-size:9pt">${esc(S.inst.name)} · ${esc(S.inst.addr)} ·
       ${esc(S.inst.phone)} · רישיון מפעל ${esc(S.inst.lic)}</div>`:
       `<div class="banner draft">${esc(T('draft'))}</div>`}
-    <h2>טופס סיכום ${r.kind==="full"?"של בדיקה כללית כולל מערכות אלקטרוניות וממוחשבות":"של בדיקה כללית ללא מערכות אלקטרוניות וממוחשבות"}</h2>
+    <h2>טופס סיכום ${r.kind==="full"?"של בדיקה כללית כולל מערכות אלקטרוניות וממוחשבות":
+      r.kind==="basic"?"של בדיקה כללית ללא מערכות אלקטרוניות וממוחשבות":
+      r.kind==="engine"?"— בדיקת מנוע בלבד":"— בדיקת שילדה ומרכב בלבד"}</h2>
     <div style="text-align:center;font-size:8.5pt">(עפ״י הוראות משרד התחבורה — הוראת נוהל 127)</div>
     <div class="kv" style="margin-top:6px">
       מס׳ הרכב: <b>${esc(r.veh.plate)}</b> · תוצר: ${esc(r.veh.make)} · דגם: ${esc(r.veh.model)} ·
@@ -1206,7 +1369,7 @@ async function buildPrint(){
     </div>
     ${(defPages||photoPages)?`<div class="pagebreak"><h2>נספח ממצאים וצילומים</h2>
       <div style="font-size:8.5pt;text-align:center">נספח זה אינו חלק מטופס הסיכום האחיד ומצורף כתיעוד נוסף.</div>
-      ${defPages}<div class="pgrid">${photoPages}</div></div>`:""}
+      ${defPages}${photoPages}</div>`:""}
     <div style="text-align:center;font-size:7.5pt;margin-top:10px">הופק ב-${esc(T('app'))} · ${esc(S.user.name)} · ${esc(today())}</div>
   </div>`;
 }
@@ -1245,7 +1408,7 @@ document.addEventListener("click",async e=>{
     case "gstart":{
       if(!gate.lic||!gate.drv)return toast("נדרשים שני הצילומים");
       if(!gate.sig)return toast("נדרשת חתימת מזמין הבדיקה");
-      const rec=newRec(gate.kind);rec.decl=true;
+      const rec=startRec(gate.kind);rec.decl=true;
       const a1=uid(),a2=uid();await phPut(a1,gate.lic);await phPut(a2,gate.drv);
       rec.photos.lic_veh=[a1];rec.photos.lic_drv=[a2];rec.sigOrd=gate.sig;
       S.cur=rec;S.tab=0;saveCur();go("rec",rec);break}
@@ -1336,6 +1499,45 @@ document.addEventListener("click",async e=>{
     case "wipe":if(confirm("למחוק את כל הבדיקות, ההזמנות והצילומים? אין דרך חזרה.")){
       if(confirm("אישור אחרון — ייצאת גיבוי?")){
         S.recs=[];S.appts=[];persist();indexedDB.deleteDatabase("bdk_photos");_db=null;home();toast(T('deleted'))}}break;
+    case "editor":go("editor");break;
+    case "phtab":phTab=t.dataset.k;render();break;
+    case "unlock":{const d=dget(r,+t.dataset.n);d.st="";saveCur();render();break}
+    case "edrow":{const n=+t.dataset.n;edRow=edRow===n?null:n;render();break}
+    case "edscope":break;
+    case "edup":case "eddown":{const n=+t.dataset.n,arr=bucketAt(edForm,n,t.dataset.p.split(">")),
+        i=+t.dataset.i,j=a==="edup"?i-1:i+1;
+      if(j<0||j>=arr.length)break;
+      [arr[i],arr[j]]=[arr[j],arr[i]];saveMap();render();break}
+    case "eddel":{const arr=bucketAt(edForm,+t.dataset.n,t.dataset.p.split(">"));
+      arr.splice(+t.dataset.i,1);saveMap();render();break}
+    case "edadd":{const n=+t.dataset.n,path=t.dataset.p.split(">");
+      const el=document.getElementById("add_"+n+"_"+path.join("_"));
+      const v=(el&&el.value||"").trim(); if(!v)break;
+      bucketAt(edForm,n,path).push(v);saveMap();render();break}
+    case "edmove":{const n=+t.dataset.n,path=t.dataset.p.split(">"),i=+t.dataset.i;
+      const item=bucketAt(edForm,n,path)[i];
+      const opts=rowsOf(edForm).flatMap(row=>buckets(edForm,row.n).map(b=>
+        `<option value="${esc(row.n+"|"+b.path.join(">"))}">${esc(row.n+". "+row.t+(b.label?" · "+b.label:""))}</option>`)).join("");
+      sheet(T('moveto'),`<div class="tiny">${esc(item)}</div>
+        <div class="f"><select id="mvsel">${opts}</select></div>
+        <button class="btn solid" data-act="edmoveok" data-n="${n}" data-p="${esc(path.join(">"))}"
+          data-i="${i}">${esc(T('moveto'))}</button>`);
+      break}
+    case "edmoveok":{const n=+t.dataset.n,path=t.dataset.p.split(">"),i=+t.dataset.i;
+      const v=($("#mvsel")||{}).value||"";if(!v)break;
+      const [tn,tp]=v.split("|");
+      const src=bucketAt(edForm,n,path),item=src.splice(i,1)[0];
+      bucketAt(edForm,+tn,tp.split(">")).push(item);
+      saveMap();closeSheet();render();toast("הועבר");break}
+    case "edform":break;
+    case "edexport":dl("bdk-lists-"+today()+".json",JSON.stringify({v:1,map:S.map,scope:S.scope}),"application/json");break;
+    case "edimport":{const inp=document.createElement("input");inp.type="file";inp.accept=".json";
+      inp.onchange=()=>{const fr=new FileReader();fr.onload=()=>{try{const d=JSON.parse(fr.result);
+        if(!d.map)return toast("הקובץ אינו קובץ רשימות");
+        S.map=d.map;if(d.scope)S.scope=d.scope;saveMap();render();toast("יובא")}
+        catch(e){toast("הקובץ אינו תקין")}};fr.readAsText(inp.files[0])};inp.click();break}
+    case "edreset":if(confirm("לאפס את כל רשימות הליקויים לברירת המחדל של נספח 5?")){
+      S.map=defaultMap();S.scope=JSON.parse(JSON.stringify(SCOPE_DEF));saveMap();render();toast("אופס")}break;
     case "sheetclose":closeSheet();break;
   }
 });
@@ -1348,6 +1550,11 @@ document.addEventListener("change",e=>{
     const v=el.dataset.v; if(el.checked){if(!d.items.includes(v))d.items.push(v)}
     else d.items=d.items.filter(x=>x!==v); if(!d.st)d.st="bad"; saveCur();render();return}
   if(el.dataset.act==="safety"&&S.cur){dget(S.cur,+el.dataset.n).safety=el.checked;saveCur();render();return}
+  if(el.dataset.act==="edform"){edForm=el.value;edRow=null;render();return}
+  if(el.dataset.act==="edscope"){const l=el.dataset.l,n=+el.dataset.n;
+    const arr=S.scope[l];const i=arr.indexOf(n);
+    if(el.checked&&i<0)arr.push(n); else if(!el.checked&&i>=0)arr.splice(i,1);
+    arr.sort((a,b)=>a-b);saveMap();return}
   if(el.dataset.s){const p=el.dataset.s,v=el.value;
     if(p.includes(".")){const[a,b]=p.split(".");S[a][b]=v;store.set(a,S[a])}
     else{S[p]=v;store.set(p,v)}
@@ -1370,6 +1577,8 @@ function sheet(title,html){const d=document.createElement("div");d.className="sh
 function closeSheet(){const s=$("#sheet");if(s)s.remove()}
 
 /* ===================== התחלה ===================== */
+S.map=store.get("map",null)||defaultMap();
+if(!S.scope)S.scope=JSON.parse(JSON.stringify(SCOPE_DEF));
 applyChrome();render();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
