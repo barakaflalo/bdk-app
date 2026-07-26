@@ -343,9 +343,9 @@ const PHOTO_GROUPS=[
    {k:"i_rear",t:"מושב אחורי"},{k:"i_extra",t:"דגש נוסף",multi:1}]},
  {k:"tire",t:"ph_tire",slots:[{k:"t_rf",t:"צמיג ימני קדמי"},{k:"t_lf",t:"צמיג שמאלי קדמי"},
    {k:"t_rr",t:"צמיג ימני אחורי"},{k:"t_lr",t:"צמיג שמאלי אחורי"},{k:"t_spare",t:"גלגל חילוף"}]},
- {k:"tests",t:"ph_tests",slots:[{k:"x_cyl",t:"פיקו: צילינדרים"},{k:"x_emis",t:"זיהום אוויר"},
-   {k:"x_batt",t:"פיקו: מצבר בלבד"},{k:"x_chg",t:"פיקו: טעינה בלבד"},{k:"x_bc",t:"פיקו: מצבר וטעינה"},
-   {k:"x_mini",t:"מיניליין"},{k:"x_l1",t:"לנצ׳ 1"},{k:"x_l2",t:"לנצ׳ 2"},{k:"x_l3",t:"לנצ׳ 3"},
+ {k:"tests",t:"ph_tests",slots:[{k:"x_cyl",t:"דחיסה מנוע"},{k:"x_emis",t:"זיהום אוויר"},
+   {k:"x_batt",t:"צילום מצבר"},{k:"x_chg",t:"טעינה"},{k:"x_bc",t:"צילום מצבר וטעינה"},
+   {k:"x_mini",t:"מיניליין"},{k:"x_l1",t:"צילום סריקה תקלות"},{k:"x_l2",t:"צילום סריקה תקלות 2"},{k:"x_l3",t:"צילום סריקה תקלות 3"},{k:"x_scan4",t:"צילום סריקה תקלות 4"},{k:"x_scan5",t:"צילום סריקה תקלות 5"},{k:"x_scan6",t:"צילום סריקה תקלות 6"},
    {k:"x_align",t:"זוויות היגוי"},{k:"x_brake",t:"מד בלם"},{k:"x_other",t:"פלט נוסף",multi:1}]},
  {k:"notes",t:"ph_notes",slots:[{k:"n_free",t:"הערות כלליות של הבוחן",multi:1}]}
 ];
@@ -354,7 +354,7 @@ const slotOf=k=>PHOTO_SLOTS.find(x=>x.k===k)||{t:k};
 
 /* ===================== i18n ===================== */
 const LANG={
-he:{dir:"rtl",name:"עברית",
+he:{dir:"rtl",lname:"עברית",
 app:"בדק",tag:"בדיקת רכב לצרכי קנייה ומכירה",
 home:"דף הבית",back:"חזרה לדף הבית",newins:"בדיקה חדשה",newins_d:"פתיחת רשומה",
 diary:"יומן הזמנות",diary_d:"מועדים קרובים",archive:"ארכיון",archive_d:"בדיקות קודמות",
@@ -398,7 +398,7 @@ editlists:"עריכת רשימות ליקויים",moveto:"העברה לסעיף
 scope_e:"נכלל בבדיקת מנוע",scope_c:"נכלל בבדיקת שילדה",
 sec_buyer:"פרטי הקונה",sec_seller:"פרטי המוכר",sec_pay:"תשלום",sec_ins:"פרטי הבדיקה",selected:"נבחרו"},
 
-en:{dir:"ltr",name:"English",app:"BDK",tag:"Pre-purchase vehicle inspection",
+en:{dir:"ltr",lname:"English",app:"BDK",tag:"Pre-purchase vehicle inspection",
 home:"Home",back:"Back to home",newins:"New inspection",newins_d:"Open a record",
 diary:"Appointments",diary_d:"Upcoming",archive:"Archive",archive_d:"Past inspections",
 dash:"Dashboard",dash_d:"Figures and summaries",settings:"Settings",about:"About",guide:"Guide",
@@ -440,7 +440,7 @@ editlists:"Edit finding lists",moveto:"Move to row",additem:"Add finding",resetd
 scope_e:"Part of engine inspection",scope_c:"Part of body inspection",
 sec_buyer:"Buyer",sec_seller:"Seller",sec_pay:"Payment",sec_ins:"Inspection",selected:"selected"},
 
-ar:{dir:"rtl",name:"العربية",app:"BDK",tag:"فحص المركبة قبل الشراء",
+ar:{dir:"rtl",lname:"العربية",app:"BDK",tag:"فحص المركبة قبل الشراء",
 home:"الرئيسية",back:"العودة للرئيسية",newins:"فحص جديد",newins_d:"فتح سجل",
 diary:"المواعيد",diary_d:"القادمة",archive:"الأرشيف",archive_d:"فحوصات سابقة",
 dash:"لوحة البيانات",dash_d:"ملخصات",settings:"الإعدادات",about:"حول",guide:"دليل",
@@ -482,7 +482,7 @@ editlists:"تعديل قوائم الأعطال",moveto:"نقل إلى بند",a
 scope_e:"ضمن فحص المحرك",scope_c:"ضمن فحص الهيكل",
 sec_buyer:"المشتري",sec_seller:"البائع",sec_pay:"الدفع",sec_ins:"الفحص",selected:"محدد"},
 
-ru:{dir:"ltr",name:"Русский",app:"BDK",tag:"Проверка авто перед покупкой",
+ru:{dir:"ltr",lname:"Русский",app:"BDK",tag:"Проверка авто перед покупкой",
 home:"Главная",back:"На главную",newins:"Новая проверка",newins_d:"Открыть запись",
 diary:"Записи",diary_d:"Ближайшие",archive:"Архив",archive_d:"Прошлые проверки",
 dash:"Панель",dash_d:"Сводка",settings:"Настройки",about:"О программе",guide:"Инструкция",
@@ -524,7 +524,7 @@ editlists:"Редактор списков",moveto:"Перенести в пун
 scope_e:"Входит в проверку двигателя",scope_c:"Входит в проверку кузова",
 sec_buyer:"Покупатель",sec_seller:"Продавец",sec_pay:"Оплата",sec_ins:"Проверка",selected:"выбрано"},
 
-es:{dir:"ltr",name:"Español",app:"BDK",tag:"Inspección previa a la compra",
+es:{dir:"ltr",lname:"Español",app:"BDK",tag:"Inspección previa a la compra",
 home:"Inicio",back:"Volver al inicio",newins:"Nueva inspección",newins_d:"Abrir registro",
 diary:"Citas",diary_d:"Próximas",archive:"Archivo",archive_d:"Inspecciones previas",
 dash:"Panel",dash_d:"Resumen",settings:"Ajustes",about:"Acerca de",guide:"Guía",
@@ -801,14 +801,14 @@ function render(){applyChrome();const a=$("#app");
 function bar(title,extra){return `<div class="topbar">
   <button class="iconbtn" data-act="home" aria-label="${esc(T('back'))}">✕</button>
   <h1>${esc(title)}</h1>${extra||""}
-  <button class="iconbtn" data-act="theme" aria-label="${esc(T('theme'))}">◑</button></div>`}
+  <button class="iconbtn" data-act="mode" aria-label="${esc(T('mode'))}">${S.mode==="dark"?"☀":"☾"}</button></div>`}
 
 /* ---------- דף הבית ---------- */
 function vHome(){
   const open=S.recs.filter(r=>r.status==="open");
   const up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
   return `<div class="topbar"><h1 style="color:var(--gold)">${esc(T('app'))}</h1>
-    <button class="iconbtn" data-act="theme">◑</button>
+    <button class="iconbtn" data-act="mode" aria-label="${esc(T('mode'))}">${S.mode==="dark"?"☀":"☾"}</button>
     <button class="iconbtn" data-act="langmenu">⌘</button>
     <button class="iconbtn" data-act="settings">⚙</button></div>
   <div class="wrap">
@@ -1241,7 +1241,7 @@ function vSettings(){
   <div class="sec">${esc(T('lang'))} · ${esc(T('theme'))}</div>
   <div class="card">
     <div class="f"><label>${esc(T('lang'))}</label><select data-s="lang">${Object.entries(LANG)
-      .map(([k,v])=>`<option value="${k}" ${S.lang===k?"selected":""}>${esc(v.name)}</option>`).join("")}</select></div>
+      .map(([k,v])=>`<option value="${k}" ${S.lang===k?"selected":""}>${esc(v.lname)}</option>`).join("")}</select></div>
     <div class="f"><label>${esc(T('theme'))}</label><select data-s="theme">${th
       .map(([k,n])=>`<option value="${k}" ${S.theme===k?"selected":""}>${esc(n)}</option>`).join("")}</select></div>
     <div class="f"><label>${esc(T('mode'))}</label><select data-s="mode">
@@ -1400,6 +1400,7 @@ document.addEventListener("click",async e=>{
     case "dash":go("dash");break;
     case "theme":{const o=["black","blue","green","steel","rust"];
       S.theme=o[(o.indexOf(S.theme)+1)%o.length];store.set("theme",S.theme);applyChrome();break}
+    case "mode":{S.mode=S.mode==="dark"?"light":"dark";store.set("mode",S.mode);render();break}
     case "langmenu":{const ks=Object.keys(LANG);S.lang=ks[(ks.indexOf(S.lang)+1)%ks.length];
       store.set("lang",S.lang);render();break}
     case "new":gate={kind:"full",lic:null,drv:null,sig:null};go("gate");break;
