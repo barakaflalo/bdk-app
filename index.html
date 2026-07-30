@@ -174,6 +174,8 @@ a{color:var(--gold-soft)}
 
 .sig{border:1px dashed var(--line);border-radius:10px;background:var(--bg2);touch-action:none;width:100%;height:150px;display:block}
 
+.kv-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.kv-row:last-child{border:none}
 .stat{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stat .b{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
 .stat .b .n{font-size:26px;font-weight:800;color:var(--gold-soft);font-variant-numeric:tabular-nums}
@@ -345,7 +347,8 @@ const PHOTO_GROUPS=[
    {k:"t_rr",t:"צמיג ימני אחורי"},{k:"t_lr",t:"צמיג שמאלי אחורי"},{k:"t_spare",t:"גלגל חילוף"}]},
  {k:"tests",t:"ph_tests",slots:[{k:"x_cyl",t:"דחיסה מנוע"},{k:"x_emis",t:"זיהום אוויר"},
    {k:"x_batt",t:"צילום מצבר"},{k:"x_chg",t:"טעינה"},{k:"x_bc",t:"צילום מצבר וטעינה"},
-   {k:"x_mini",t:"מיניליין"},{k:"x_l1",t:"צילום סריקה תקלות"},{k:"x_l2",t:"צילום סריקה תקלות 2"},{k:"x_l3",t:"צילום סריקה תקלות 3"},{k:"x_scan4",t:"צילום סריקה תקלות 4"},{k:"x_scan5",t:"צילום סריקה תקלות 5"},{k:"x_scan6",t:"צילום סריקה תקלות 6"},
+   {k:"x_mini",t:"מיניליין"},{k:"x_l1",t:"צילום סריקה תקלות 1"},{k:"x_l2",t:"צילום סריקה תקלות 2"},{k:"x_l3",t:"צילום סריקה תקלות 3"},
+   {k:"x_scan4",t:"צילום סריקה תקלות 4"},{k:"x_scan5",t:"צילום סריקה תקלות 5"},{k:"x_scan6",t:"צילום סריקה תקלות 6"},
    {k:"x_align",t:"זוויות היגוי"},{k:"x_brake",t:"מד בלם"},{k:"x_other",t:"פלט נוסף",multi:1}]},
  {k:"notes",t:"ph_notes",slots:[{k:"n_free",t:"הערות כלליות של הבוחן",multi:1}]}
 ];
@@ -396,7 +399,10 @@ ns_engine:"לא נבדק — בוצעה בדיקת מנוע בלבד",ns_chassis
 ph_docs:"תעודות",ph_ext:"חיצוני",ph_int:"פנים הרכב",ph_tire:"צמיגים",ph_tests:"בדיקות",ph_notes:"הערות בוחן",
 editlists:"עריכת רשימות ליקויים",moveto:"העברה לסעיף",additem:"הוספת אבחנה",resetdef:"איפוס לברירת מחדל",
 scope_e:"נכלל בבדיקת מנוע",scope_c:"נכלל בבדיקת שילדה",
-sec_buyer:"פרטי הקונה",sec_seller:"פרטי המוכר",sec_pay:"תשלום",sec_ins:"פרטי הבדיקה",selected:"נבחרו"},
+sec_buyer:"פרטי הקונה",sec_seller:"פרטי המוכר",sec_pay:"תשלום",sec_ins:"פרטי הבדיקה",selected:"נבחרו",
+about_dev:"פותח",about_plat:"פלטפורמה",about_store:"אחסון נתונים",about_ondev:"על המכשיר בלבד",about_lic:"רישיון",about_store_link:"חנות AppNest",about_share:"שתף את האפליקציה",about_fb:"שלח משוב",about_priv:"מדיניות פרטיות",about_disc:"הסרת אחריות",
+disc_txt:"כל הנתונים באפליקציה, לרבות הערכות בינה, הם עזר לבוחן בלבד ואינם תחליף לבדיקה מוסמכת. הדוח הרשמי ללקוח מופק דרך מכון מורשה. השימוש באחריות המשתמש.",
+ai_free:"חינם",ai_api:"מפתח",ai_local:"מקומי",ai_status_on:"מחובר",ai_status_off:"מנותק",ai_model:"מודל",ai_getkey:"השגת מפתח",ai_howto:"הוראות חיבור",ai_video:"סרטון הסבר",ai_test:"בדיקת חיבור",ai_disconnect:"ניתוק",ai_sends:"פיצ׳רי הבינה שולחים את הטקסט לספק שנבחר. הניסוח נשאר תמיד מרשימת נספח 5.",priv:"פרטיות"},
 
 en:{dir:"ltr",lname:"English",app:"BDK",tag:"Pre-purchase vehicle inspection",
 home:"Home",back:"Back to home",newins:"New inspection",newins_d:"Open a record",
@@ -438,7 +444,10 @@ ns_engine:"Not inspected — engine-only inspection",ns_chassis:"Not inspected �
 ph_docs:"Documents",ph_ext:"Exterior",ph_int:"Interior",ph_tire:"Tyres",ph_tests:"Test printouts",ph_notes:"Inspector photos",
 editlists:"Edit finding lists",moveto:"Move to row",additem:"Add finding",resetdef:"Reset to default",
 scope_e:"Part of engine inspection",scope_c:"Part of body inspection",
-sec_buyer:"Buyer",sec_seller:"Seller",sec_pay:"Payment",sec_ins:"Inspection",selected:"selected"},
+sec_buyer:"Buyer",sec_seller:"Seller",sec_pay:"Payment",sec_ins:"Inspection",selected:"selected",
+about_dev:"Developer",about_plat:"Platform",about_store:"Data storage",about_ondev:"On-device only",about_lic:"Licence",about_store_link:"AppNest store",about_share:"Share the app",about_fb:"Send feedback",about_priv:"Privacy policy",about_disc:"Disclaimer",
+disc_txt:"All data in the app, including AI suggestions, is an aid to the inspector only and is not a substitute for a certified inspection. The official customer report is issued through a licensed centre. Use at your own responsibility.",
+ai_free:"Free",ai_api:"Key",ai_local:"Local",ai_status_on:"Connected",ai_status_off:"Disconnected",ai_model:"Model",ai_getkey:"Get a key",ai_howto:"Setup steps",ai_video:"Video guide",ai_test:"Test connection",ai_disconnect:"Disconnect",ai_sends:"AI features send your text to the chosen provider. Findings always stay from the Annex 5 list.",priv:"Privacy"},
 
 ar:{dir:"rtl",lname:"العربية",app:"BDK",tag:"فحص المركبة قبل الشراء",
 home:"الرئيسية",back:"العودة للرئيسية",newins:"فحص جديد",newins_d:"فتح سجل",
@@ -480,7 +489,10 @@ ns_engine:"لم يُفحص — تم فحص المحرك فقط",ns_chassis:"لم
 ph_docs:"وثائق",ph_ext:"خارجي",ph_int:"داخل المركبة",ph_tire:"إطارات",ph_tests:"مطبوعات",ph_notes:"صور الفاحص",
 editlists:"تعديل قوائم الأعطال",moveto:"نقل إلى بند",additem:"إضافة تشخيص",resetdef:"إعادة الضبط",
 scope_e:"ضمن فحص المحرك",scope_c:"ضمن فحص الهيكل",
-sec_buyer:"المشتري",sec_seller:"البائع",sec_pay:"الدفع",sec_ins:"الفحص",selected:"محدد"},
+sec_buyer:"المشتري",sec_seller:"البائع",sec_pay:"الدفع",sec_ins:"الفحص",selected:"محدد",
+about_dev:"المطور",about_plat:"المنصة",about_store:"تخزين البيانات",about_ondev:"على الجهاز فقط",about_lic:"الترخيص",about_store_link:"متجر AppNest",about_share:"شارك التطبيق",about_fb:"إرسال ملاحظات",about_priv:"سياسة الخصوصية",about_disc:"إخلاء مسؤولية",
+disc_txt:"جميع البيانات في التطبيق، بما فيها اقتراحات الذكاء الاصطناعي، هي مساعدة للفاحص فقط وليست بديلاً عن فحص معتمد. يصدر التقرير الرسمي عبر مركز مرخّص. الاستخدام على مسؤولية المستخدم.",
+ai_free:"مجاني",ai_api:"مفتاح",ai_local:"محلي",ai_status_on:"متصل",ai_status_off:"غير متصل",ai_model:"نموذج",ai_getkey:"الحصول على مفتاح",ai_howto:"خطوات الإعداد",ai_video:"شرح فيديو",ai_test:"اختبار الاتصال",ai_disconnect:"قطع",ai_sends:"ميزات الذكاء ترسل نصك للمزود المختار. تبقى التشخيصات دائماً من قائمة الملحق 5.",priv:"الخصوصية"},
 
 ru:{dir:"ltr",lname:"Русский",app:"BDK",tag:"Проверка авто перед покупкой",
 home:"Главная",back:"На главную",newins:"Новая проверка",newins_d:"Открыть запись",
@@ -522,7 +534,10 @@ ns_engine:"Не проверялось — проверка только дви�
 ph_docs:"Документы",ph_ext:"Экстерьер",ph_int:"Салон",ph_tire:"Шины",ph_tests:"Распечатки",ph_notes:"Фото инспектора",
 editlists:"Редактор списков",moveto:"Перенести в пункт",additem:"Добавить диагноз",resetdef:"Сбросить",
 scope_e:"Входит в проверку двигателя",scope_c:"Входит в проверку кузова",
-sec_buyer:"Покупатель",sec_seller:"Продавец",sec_pay:"Оплата",sec_ins:"Проверка",selected:"выбрано"},
+sec_buyer:"Покупатель",sec_seller:"Продавец",sec_pay:"Оплата",sec_ins:"Проверка",selected:"выбрано",
+about_dev:"Разработчик",about_plat:"Платформа",about_store:"Хранение данных",about_ondev:"Только на устройстве",about_lic:"Лицензия",about_store_link:"Магазин AppNest",about_share:"Поделиться",about_fb:"Отзыв",about_priv:"Политика конфиденциальности",about_disc:"Отказ от ответственности",
+disc_txt:"Все данные в приложении, включая предложения ИИ, — только помощь инспектору и не заменяют сертифицированную проверку. Официальный отчёт выдаётся через лицензированный центр. Использование на ваш риск.",
+ai_free:"Бесплатно",ai_api:"Ключ",ai_local:"Локально",ai_status_on:"Подключено",ai_status_off:"Отключено",ai_model:"Модель",ai_getkey:"Получить ключ",ai_howto:"Настройка",ai_video:"Видео",ai_test:"Проверить связь",ai_disconnect:"Отключить",ai_sends:"Функции ИИ отправляют текст выбранному провайдеру. Диагнозы всегда из списка Приложения 5.",priv:"Конфиденциальность"},
 
 es:{dir:"ltr",lname:"Español",app:"BDK",tag:"Inspección previa a la compra",
 home:"Inicio",back:"Volver al inicio",newins:"Nueva inspección",newins_d:"Abrir registro",
@@ -564,7 +579,10 @@ ns_engine:"No inspeccionado — inspección solo de motor",ns_chassis:"No inspec
 ph_docs:"Documentos",ph_ext:"Exterior",ph_int:"Interior",ph_tire:"Neumáticos",ph_tests:"Impresiones",ph_notes:"Fotos del inspector",
 editlists:"Editar listas",moveto:"Mover al apartado",additem:"Añadir diagnóstico",resetdef:"Restablecer",
 scope_e:"Incluido en inspección de motor",scope_c:"Incluido en inspección de carrocería",
-sec_buyer:"Comprador",sec_seller:"Vendedor",sec_pay:"Pago",sec_ins:"Inspección",selected:"seleccionados"}
+sec_buyer:"Comprador",sec_seller:"Vendedor",sec_pay:"Pago",sec_ins:"Inspección",selected:"seleccionados",
+about_dev:"Desarrollador",about_plat:"Plataforma",about_store:"Almacenamiento",about_ondev:"Solo en el dispositivo",about_lic:"Licencia",about_store_link:"Tienda AppNest",about_share:"Compartir la app",about_fb:"Enviar comentarios",about_priv:"Política de privacidad",about_disc:"Aviso legal",
+disc_txt:"Todos los datos de la app, incluidas las sugerencias de IA, son una ayuda para el inspector y no sustituyen una inspección certificada. El informe oficial se emite mediante un centro autorizado. Uso bajo responsabilidad del usuario.",
+ai_free:"Gratis",ai_api:"Clave",ai_local:"Local",ai_status_on:"Conectado",ai_status_off:"Desconectado",ai_model:"Modelo",ai_getkey:"Obtener clave",ai_howto:"Pasos",ai_video:"Vídeo",ai_test:"Probar conexión",ai_disconnect:"Desconectar",ai_sends:"Las funciones de IA envían tu texto al proveedor elegido. Los diagnósticos siempre provienen de la lista del Anexo 5.",priv:"Privacidad"}
 };
 function T(k){const L=LANG[S.lang]||LANG.he;return L[k]!==undefined?L[k]:(LANG.en[k]!==undefined?LANG.en[k]:k)}
 
@@ -584,8 +602,10 @@ let S={
   mo:store.get("mo",{proxy:""}),
   recs:store.get("recs",[]), appts:store.get("appts",[]), km:store.get("km",{}),
   map:null, scope:store.get("scope",null),
-  cur:null, tab:0, screen:"home", seen:store.get("seen",false)
+  pin:store.get("pin",null), notify:store.get("notify",false),
+  cur:null, tab:0, screen:"home", seen:store.get("seen",false), locked:false
 };
+function hash(x){let h=5381;for(let i=0;i<x.length;i++)h=((h<<5)+h+x.charCodeAt(i))>>>0;return String(h)}
 function persist(){store.set("recs",S.recs);store.set("appts",S.appts);store.set("km",S.km)}
 
 /* --- IndexedDB for photos (blobs are far too big for localStorage) --- */
@@ -670,6 +690,29 @@ async function lookupPlate(plate){
     flags,recalls:recall.map(r=>r.recall_description||r.recall_number||"").filter(Boolean).slice(0,5)}
 }
 
+/* ===================== ספקי בינה ===================== */
+const AI_PROVIDERS={
+ claude:{name:"Claude (Anthropic)",tag:"API",tagk:"ai_api",key:1,
+   models:["claude-haiku-4-5-20251001","claude-sonnet-4-6","claude-opus-4-8"],
+   modelNames:["Haiku · זול ומהיר","Sonnet · מאוזן","Opus · החכם ביותר"],
+   get:"https://console.anthropic.com",
+   howto:"היכנס ל-console.anthropic.com ← API Keys ← Create Key ← העתק והדבק כאן. הכי מדויק לעברית."},
+ gemini:{name:"Gemini (Google)",tag:"FREE",tagk:"ai_free",key:1,
+   models:["gemini-2.5-flash","gemini-2.0-flash","gemini-1.5-flash"],
+   modelNames:["2.5 Flash","2.0 Flash","1.5 Flash"],
+   get:"https://aistudio.google.com/app/apikey",
+   video:"https://www.youtube.com/watch?v=Cl4XKgz6EJQ",
+   howto:"יש שכבה חינמית ללא כרטיס אשראי. aistudio.google.com/app/apikey ← Create API key ← העתק."},
+ openai:{name:"ChatGPT (OpenAI)",tag:"API",tagk:"ai_api",key:1,
+   models:["gpt-4o-mini","gpt-4o"],modelNames:["4o-mini · זול","4o · חזק"],
+   get:"https://platform.openai.com/api-keys",
+   howto:"platform.openai.com ← API Keys ← Create ← העתק. דורש כרטיס אשראי."},
+ local:{name:"מודל מקומי (Ollama / LM Studio)",tag:"LOCAL",tagk:"ai_local",url:1,
+   models:[],modelNames:[],get:"https://ollama.ai",
+   howto:"התקן Ollama או LM Studio, הפעל מודל, והזן את הכתובת המקומית. פרטי לגמרי, בלי עלות ובלי אינטרנט."}
+};
+function aiConnected(){return !!(S.ai.provider&&(S.ai.key||S.ai.url))}
+
 /* ===================== מנוע התאמת אבחנות ===================== */
 /* חינם: התאמת מילים. Pro: שכבת API עם ספק לבחירת המשתמש. */
 function normalize(s){return String(s).replace(/[״"׳'.,()\/]/g," ").replace(/\s+/g," ").trim()}
@@ -739,13 +782,85 @@ function newRec(kind){return{
   photos:{},defects:{},sigIns:null,sigOrd:null,decl:false
 }}
 function startRec(kind){const r=newRec(kind);S.cur=r;applyScope(r);return r}
-/* --- מפת האבחנות: ניתנת לעריכה מלאה ע"י הבוחן --- */
+/* --- מפת האבחנות: ברירת מחדל ממופה סעיף-סעיף, ניתנת לעריכה מלאה --- */
+const dpick=(arr,...sub)=>arr.filter(x=>sub.some(t=>x.includes(t)));
+const domit=(arr,...sub)=>arr.filter(x=>!sub.some(t=>x.includes(t)));
+const cp=o=>JSON.parse(JSON.stringify(o));
+
+/* חלוקות עזר בתוך רשימות נספח 5 */
+const EL_CHARGE=dpick(D.electric,"אלטרנטור","אין טעינה");
+const EL_START =dpick(D.electric,"מצבר","מתנע","זר שיניים");
+const EL_LIGHT =dpick(D.electric,"פנס","אור","איתות");
+const EL_COMFORT=domit(D.electric,"אלטרנטור","אין טעינה","מצבר","מתנע","זר שיניים","פנס","אור","איתות");
+const IG_START =dpick(D.ignition,"התנעה");
+const SUS_FRONT=dpick(D.springs,"קדמי","זהים","תותבים לבולמי","אוגר","בומבות","הידראולית","טבעות","פין מרכזי");
+const SUS_REAR =dpick(D.springs,"אחורי");
+const ST_FRONT =dpick(D.steering,"מייצב קדמי","נקישות במתלה","חריקות במתלה","גשר קדמי","מעיכות בגשר",
+  "משולש","תותבים ציר קדמי","חיבורי ציר קדמי","משולשים במתלה");
+const ST_REAR  =dpick(D.steering,"גשר אחורי","מייצב אחורי","תותבים ציר אחורי","סרן אחורי","ציר אחורי פגומה");
+const ST_PURE  =dpick(D.steering,"הגה","היגוי","יציבות","מקביליות","מידות מרכב","מגן קרועות");
+const ST_WHEEL =dpick(D.steering,"מסבי גלגלים","שחיקת צמיגים","רעידות בגלגלים");
+const FU_TURBO =dpick(D.fuel,"טורבו","גדוש","גידוש");
+const FU_INJ   =dpick(D.fuel,"הזרקת","מחשב מערכת דלק");
+const GA_CHARGE=dpick(D.gauges,"טעינה");
+
+const ROWMAP={
+ full:{
+  1:{flat:D.engine},
+  2:{flat:[D.ecu[0]].concat(FU_INJ,dpick(D.fuel,"סיבובי מנוע"),dpick(D.ignition,"מנוע מזייף","לתאם מנוע"))},
+  3:{flat:D.cooling},
+  4:{flat:domit(D.fuel,"טורבו","גדוש","גידוש","הזרקת","מחשב מערכת דלק")},
+  5:{flat:domit(D.ignition,"התנעה").concat(FU_INJ)},
+  6:{flat:FU_TURBO},
+  7:{flat:[D.ecu[0],D.ecu[2]].concat(dpick(D.power["דיפרנציאל והנעה"],"הנעה"))},
+  8:{flat:EL_CHARGE.concat(GA_CHARGE)},
+  9:{flat:EL_START.concat(IG_START,dpick(D.ignition,"מתג התנעה"))},
+  10:{flat:D.power["מצמד"]},
+  11:{groups:{"תיבת הילוכים":D.power["תיבת הילוכים"],"תיבה אוטומטית":D.power["תיבה אוטומטית"]}},
+  12:{flat:dpick(D.power["דיפרנציאל והנעה"],"4X4","מערכת הנעה").concat([D.ecu[2]])},
+  13:{flat:D.power["גלי הינע"].concat(dpick(D.power["דיפרנציאל והנעה"],"ציריות"))},
+  14:{flat:dpick(D.power["דיפרנציאל והנעה"],"דיפרנציאל","רעידות בנסיעה").concat(ST_REAR,dpick(D.power["דיפרנציאל והנעה"],"מסבי גלגלים"))},
+  15:{flat:SUS_FRONT.concat(ST_FRONT,["תותבים לקפיצים"])},
+  16:{flat:SUS_REAR.concat(dpick(D.steering,"מייצב אחורי","תותבים ציר אחורי"))},
+  17:{flat:ST_PURE.concat(dpick(D.steering,"זרוע עזר"))},
+  18:{flat:D.brakes},
+  19:{flat:D.tires.concat(ST_WHEEL,[D.ecu[9]])},
+  20:{flat:D.exhaust},
+  21:{flat:[D.ecu[5]].concat(dpick(CH_MINOR,"חגורת בטיחות"))},
+  22:{chassis:1},
+  23:{flat:EL_LIGHT.concat(D.gauges,[D.ecu[6],D.ecu[11]])},
+  24:{flat:D.ecu},
+  25:{flat:D.remarks.concat(EL_COMFORT)}
+ },
+ basic:{
+  1:{flat:D.engine},2:{flat:D.cooling},
+  3:{flat:domit(D.fuel,"טורבו","גדוש","גידוש","מחשב מערכת דלק")},
+  4:{flat:domit(D.ignition,"התנעה")},5:{flat:FU_TURBO},
+  6:{flat:dpick(D.power["דיפרנציאל והנעה"],"הנעה","4X4")},
+  7:{flat:EL_CHARGE.concat(GA_CHARGE)},
+  8:{flat:D.exhaust},
+  9:{flat:EL_START.concat(IG_START,dpick(D.ignition,"מתג התנעה"))},
+  10:{flat:D.power["מצמד"]},
+  11:{groups:{"תיבת הילוכים":D.power["תיבת הילוכים"],"תיבה אוטומטית":D.power["תיבה אוטומטית"]}},
+  12:{flat:dpick(D.power["דיפרנציאל והנעה"],"4X4","מערכת הנעה")},
+  13:{flat:D.power["גלי הינע"].concat(dpick(D.power["דיפרנציאל והנעה"],"ציריות"))},
+  14:{flat:SUS_FRONT.concat(ST_FRONT)},
+  15:{flat:SUS_REAR.concat(dpick(D.steering,"מייצב אחורי","תותבים ציר אחורי"))},
+  16:{flat:ST_PURE.concat(dpick(D.power["דיפרנציאל והנעה"],"דיפרנציאל"),ST_REAR)},
+  17:{flat:D.brakes},
+  18:{flat:D.tires.concat(ST_WHEEL)},
+  19:{chassis:1},
+  20:{flat:EL_LIGHT.concat(D.gauges)},
+  21:{flat:D.remarks.concat(EL_COMFORT)}
+ }
+};
 function defaultMap(){
-  const cp=o=>JSON.parse(JSON.stringify(o)), m={full:{},basic:{}};
+  const m={full:{},basic:{}};
   [["full",FORM_FULL],["basic",FORM_BASIC]].forEach(([k,F])=>F.forEach(row=>{
-    if(row.src==="CHASSIS")m[k][row.n]={type:"chassis",body:cp(D.chassis.body),separate:cp(D.chassis.separate)};
-    else if(row.src==="power")m[k][row.n]={type:"groups",groups:cp(D.power)};
-    else m[k][row.n]={type:"flat",items:(D[row.src]||[]).concat(row.also?(D[row.also]||[]):[])};
+    const def=(ROWMAP[k]||{})[row.n]||{flat:[]};
+    if(def.chassis)m[k][row.n]={type:"chassis",body:cp(D.chassis.body),separate:cp(D.chassis.separate)};
+    else if(def.groups)m[k][row.n]={type:"groups",groups:cp(def.groups)};
+    else m[k][row.n]={type:"flat",items:[...new Set(def.flat)]};
   }));
   return m;
 }
@@ -792,8 +907,10 @@ function home(){S.cur=null;S.tab=0;go("home")}
 
 /* ===================== רינדור ===================== */
 function render(){applyChrome();const a=$("#app");
+  if(S.locked){a.innerHTML=vLock();return}
+  if(!S.seen){a.innerHTML=vGuide();return}
   const m={home:vHome,gate:vGate,rec:vRec,archive:vArchive,diary:vDiary,dash:vDash,
-    settings:vSettings,editor:vEditor}[S.screen]||vHome;
+    settings:vSettings,editor:vEditor,about:vAbout}[S.screen]||vHome;
   a.className="fade";a.innerHTML=m();
   if(S.screen==="rec")afterRec();
   if(S.screen==="gate")afterGate();
@@ -810,9 +927,12 @@ function vHome(){
   return `<div class="topbar"><h1 style="color:var(--gold)">${esc(T('app'))}</h1>
     <button class="iconbtn" data-act="mode" aria-label="${esc(T('mode'))}">${S.mode==="dark"?"☀":"☾"}</button>
     <button class="iconbtn" data-act="langmenu">⌘</button>
+    <button class="iconbtn" data-act="about">ℹ</button>
     <button class="iconbtn" data-act="settings">⚙</button></div>
   <div class="wrap">
     <div class="hero"><div class="mark">${esc(T('app'))}</div><div class="sub">${esc(T('tag'))}</div></div>
+    ${(()=>{const t=S.appts.filter(a=>a.date===today());
+      return t.length?`<div class="alert warn"><b>היום:</b> ${t.map(a=>esc(a.time+" · "+(a.plate||a.name||""))).join(" · ")}</div>`:""})()}
     ${open.length?`<div class="alert info">יש ${open.length} בדיקות פתוחות. <button class="btn sm" data-act="open" data-id="${esc(open[0].id)}">המשך את האחרונה</button></div>`:""}
     <div class="tiles">
       <button class="tile wide go" data-act="new"><div class="ic">＋</div>
@@ -827,7 +947,7 @@ function vHome(){
         <div class="d">${esc(S.user.name||T('username'))}</div></button>
     </div>
     <div class="tiny" style="text-align:center;margin-top:26px">
-      גרסה 1.1 · ${esc(S.inst.name||T('draft'))}</div>
+      גרסה 1.3 · ${esc(S.inst.name||T('draft'))}</div>
   </div>`}
 
 /* ---------- שער פתיחת בדיקה ---------- */
@@ -892,6 +1012,50 @@ function sigPad(cv,onEnd,existing){
   cv._clear=()=>{c.clearRect(0,0,cv.width,cv.height);onEnd&&onEnd(null)};
 }
 
+
+/* ---------- נעילה ומדריך ---------- */
+let pinBuf="";
+function vLock(){
+  return `<div class="wrap" style="padding-top:16vh;text-align:center">
+    <div class="mark" style="font-size:40px;font-weight:800;color:var(--gold)">${esc(T('app'))}</div>
+    <div class="muted" style="margin:6px 0 26px">${esc(T('pin'))}</div>
+    <div style="font-size:30px;letter-spacing:14px;height:40px">${"•".repeat(pinBuf.length)}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:290px;margin:18px auto">
+      ${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="btn" data-act="pind" data-n="${n}"
+        style="margin:0;font-size:22px;padding:16px">${n}</button>`).join("")}
+      <button class="btn" data-act="pinback" style="margin:0;padding:16px">⌫</button>
+      <button class="btn" data-act="pind" data-n="0" style="margin:0;font-size:22px;padding:16px">0</button>
+      <button class="btn primary" data-act="pinok" style="margin:0;padding:16px">✓</button>
+    </div>
+    <div class="tiny" id="pinmsg">נעילת מסך מקומית. אינה מצפינה את הנתונים על המכשיר.</div></div>`}
+const GUIDE=[
+ {i:"🚗",t:"בדיקה מתחילה במספר רכב",d:"הזן מספר ולחץ שליפה — תוצר, דגם, שנה, שלדה, צבע ומידות צמיגים נטענים ממשרד התחבורה, יחד עם היסטוריית ק״מ, ריקולים ושינוי מבנה."},
+ {i:"⚖",t:"רשום ברישיון מול נמצא בפועל",d:"שדות הזיהוי כפולים. אי-התאמה במספר שלדה עוצרת את הבדיקה; אי-התאמה בצבע, בצמיגים או במספר מנוע נרשמת לבד בהערות הכלליות."},
+ {i:"🔧",t:"ליקויים בלשון הנוהל",d:"כל אבחנה נבחרת מרשימת נספח 5 בניסוח המחייב. אפשר להוסיף הערת בוחן חופשית וצילומים — הם נדפסים בנספח נפרד, לא בטופס האחיד."},
+ {i:"✎",t:"הרשימות בשליטתך",d:"הגדרות ← עריכת רשימות ליקויים: העבר אבחנה לסעיף אחר, שנה סדר, הוסף אבחנות משלך, וקבע מה נכלל בבדיקת מנוע או שילדה בלבד."},
+ {i:"📵",t:"עובד בלי רשת",d:"הכול נשמר על המכשיר. בבור אין קליטה — פתח את ההזמנה מראש והנתונים כבר יהיו שמורים."}
+];
+let gStep=0;
+function vGuide(){const g=GUIDE[gStep],last=gStep===GUIDE.length-1;
+  return `<div class="wrap" style="padding-top:9vh">
+    <div style="text-align:center;font-size:52px">${g.i}</div>
+    <h2 style="text-align:center;font-size:21px;margin:14px 0 8px">${esc(g.t)}</h2>
+    <div class="muted" style="text-align:center;line-height:1.7">${esc(g.d)}</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin:26px 0">
+      ${GUIDE.map((_,i)=>`<span style="width:7px;height:7px;border-radius:50%;background:${
+        i===gStep?"var(--gold)":"var(--line)"}"></span>`).join("")}</div>
+    <button class="btn solid" data-act="gnext">${last?esc(T('ok')):esc(T('next'))}</button>
+    ${last?"":`<button class="btn" data-act="gskip">דלג</button>`}</div>`}
+
+/* תזכורות: פועלות כל עוד האפליקציה פתוחה */
+function scheduleNotes(){
+  if(!S.notify||!("Notification" in window)||Notification.permission!=="granted")return;
+  const now=Date.now();
+  S.appts.filter(a=>a.date===today()).forEach(a=>{
+    const t=new Date(a.date+"T"+(a.time||"09:00")).getTime()-15*60000;
+    if(t>now&&t-now<12*3600e3)setTimeout(()=>{try{new Notification("בדיקה בעוד 15 דקות",
+      {body:(a.plate||"")+" · "+(a.name||""),icon:"icon-192.png"})}catch(e){}},t-now)});
+}
 /* ---------- רשומת בדיקה ---------- */
 const TABS=["t_veh","t_ins","t_pho","t_def","t_sum"];
 function vRec(){
@@ -1088,6 +1252,7 @@ function vTSum(r){
     <canvas class="sig" id="sig2"></canvas>
     <button class="btn sm" data-act="sigclear" data-w="2">${esc(T('clearsig'))}</button></div>
   <button class="btn solid" data-act="print">${esc(T('pdf'))}</button>
+  <button class="btn primary" data-act="share">שליחת סיכום ללקוח</button>
   <button class="btn" data-act="finish">${r.status==="done"?"בדיקה סגורה":"סגירת הבדיקה"}</button>
   <button class="btn danger" data-act="delrec">${esc(T('del'))}</button>`}
 function afterRec(){
@@ -1112,7 +1277,7 @@ function vArchive(){
    <div class="f"><input data-act="aq" placeholder="${esc(T('search'))} — מספר רכב, שם, תאריך" value="${esc(aq)}"></div>
    <div class="tiny">הנוהל מחייב שמירת עותקי טפסים 24 חודשים לפחות. ייצא גיבוי בקביעות.</div>
    <div class="list">${list.length?list.map(r=>{const c=counts(r);
-     return `<button class="it" data-act="open" data-id="${esc(r.id)}">
+     return `<button class="it" data-act="open" data-id="${esc(r.id)}" data-lp="${esc(r.id)}">
        <div class="main"><div class="t">${esc(r.veh.plate||"ללא מספר")} · ${esc(r.veh.make||"")} ${esc(r.veh.model||"")}</div>
        <div class="d">${esc(r.ins.date)} · ${esc(r.buyer.name||r.seller.name||"")} · ${c.bad} ליקויים</div></div>
        <span class="pill ${r.status==="done"?"ok":""}">${esc(r.status==="done"?T('complete'):T('inprog'))}</span></button>`}).join("")
@@ -1215,6 +1380,58 @@ function vEditor(){
   </div></div>`}
 function saveMap(){store.set("map",S.map);store.set("scope",S.scope)}
 
+
+/* ---------- אודות ---------- */
+const STORE_URL="https://barakaflalo.github.io/appnest";
+const FEEDBACK="appnest55@gmail.com";
+function vAbout(){
+  return bar(T('about'))+`<div class="wrap">
+   <div style="text-align:center;padding:24px 0 6px">
+     <div style="font-size:44px;font-weight:800;color:var(--gold);letter-spacing:-1px">${esc(T('app'))}</div>
+     <div class="muted">${esc(T('tag'))}</div>
+     <div class="tiny" style="margin-top:4px">גרסה 1.3</div>
+   </div>
+   <div class="card">
+     <div class="kv-row"><span class="muted">${esc(T('about_dev'))}</span><b>Barak Aflalo</b></div>
+     <div class="kv-row"><span class="muted">${esc(T('about_plat'))}</span><b>PWA · HTML5</b></div>
+     <div class="kv-row"><span class="muted">${esc(T('about_store'))}</span><b>${esc(T('about_ondev'))}</b></div>
+     <div class="kv-row"><span class="muted">${esc(T('about_lic'))}</span><b>© AppNest 2026</b></div>
+   </div>
+   <button class="btn" data-act="a_store">🏪 ${esc(T('about_store_link'))}</button>
+   <button class="btn" data-act="a_share">↗ ${esc(T('about_share'))}</button>
+   <button class="btn" data-act="a_fb">✉ ${esc(T('about_fb'))}</button>
+   <button class="btn" data-act="guideagain">📘 ${esc(T('guide'))}</button>
+   <button class="btn" data-act="a_priv">🔒 ${esc(T('about_priv'))}</button>
+   <div class="sec">${esc(T('about_disc'))}</div>
+   <div class="card tight"><div class="tiny" style="line-height:1.7">${esc(T('disc_txt'))}</div></div>
+   <div class="tiny" style="text-align:center;margin-top:20px;opacity:.6">AppNest · appnest55@gmail.com</div>
+  </div>`}
+function privacyHTML(){return `<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>מדיניות פרטיות · ${esc(T('app'))}</title>
+<style>body{font-family:system-ui,'Segoe UI',sans-serif;max-width:720px;margin:0 auto;padding:24px;line-height:1.7;
+background:#0d0d0f;color:#f2f2f4}h1{color:#c9a227}h2{color:#e6c85c;font-size:17px;margin-top:24px}
+a{color:#e6c85c}.en{direction:ltr;text-align:left;border-top:1px solid #2a2a31;margin-top:32px;padding-top:16px}</style></head>
+<body><h1>מדיניות פרטיות — ${esc(T('app'))}</h1>
+<p>אפליקציית ${esc(T('app'))} של AppNest נבנתה כדי לשמור על פרטיותך באופן מלא.</p>
+<h2>נתונים על המכשיר בלבד</h2><p>כל הבדיקות, הצילומים, פרטי הלקוחות וההגדרות נשמרים מקומית על המכשיר שלך
+(localStorage ו-IndexedDB). אין חשבון, אין שרת של AppNest, ואיננו אוספים או רואים שום נתון שלך.</p>
+<h2>מה נשלח החוצה, ומתי</h2><p>שני דברים בלבד, ורק ביוזמתך:</p>
+<p>1. שליפת נתוני רכב — כשאתה לוחץ "שליפה", מספר הרכב נשלח ל-data.gov.il (מאגר משרד התחבורה הפתוח).<br>
+2. בינה מלאכותית — אם חיברת מפתח, הטקסט שאתה מזין נשלח ישירות לספק שבחרת (Anthropic / Google / OpenAI),
+ולא דרך AppNest. בלי מפתח, מנוע החוקים עובד מקומית ללא שליחה.</p>
+<h2>מצלמה</h2><p>הצילומים נשמרים על המכשיר בלבד ואינם נשלחים לשום מקום.</p>
+<h2>אין מעקב</h2><p>אין אנליטיקה, אין פרסום, אין קובצי מעקב. שליטה מלאה: גיבוי, ייצוא ומחיקה בכל עת.</p>
+<h2>הבהרה</h2><p>הדוחות והערכות הבינה הם עזר מקצועי בלבד ואינם תחליף לבדיקה מוסמכת במכון מורשה.</p>
+<h2>יצירת קשר</h2><p><a href="mailto:appnest55@gmail.com">appnest55@gmail.com</a></p>
+<div class="en"><h1>Privacy Policy — ${esc(T('app'))}</h1>
+<p>All data (inspections, photos, customer details, settings) is stored locally on your device only.
+No account, no AppNest server, no data collection.</p>
+<p>Data leaves the device only on your action: the plate number to Israel's open vehicle registry when you tap fetch,
+and — only if you connect an API key — the text you enter goes directly to your chosen AI provider, never through AppNest.
+Photos stay on the device. No tracking, analytics or ads. Reports and AI suggestions are a professional aid only,
+not a substitute for a certified inspection. Contact: appnest55@gmail.com</p></div>
+</body></html>`}
+
 /* ---------- הגדרות ---------- */
 function vSettings(){
   const th=[["black","שחור וזהב"],["blue","כחול כהה"],["green","ירוק"],["steel","פלדה"],["rust","חלודה"]];
@@ -1257,21 +1474,44 @@ function vSettings(){
     <div class="tiny" id="motestout">בדוק פעם אחת מהטלפון. אם הפנייה הישירה נחסמת, הזן כתובת proxy כאן.</div>
   </div>
 
-  <div class="sec">${esc(T('aiconn'))}</div>
+  <div class="sec">${esc(T('aiconn'))} ${aiConnected()
+    ?`<span style="color:var(--ok)">● ${esc(T('ai_status_on'))}</span>`
+    :`<span style="color:var(--tx3)">● ${esc(T('ai_status_off'))}</span>`}</div>
   <div class="card">
     <div class="f"><label>${esc(T('provider'))}</label><select data-s="ai.provider">
-      <option value="">מנוע חוקים בלבד (חינם, אופליין)</option>
-      <option value="claude" ${S.ai.provider==="claude"?"selected":""}>Anthropic Claude</option>
-      <option value="gemini" ${S.ai.provider==="gemini"?"selected":""}>Google Gemini</option>
-      <option value="openai" ${S.ai.provider==="openai"?"selected":""}>OpenAI</option>
-      <option value="local" ${S.ai.provider==="local"?"selected":""}>מודל מקומי (Ollama / LM Studio)</option>
+      <option value="">${esc(T('ai_free'))} — מנוע חוקים (אופליין)</option>
+      ${Object.entries(AI_PROVIDERS).map(([k,v])=>`<option value="${k}" ${S.ai.provider===k?"selected":""}>
+        ${esc(v.name)} · ${esc(T(v.tagk))}</option>`).join("")}
     </select></div>
-    ${S.ai.provider&&S.ai.provider!=="local"?`<div class="f"><label>${esc(T('apikey'))}</label>
-      <input type="password" data-s="ai.key" value="${esc(S.ai.key)}" placeholder="sk-…"></div>`:""}
-    ${S.ai.provider==="local"?`<div class="f"><label>כתובת מקומית</label>
-      <input data-s="ai.url" value="${esc(S.ai.url)}" placeholder="http://localhost:11434/v1/chat/completions"></div>
-      <div class="f"><label>מודל</label><input data-s="ai.model" value="${esc(S.ai.model)}" placeholder="llama3"></div>`:""}
-    <div class="tiny">הבינה בוחרת אבחנות מתוך רשימת נספח 5 בלבד ואינה מנסחת טקסט חדש. בלי חיבור — מנוע החוקים עובד אופליין.</div>
+    ${(()=>{const pv=AI_PROVIDERS[S.ai.provider];if(!pv)return `<div class="tiny">${esc(T('ai_sends'))}</div>`;
+      return `${pv.key?`<div class="f"><label>${esc(T('apikey'))}</label>
+        <input type="password" data-s="ai.key" value="${esc(S.ai.key)}" placeholder="••••••••"></div>`:""}
+      ${pv.url?`<div class="f"><label>כתובת מקומית</label>
+        <input data-s="ai.url" value="${esc(S.ai.url)}" placeholder="http://localhost:11434/v1/chat/completions"></div>`:""}
+      ${pv.models&&pv.models.length?`<div class="f"><label>${esc(T('ai_model'))}</label>
+        <select data-s="ai.model">${pv.models.map((m,i)=>`<option value="${esc(m)}" ${S.ai.model===m?"selected":""}>
+          ${esc(pv.modelNames[i]||m)}</option>`).join("")}</select></div>`:
+        pv.url?`<div class="f"><label>${esc(T('ai_model'))}</label>
+          <input data-s="ai.model" value="${esc(S.ai.model)}" placeholder="llama3"></div>`:""}
+      <div class="alert info" style="font-size:12.5px">${esc(pv.howto)}</div>
+      <div class="row">
+        <a class="btn sm" style="flex:none" href="${pv.get}" target="_blank">${esc(T('ai_getkey'))} ↗</a>
+        ${pv.video?`<a class="btn sm" style="flex:none" href="${pv.video}" target="_blank">${esc(T('ai_video'))} ▶</a>`:""}
+        <button class="btn sm" style="flex:none" data-act="aitest">${esc(T('ai_test'))}</button>
+        ${aiConnected()?`<button class="btn sm" style="flex:none" data-act="aidisc">${esc(T('ai_disconnect'))}</button>`:""}
+      </div>
+      <div class="tiny" id="aitestout" style="margin-top:6px">${esc(T('ai_sends'))}</div>`})()}
+  </div>
+
+  <div class="sec">${esc(T('pin'))}</div>
+  <div class="card">
+    <button class="btn ${S.pin?"":"primary"}" data-act="setpin">${S.pin?"שינוי או ביטול הקוד":"קביעת קוד נעילה"}</button>
+    <div class="alert ${S.pin?"ok":"warn"}">${S.pin
+      ?"נעילה פעילה. שים לב: זו נעילת מסך בלבד, לא הצפנה של הנתונים."
+      :"האפליקציה מחזיקה תעודות זהות של לקוחות וצילומי רישיונות. מומלץ לקבוע קוד."}</div>
+    <button class="btn" data-act="notify">${S.notify?"התראות מופעלות ✓":"הפעלת תזכורות ליומן"}</button>
+    <div class="tiny">התזכורת קופצת 15 דקות לפני מועד, כל עוד האפליקציה פתוחה ברקע.</div>
+    <button class="btn" data-act="guideagain">הצגת המדריך שוב</button>
   </div>
 
   <div class="sec">${esc(T('t_def'))}</div>
@@ -1290,7 +1530,7 @@ function vSettings(){
 
   <div class="sec">${esc(T('about'))}</div>
   <div class="card tight"><div class="tiny">
-    ${esc(T('app'))} · גרסה 1.1<br>בנוי לפי הוראת נוהל 127 של משרד התחבורה (עדכון 1.10.2014).<br>
+    ${esc(T('app'))} · גרסה 1.3<br>בנוי לפי הוראת נוהל 127 של משרד התחבורה (עדכון 1.10.2014).<br>
     Barak Aflalo · © AppNest 2026<br><br>
     כל הנתונים נשמרים על המכשיר בלבד ואינם עוברים לשום שרת. פניות למשרד התחבורה ולספק הבינה
     יוצאות רק כשאתה מבקש זאת.</div></div></div>`}
@@ -1400,7 +1640,7 @@ document.addEventListener("click",async e=>{
     case "dash":go("dash");break;
     case "theme":{const o=["black","blue","green","steel","rust"];
       S.theme=o[(o.indexOf(S.theme)+1)%o.length];store.set("theme",S.theme);applyChrome();break}
-    case "mode":{S.mode=S.mode==="dark"?"light":"dark";store.set("mode",S.mode);render();break}
+    case "mode":S.mode=S.mode==="dark"?"light":"dark";store.set("mode",S.mode);render();break;
     case "langmenu":{const ks=Object.keys(LANG);S.lang=ks[(ks.indexOf(S.lang)+1)%ks.length];
       store.set("lang",S.lang);render();break}
     case "new":gate={kind:"full",lic:null,drv:null,sig:null};go("gate");break;
@@ -1501,6 +1741,22 @@ document.addEventListener("click",async e=>{
       if(confirm("אישור אחרון — ייצאת גיבוי?")){
         S.recs=[];S.appts=[];persist();indexedDB.deleteDatabase("bdk_photos");_db=null;home();toast(T('deleted'))}}break;
     case "editor":go("editor");break;
+    case "about":go("about");break;
+    case "a_store":window.open(STORE_URL,"_blank");break;
+    case "a_share":{const u=location.href;
+      if(navigator.share)navigator.share({title:T('app'),text:T('tag'),url:u}).catch(()=>{});
+      else{try{navigator.clipboard.writeText(u);toast("הקישור הועתק")}catch(e){toast(u)}}break}
+    case "a_fb":window.location.href="mailto:"+FEEDBACK+"?subject="+encodeURIComponent(T('app')+" — משוב");break;
+    case "a_priv":{const w2=window.open("","_blank");
+      if(w2){w2.document.write(privacyHTML());w2.document.close()}
+      else{const b=new Blob([privacyHTML()],{type:"text/html"});window.open(URL.createObjectURL(b),"_blank")}break}
+    case "aitest":{const o=$("#aitestout");o.innerHTML='<span class="spin"></span> בודק…';
+      try{const r=await aiSuggest("נזילת שמן מהמנוע",D.engine.slice(0,10));
+        o.innerHTML=aiConnected()?'<span style="color:var(--ok)">✔ הבינה מגיבה. חיבור תקין.</span>'
+          :'<span style="color:var(--warn)">מנוע החוקים פעיל (לא חובר מפתח).</span>';}
+      catch(err){o.innerHTML='<span style="color:var(--bad)">✕ החיבור נכשל: '+esc(err.message)+'</span>'}break}
+    case "aidisc":{S.ai={provider:"",key:"",url:"",model:""};store.set("ai",S.ai);render();toast(T('ai_disconnect'));break}
+
     case "phtab":phTab=t.dataset.k;render();break;
     case "unlock":{const d=dget(r,+t.dataset.n);d.st="";saveCur();render();break}
     case "edrow":{const n=+t.dataset.n;edRow=edRow===n?null:n;render();break}
@@ -1539,6 +1795,62 @@ document.addEventListener("click",async e=>{
         catch(e){toast("הקובץ אינו תקין")}};fr.readAsText(inp.files[0])};inp.click();break}
     case "edreset":if(confirm("לאפס את כל רשימות הליקויים לברירת המחדל של נספח 5?")){
       S.map=defaultMap();S.scope=JSON.parse(JSON.stringify(SCOPE_DEF));saveMap();render();toast("אופס")}break;
+    case "pind":pinBuf=(pinBuf+t.dataset.n).slice(0,8);render();break;
+    case "pinback":pinBuf=pinBuf.slice(0,-1);render();break;
+    case "pinok":{if(hash(pinBuf)===S.pin){S.locked=false;pinBuf="";render();scheduleNotes()}
+      else{pinBuf="";render();const m=$("#pinmsg");if(m){m.textContent="קוד שגוי";m.style.color="var(--bad)"}}break}
+    case "gnext":if(gStep<GUIDE.length-1){gStep++;render()}else{S.seen=true;store.set("seen",true);render()}break;
+    case "gskip":S.seen=true;store.set("seen",true);render();break;
+    case "guideagain":S.seen=false;gStep=0;render();break;
+    case "setpin":{const v=prompt("קוד חדש (4–8 ספרות). ריק = ביטול הנעילה:");
+      if(v===null)break;
+      if(!v.trim()){S.pin=null;store.del("pin");toast("הנעילה בוטלה")}
+      else if(/^\d{4,8}$/.test(v.trim())){S.pin=hash(v.trim());store.set("pin",S.pin);toast("הקוד נקבע")}
+      else toast("נדרשות 4–8 ספרות");
+      render();break}
+    case "notify":{if(!("Notification" in window))return toast("הדפדפן לא תומך בהתראות");
+      const p=await Notification.requestPermission();
+      S.notify=p==="granted";store.set("notify",S.notify);
+      toast(S.notify?"התראות הופעלו":"ההרשאה נדחתה");scheduleNotes();render();break}
+    case "share":{const rec=S.cur,c=counts(rec);
+      const ord=rec.orderer==="seller"?rec.seller:rec.buyer;
+      const bad=form().filter(x=>(rec.defects[x.n]||{}).st==="bad")
+        .map(x=>"• "+x.t+": "+((rec.defects[x.n].items||[]).join(", ")||"—")).join("\n");
+      const txt=["סיכום בדיקת רכב — "+(S.inst.name||T('draft')),
+        "מספר רכב: "+rec.veh.plate+"  |  "+rec.veh.make+" "+rec.veh.model+" "+rec.veh.year,
+        "תאריך: "+rec.ins.date+"  |  בודק: "+rec.ins.inspector,
+        "סוג בדיקה: "+(rec.kind==="full"?T('kind_full'):rec.kind==="basic"?T('kind_basic'):
+          rec.kind==="engine"?T('kind_engine'):T('kind_chassis')),
+        "",c.bad?"ליקויים שנמצאו ("+c.bad+"):\n"+bad:"לא נמצאו ליקויים בסעיפים שנבדקו.",
+        c.safety?"\n⚠ נמצא ליקוי בטיחותי המחייב תיקון מיידי.":"",
+        "\nהאחריות על הבדיקה: 3 חודשים או 6,000 ק״מ, לפי המוקדם.",
+        "הדוח המלא נמסר בנפרד."].filter(x=>x!=="").join("\n");
+      sheet("שליחת סיכום ל"+(ord.name||"לקוח"),
+        `<div class="tiny" style="white-space:pre-wrap;max-height:220px;overflow:auto;
+          border:1px solid var(--line);border-radius:10px;padding:10px">${esc(txt)}</div>
+         <div class="tiny" style="margin:8px 0">זהו סיכום טקסט בלבד. את הדוח המלא הפק בכפתור ״${esc(T('pdf'))}״ ושמור כ-PDF.</div>
+         <button class="btn solid" data-act="shwa" data-t="${esc(encodeURIComponent(txt))}"
+           data-ph="${esc((ord.phone||"").replace(/\D/g,""))}">שליחה בוואטסאפ</button>
+         <button class="btn" data-act="shmail" data-t="${esc(encodeURIComponent(txt))}"
+           data-p="${esc(rec.veh.plate)}">שליחה במייל</button>
+         <button class="btn" data-act="shcopy" data-t="${esc(encodeURIComponent(txt))}">העתקה</button>`);
+      break}
+    case "shwa":{let ph=t.dataset.ph||"";
+      if(ph.startsWith("0"))ph="972"+ph.slice(1);
+      window.open("https://wa.me/"+ph+"?text="+t.dataset.t,"_blank");break}
+    case "shmail":window.location.href="mailto:?subject="+encodeURIComponent("סיכום בדיקת רכב "+t.dataset.p)+
+      "&body="+t.dataset.t;break;
+    case "shcopy":try{await navigator.clipboard.writeText(decodeURIComponent(t.dataset.t));toast("הועתק")}
+      catch(e){toast("ההעתקה נכשלה")}break;
+    case "recmenu":{const rec=S.recs.find(x=>x.id===t.dataset.id);if(!rec)break;
+      sheet(rec.veh.plate||T('archive'),
+        `<button class="btn primary" data-act="open" data-id="${esc(rec.id)}">${esc(T('edit'))}</button>
+         <button class="btn danger" data-act="killrec" data-id="${esc(rec.id)}">${esc(T('del'))}</button>`);break}
+    case "killrec":if(confirm(T('confirm'))){
+      const rec=S.recs.find(x=>x.id===t.dataset.id);
+      if(rec){for(const ids of Object.values(rec.photos||{}))for(const id of ids)await phDel(id);
+        for(const d of Object.values(rec.defects||{}))for(const id of (d.photos||[]))await phDel(id)}
+      S.recs=S.recs.filter(x=>x.id!==t.dataset.id);persist();closeSheet();render();toast(T('deleted'))}break;
     case "sheetclose":closeSheet();break;
   }
 });
@@ -1557,6 +1869,8 @@ document.addEventListener("change",e=>{
     if(el.checked&&i<0)arr.push(n); else if(!el.checked&&i>=0)arr.splice(i,1);
     arr.sort((a,b)=>a-b);saveMap();return}
   if(el.dataset.s){const p=el.dataset.s,v=el.value;
+    if(p==="ai.provider"){const pv=AI_PROVIDERS[v];
+      S.ai.provider=v;S.ai.model=pv&&pv.models&&pv.models[0]||"";store.set("ai",S.ai);render();return}
     if(p.includes(".")){const[a,b]=p.split(".");S[a][b]=v;store.set(a,S[a])}
     else{S[p]=v;store.set(p,v)}
     render();return}
@@ -1569,6 +1883,13 @@ document.addEventListener("input",e=>{
     const n=document.querySelector("[data-act=aq]");if(n){n.focus();n.setSelectionRange(pos,pos)}return}
   if(el.dataset.act==="dnote"&&S.cur){dget(S.cur,+el.dataset.n).notes=el.value;saveCur();return}
 });
+let lpT=null;
+document.addEventListener("pointerdown",e=>{const el=e.target.closest("[data-lp]");if(!el)return;
+  lpT=setTimeout(()=>{lpT=null;
+    const b=document.createElement("button");b.dataset.act="recmenu";b.dataset.id=el.dataset.lp;
+    b.style.display="none";document.body.appendChild(b);b.click();b.remove()},600)});
+["pointerup","pointermove","pointercancel","scroll"].forEach(ev=>
+  document.addEventListener(ev,()=>{if(lpT){clearTimeout(lpT);lpT=null}},{passive:true}));
 function dl(name,content,type){const b=new Blob([content],{type});const u=URL.createObjectURL(b);
   const a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)}
 function sheet(title,html){const d=document.createElement("div");d.className="sheet";d.id="sheet";
@@ -1580,7 +1901,9 @@ function closeSheet(){const s=$("#sheet");if(s)s.remove()}
 /* ===================== התחלה ===================== */
 S.map=store.get("map",null)||defaultMap();
 if(!S.scope)S.scope=JSON.parse(JSON.stringify(SCOPE_DEF));
+if(S.pin)S.locked=true;
 applyChrome();render();
+if(!S.locked)scheduleNotes();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
