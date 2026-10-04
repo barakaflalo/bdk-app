@@ -2,7 +2,7 @@
   "name": "בדק — בדיקת רכב לפני קנייה",
   "short_name": "בדק",
   "description": "ניהול בדיקת רכב לצרכי קנייה ומכירה לפי הוראת נוהל 127",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
