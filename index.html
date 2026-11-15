@@ -2,7 +2,6 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
-<script>/* Moved to its own address. Redirect ONLY from the old GitHub Pages address (same repo feeds both). */(function(){try{if(location.hostname==='barakaflalo.github.io'){var p=location.pathname.replace(/^\/[^\/]+/,'')||'/';location.replace('https://bdk-app.pages.dev'+p+location.search+location.hash);}}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0d0d0f">
 <title>בדק — בדיקת רכב לפני קנייה</title>
@@ -36,6 +35,7 @@ body{padding-bottom:env(safe-area-inset-bottom)}
 button,input,select,textarea{font-family:inherit;font-size:16px;color:inherit}
 button{cursor:pointer;border:none;background:none}
 a{color:var(--gold-soft)}
+a.btn{text-decoration:none}
 
 /* ---------- layout ---------- */
 .wrap{max-width:760px;margin:0 auto;padding:0 var(--pad) 90px}
@@ -95,6 +95,7 @@ a{color:var(--gold-soft)}
 .dual .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .dual .pair label{font-size:11.5px;color:var(--tx3);display:block;margin-bottom:4px}
 .dual input{width:100%;padding:10px;border-radius:9px;background:var(--card);border:1px solid var(--line);color:var(--tx)}
+@media(max-width:430px){.dual .pair{grid-template-columns:1fr}}
 .dual.mismatch{border-color:var(--bad)}
 .dual .flag{margin-top:8px;font-size:12.5px;color:var(--bad);font-weight:600}
 .dual.blocked{border-color:var(--bad);background:rgba(209,72,63,.07)}
@@ -192,6 +193,21 @@ a{color:var(--gold-soft)}
 .fade{animation:fd .18s ease}
 @keyframes fd{from{opacity:0;transform:translateY(5px)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- bottom navigation ---------- */
+.nav{position:fixed;bottom:0;inset-inline:0;z-index:50;max-width:760px;margin:0 auto;background:var(--bg2);
+  border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);
+  padding-bottom:env(safe-area-inset-bottom)}
+.nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:58px;
+  padding:7px 2px;color:var(--tx3);font-size:11.5px;line-height:1.2}
+.nav button .ni{font-size:19px;line-height:1.1}
+.nav button.on{color:var(--gold-soft);font-weight:700}
+.nav button:focus-visible,.backbtn:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+body.tabs-on .wrap{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+body.tabs-on .toast{bottom:calc(78px + env(safe-area-inset-bottom))}
+.backbtn{flex:none;max-width:44%;height:38px;padding:0 12px;border-radius:10px;border:1px solid var(--gold);
+  color:var(--gold-soft);font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 
 /* ---------- print ---------- */
 #printarea{display:none}
@@ -585,6 +601,56 @@ about_dev:"Desarrollador",about_plat:"Plataforma",about_store:"Almacenamiento",a
 disc_txt:"Todos los datos de la app, incluidas las sugerencias de IA, son una ayuda para el inspector y no sustituyen una inspección certificada. El informe oficial se emite mediante un centro autorizado. Uso bajo responsabilidad del usuario.",
 ai_free:"Gratis",ai_api:"Clave",ai_local:"Local",ai_status_on:"Conectado",ai_status_off:"Desconectado",ai_model:"Modelo",ai_getkey:"Obtener clave",ai_howto:"Pasos",ai_video:"Vídeo",ai_test:"Probar conexión",ai_disconnect:"Desconectar",ai_sends:"Las funciones de IA envían tu texto al proveedor elegido. Los diagnósticos siempre provienen de la lista del Anexo 5.",priv:"Privacidad"}
 };
+
+/* מפתחות נוספים — [עברית, English, العربية, Русский, Español] */
+const LX={
+ver:["גרסה","Version","الإصدار","Версия","Versión"],
+more:["עוד","More","المزيد","Ещё","Más"],
+pressAgainExit:["לחץ שוב כדי לצאת","Press back again to exit","اضغط مرة أخرى للخروج","Нажмите ещё раз для выхода","Pulsa otra vez para salir"],
+upd_ready:["גרסה חדשה הותקנה","A new version was installed","تم تثبيت إصدار جديد","Установлена новая версия","Se instaló una versión nueva"],
+upd_reload:["רענון","Reload","تحديث","Обновить","Recargar"],
+file_warn:["האפליקציה נפתחה מקובץ מקומי. התקנה ועבודה בלי רשת יפעלו רק מהכתובת באינטרנט.","The app was opened from a local file. Install and offline use work only from the web address.","تم فتح التطبيق من ملف محلي. التثبيت والعمل دون اتصال يعملان فقط من عنوان الويب.","Приложение открыто из локального файла. Установка и офлайн работают только с веб-адреса.","La app se abrió desde un archivo local. La instalación y el uso sin conexión solo funcionan desde la dirección web."],
+today_lbl:["היום","Today","اليوم","Сегодня","Hoy"],
+open_recs:["בדיקות פתוחות","Open inspections","فحوصات مفتوحة","Открытые проверки","Inspecciones abiertas"],
+upcoming:["מועדים קרובים","Upcoming appointments","المواعيد القادمة","Ближайшие записи","Próximas citas"],
+cont:["המשך","Continue","متابعة","Продолжить","Continuar"],
+home_empty:["אין בדיקות פתוחות. התחל בדיקה חדשה.","No open inspections. Start a new one.","لا توجد فحوصات مفتوحة. ابدأ فحصاً جديداً.","Нет открытых проверок. Начните новую.","No hay inspecciones abiertas. Empieza una nueva."],
+noplate:["ללא מספר","No plate","بدون رقم","Без номера","Sin matrícula"],
+n_defects:["ליקויים","defects","أعطال","дефектов","defectos"],
+loaded:["הנתונים נטענו — השלם את עמודת ״נמצא בפועל״","Data loaded — fill in the “Actual” column","تم تحميل البيانات — أكمل عمود «الواقع»","Данные загружены — заполните столбец «Фактически»","Datos cargados — completa la columna «Real»"],
+mo_lasttest:["טסט אחרון","Last annual test","آخر فحص سنوي","Последний техосмотр","Última ITV"],
+mo_tokef:["תוקף רישיון הרכב","Licence valid until","صلاحية الرخصة حتى","Лицензия действительна до","Permiso válido hasta"],
+mo_expired:["רישיון הרכב פג תוקף","The vehicle licence has expired","انتهت صلاحية رخصة المركبة","Срок лицензии ТС истёк","El permiso del vehículo ha caducado"],
+mo_km_last:["ק״מ בטסט האחרון","Odometer at last test","العداد في آخر فحص","Пробег на последнем техосмотре","Kilometraje en la última ITV"],
+mo_km_saved:["קריאות ק״מ שנשמרו במכשיר זה","Odometer readings saved on this device","قراءات العداد المحفوظة على هذا الجهاز","Показания пробега, сохранённые на устройстве","Lecturas guardadas en este dispositivo"],
+mo_km_note:["המאגר מחזיק רק את הקריאה מהטסט האחרון. היסטוריה נבנית כאן מכל שליפה.","The registry holds only the last test reading. History builds up here with each lookup.","السجل يحتفظ فقط بقراءة آخر فحص. يُبنى السجل هنا مع كل استعلام.","В реестре хранится только последнее показание. История копится здесь при каждом запросе.","El registro solo guarda la última lectura. El historial se construye aquí con cada consulta."],
+mo_owners:["בעלויות רשומות","Registered owners","الملاك المسجلون","Зарегистрированные владельцы","Titulares registrados"],
+mo_norecall:["לא נמצא ריקול פתוח לרכב זה","No open recall found for this vehicle","لا يوجد استدعاء مفتوح لهذه المركبة","Открытых отзывов для этого ТС не найдено","No hay llamadas a revisión abiertas"],
+mo_recall_n:["ריקול שלא בוצע","Recall not performed","استدعاء لم يُنفذ","Невыполненный отзыв","Llamada a revisión pendiente"],
+mo_recall_fail:["בדיקת הריקול לא הצליחה — שלוף שוב כשיש רשת","The recall check failed — fetch again when online","فشل فحص الاستدعاء — أعد الجلب عند توفر الشبكة","Проверка отзывов не удалась — повторите при наличии сети","Falló la comprobación — vuelve a consultar con conexión"],
+mo_part_fail:["חלק מהמאגרים לא נטענו","Some registry datasets did not load","بعض قواعد البيانات لم تُحمَّل","Часть реестров не загрузилась","Algunos registros no se cargaron"],
+mo_struct:["שינוי מבנה רשום במאגר (כולל גם וו גרירה או גגון — לבדוק ברישיון)","Structural change on record (also covers a tow hook or roof rack — check the licence)","تغيير هيكلي مسجل (يشمل أيضاً خطاف السحب أو حامل السقف — راجع الرخصة)","Зарегистрировано изменение конструкции (включая фаркоп или багажник — проверьте лицензию)","Cambio estructural registrado (incluye enganche o baca — revisa el permiso)"],
+mo_color:["שינוי צבע רשום במאגר","Colour change on record","تغيير لون مسجل","Зарегистрирована смена цвета","Cambio de color registrado"],
+mo_tire:["שינוי מידות צמיגים רשום במאגר","Tyre size change on record","تغيير مقاس الإطارات مسجل","Зарегистрировано изменение размера шин","Cambio de medida de neumáticos registrado"],
+mo_lpg:["מערכת גפ״מ רשומה במאגר","LPG system on record","نظام غاز مسجل","Зарегистрирована ГБО","Sistema GLP registrado"],
+mo_orig:["מקוריות","Originality","الأصالة","Происхождение","Originalidad"],
+mo_lease:["ליסינג","leasing","تأجير تمويلي","лизинг","leasing"],
+mo_own_was:["בעלות קודמת","Previous ownership","ملكية سابقة","Прежний владелец","Titularidad anterior"],
+mo_roll:["במאגר נרשמו {a} ק״מ בטסט האחרון, והזנת {b}.","The registry shows {a} km at the last test, and you entered {b}.","السجل يظهر {a} كم في آخر فحص، وأدخلت {b}.","В реестре {a} км на последнем техосмотре, а введено {b}.","El registro indica {a} km en la última ITV y has introducido {b}."],
+mo_src:["מקור: data.gov.il — מאגרי משרד התחבורה. המידע אינו מחליף את הבדיקה ברכב עצמו.","Source: Ministry of Transport open data (data.gov.il). It does not replace inspecting the vehicle itself.","المصدر: بيانات وزارة المواصلات المفتوحة. لا تغني عن فحص المركبة نفسها.","Источник: открытые данные Минтранса. Не заменяет осмотр самого автомобиля.","Fuente: datos abiertos del Ministerio de Transporte. No sustituye la inspección del vehículo."],
+mo_old:["נתוני שליפה מגרסה קודמת — לחץ שליפה לרענון","Lookup data from an older version — fetch again to refresh","بيانات من إصدار سابق — أعد الجلب للتحديث","Данные из старой версии — запросите заново","Datos de una versión anterior — vuelve a consultar"],
+mo_ok:["✔ החיבור עובד. השליפה האוטומטית זמינה.","✔ Connection works. Automatic lookup is available.","✔ الاتصال يعمل. الجلب التلقائي متاح.","✔ Связь работает. Автозапрос доступен.","✔ La conexión funciona. La consulta automática está disponible."],
+mo_fail:["✕ הפנייה נכשלה","✕ The request failed","✕ فشل الطلب","✕ Запрос не удался","✕ La consulta falló"],
+ai_checking:["בודק…","Checking…","جارٍ الفحص…","Проверка…","Comprobando…"],
+ai_ok:["✔ המפתח תקין · {n} מודלים זמינים","✔ Key is valid · {n} models available","✔ المفتاح صالح · {n} نماذج متاحة","✔ Ключ действителен · доступно моделей: {n}","✔ Clave válida · {n} modelos disponibles"],
+ai_fail:["✕ החיבור נכשל","✕ Connection failed","✕ فشل الاتصال","✕ Не удалось подключиться","✕ Falló la conexión"],
+ai_nokey:["לא הוזן מפתח — מנוע החוקים פעיל","No key entered — the rule engine is active","لم يُدخل مفتاح — محرك القواعد يعمل","Ключ не введён — работает движок правил","Sin clave — el motor de reglas está activo"],
+ai_fallback:["הבינה לא זמינה — עברתי למנוע החוקים","AI unavailable — switched to the rule engine","الذكاء غير متاح — تم التحويل لمحرك القواعد","ИИ недоступен — включён движок правил","IA no disponible — se usó el motor de reglas"],
+ai_auto:["אוטומטי (מומלץ)","Automatic (recommended)","تلقائي (موصى به)","Авто (рекомендуется)","Automático (recomendado)"],
+back_home:["חזרה לאפליקציה","Back to the app","العودة للتطبيق","Назад в приложение","Volver a la app"]
+};
+["he","en","ar","ru","es"].forEach((l,i)=>{for(const k in LX)LANG[l][k]=LX[k][i]});
+const TF=(k,o)=>T(k).replace(/\{(\w+)\}/g,(m,x)=>o[x]!==undefined?o[x]:m);
 function T(k){const L=LANG[S.lang]||LANG.he;return L[k]!==undefined?L[k]:(LANG.en[k]!==undefined?LANG.en[k]:k)}
 
 /* ===================== state & storage ===================== */
@@ -639,7 +705,11 @@ function compress(file,max=1400,q=.72){return new Promise((res,rej)=>{
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const today=()=>new Date().toISOString().slice(0,10);
+const APP_VER="1.4.0";
+/* תאריך מקומי — toISOString מזיז את היום אחורה בישראל בשעות הלילה */
+const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const today=()=>ymd(new Date());
+const dmy=x=>{const m=String(x||"").match(/^(\d{4})-(\d{2})(?:-(\d{2}))?/);return m?(m[3]?m[3]+"/":"")+m[2]+"/"+m[1]:String(x||"")};
 const nowTime=()=>new Date().toTimeString().slice(0,5);
 function toast(m,ms=2200){const e=document.createElement("div");e.className="toast";e.textContent=m;
   document.body.appendChild(e);setTimeout(()=>e.remove(),ms)}
@@ -665,53 +735,95 @@ async function moFetch(rid,filters,limit){
 function plateVariants(p){const c=String(p).replace(/\D/g,"");const v=[c];
   if(c.length===7)v.push("0"+c); else if(c.length===8&&c[0]==="0")v.push(c.slice(1)); return v}
 
+/* שמות השדות נבדקו מול המאגרים החיים: במאגר הריקול השדה הוא MISPAR_RECHEV (אותיות גדולות);
+   שדה שלא קיים מחזיר 404 ולא "אין תוצאות". מאגר ההיסטוריה מחזיק רק את הק״מ מהטסט האחרון. */
 async function lookupPlate(plate){
-  const vars=plateVariants(plate); let veh=null,used=null;
-  for(const p of vars){const r=await moFetch(RES.veh,{mispar_rechev:p},1);if(r.length){veh=r[0];used=p;break}}
+  const vars=plateVariants(plate); let veh=null;
+  for(const p of vars){const r=await moFetch(RES.veh,{mispar_rechev:p},1);if(r.length){veh=r[0];break}}
   if(!veh)return null;
-  let hist=[],recall=[];
-  try{for(const p of vars)hist=hist.concat(await moFetch(RES.hist,{mispar_rechev:p},200))}catch(e){}
-  try{for(const p of vars)recall=recall.concat(await moFetch(RES.recall,{mispar_rechev:p},20))}catch(e){}
-  const kmH=hist.map(r=>({date:String(r.mivchan_acharon_dt||r.rishum_rishon_dt||"").split("T")[0],
-      km:parseInt(String(r.kilometer_test_aharon||"").replace(/\D/g,""))||null}))
-    .filter(x=>x.date||x.km).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
-  const h0=hist[0]||{};
+  const used=String(veh.mispar_rechev||vars[0]), failed=[];
+  const grab=async(name,rid,field,lim)=>{try{const seen=new Set(),out=[];
+      for(const p of vars)for(const x of await moFetch(rid,{[field]:p},lim))if(!seen.has(x._id)){seen.add(x._id);out.push(x)}
+      return out}catch(e){failed.push(name);return []}};
+  const [hist,recall,own]=await Promise.all([
+    grab("hist",RES.hist,"mispar_rechev",5),
+    grab("recall",RES.recall,"MISPAR_RECHEV",30),
+    grab("own",RES.own,"mispar_rechev",60)]);
+  const h0=hist[0]||{}, one=x=>String(x==null?"":x).trim()==="1";
+  const lastKm=parseInt(String(h0.kilometer_test_aharon==null?"":h0.kilometer_test_aharon).replace(/\D/g,""))||null;
+  const lastTest=String(veh.mivchan_acharon_dt||"").split("T")[0];
+  const tokef=String(veh.tokef_dt||"").split("T")[0];
+  const owners=own.map(o=>({ym:String(o.baalut_dt||""),type:String(o.baalut||"").trim()}))
+    .sort((a,b)=>a.ym.localeCompare(b.ym));
   const flags=[];
-  if(hist.some(r=>String(r.shinui_mivne_ind||"").trim()==="1"))flags.push({lv:"bad",t:"שינוי מבנה רשום במאגר"});
-  if(hist.some(r=>String(r.shnui_zeva_ind||"").trim()==="1"))flags.push({lv:"warn",t:"שינוי צבע רשום במאגר"});
-  if(hist.some(r=>String(r.shinui_zmig_ind||"").trim()==="1"))flags.push({lv:"info",t:"שינוי מידות צמיגים רשום במאגר"});
+  if(tokef&&tokef<today())flags.push({lv:"warn",k:"mo_expired",x:dmy(tokef)});
+  if(one(h0.shinui_mivne_ind))flags.push({lv:"warn",k:"mo_struct"});
+  if(one(h0.shnui_zeva_ind))flags.push({lv:"warn",k:"mo_color"});
+  if(one(h0.shinui_zmig_ind))flags.push({lv:"info",k:"mo_tire"});
+  if(one(h0.gapam_ind))flags.push({lv:"info",k:"mo_lpg"});
   const mk=String(h0.mkoriut_nm||"").trim();
-  if(mk&&!["","None","מקורי","חדש"].includes(mk))flags.push({lv:"warn",t:"מקוריות: "+mk});
-  if(recall.length)flags.push({lv:"bad",t:"ריקול פתוח: "+recall.length});
-  return {plate:used,
+  if(mk&&!["None","מקורי","חדש"].includes(mk))
+    flags.push(/החכר|ליסינג/.test(mk)?{lv:"info",k:"mo_orig",x:mk,lease:1}:{lv:"warn",k:"mo_orig",x:mk});
+  [...new Set(owners.map(o=>o.type).filter(t=>t&&t!=="פרטי"))].forEach(t=>
+    flags.push({lv:/השכר|מונית|לימוד|סוחר/.test(t)?"warn":"info",k:"mo_own_was",x:t}));
+  return {v:2,plate:used,at:Date.now(),failed,
     make:veh.tozeret_nm||"",model:veh.kinuy_mishari||veh.degem_nm||"",year:veh.shnat_yitzur||"",
-    vin:veh.misgeret||veh.mispar_shilda||"",color:veh.tzeva_rechev||"",vtype:veh.sug_degem||veh.sug_rechev||"",
+    trim:veh.ramat_gimur||"",vin:veh.misgeret||"",color:veh.tzeva_rechev||"",vtype:({P:"פרטי",M:"מסחרי"})[veh.sug_degem]||veh.sug_degem||"",
     tireF:veh.zmig_kidmi||"",tireR:veh.zmig_ahori||"",fuel:veh.sug_delek_nm||"",
-    engno:h0.mispar_manoa||"",lastKm:kmH.length?kmH[0].km:null,kmHistory:kmH.slice(0,12),
-    flags,recalls:recall.map(r=>r.recall_description||r.recall_number||"").filter(Boolean).slice(0,5)}
+    engno:h0.mispar_manoa||"",lastKm,lastTest,tokef,owners,flags,
+    recalls:recall.map(r=>({type:r.SUG_RECALL||"",area:r.SUG_TAKALA||"",text:String(r.TEUR_TAKALA||"").replace(/\s+/g," ").trim(),
+      date:String(r.TAARICH_PTICHA||"").split("T")[0]}))}
+}
+/* שומרים כל צמד (תאריך טסט, ק״מ) — כך נבנית היסטוריה אמיתית מבדיקה לבדיקה */
+function rememberKm(m){
+  if(!m||!m.lastKm)return;
+  const list=S.km[m.plate]=S.km[m.plate]||[], date=m.lastTest||today();
+  if(!list.some(x=>x.date===date&&x.km===m.lastKm)){list.push({date,km:m.lastKm});
+    list.sort((a,b)=>b.date.localeCompare(a.date));store.set("km",S.km)}
 }
 
 /* ===================== ספקי בינה ===================== */
+/* כלל הזהב: שמות מודלים מתיישנים. מתחילים מהעדכני, מדלגים על מודל מת, ומושכים את הרשימה החיה של המפתח. */
+const DEAD_MODELS=["gemini-2.5-flash","gemini-2.0-flash","gemini-1.5-flash","gemini-1.5-pro","gemini-pro"];
 const AI_PROVIDERS={
  claude:{name:"Claude (Anthropic)",tag:"API",tagk:"ai_api",key:1,
-   models:["claude-haiku-4-5-20251001","claude-sonnet-4-6","claude-opus-4-8"],
-   modelNames:["Haiku · זול ומהיר","Sonnet · מאוזן","Opus · החכם ביותר"],
+   models:["claude-haiku-5-5","claude-sonnet-5-5","claude-opus-5-5"],
    get:"https://console.anthropic.com",
    howto:"היכנס ל-console.anthropic.com ← API Keys ← Create Key ← העתק והדבק כאן. הכי מדויק לעברית."},
  gemini:{name:"Gemini (Google)",tag:"FREE",tagk:"ai_free",key:1,
-   models:["gemini-2.5-flash","gemini-2.0-flash","gemini-1.5-flash"],
-   modelNames:["2.5 Flash","2.0 Flash","1.5 Flash"],
+   models:["gemini-flash-latest","gemini-3.6-flash","gemini-3.5-flash"],
    get:"https://aistudio.google.com/app/apikey",
    video:"https://www.youtube.com/watch?v=Cl4XKgz6EJQ",
    howto:"יש שכבה חינמית ללא כרטיס אשראי. aistudio.google.com/app/apikey ← Create API key ← העתק."},
  openai:{name:"ChatGPT (OpenAI)",tag:"API",tagk:"ai_api",key:1,
-   models:["gpt-4o-mini","gpt-4o"],modelNames:["4o-mini · זול","4o · חזק"],
+   models:["gpt-4o-mini","gpt-4o"],
    get:"https://platform.openai.com/api-keys",
    howto:"platform.openai.com ← API Keys ← Create ← העתק. דורש כרטיס אשראי."},
  local:{name:"מודל מקומי (Ollama / LM Studio)",tag:"LOCAL",tagk:"ai_local",url:1,
-   models:[],modelNames:[],get:"https://ollama.ai",
+   models:[],get:"https://ollama.ai",
    howto:"התקן Ollama או LM Studio, הפעל מודל, והזן את הכתובת המקומית. פרטי לגמרי, בלי עלות ובלי אינטרנט."}
 };
+const alive=m=>m&&!DEAD_MODELS.includes(m);
+function aiModels(p){const pv=AI_PROVIDERS[p]||{},live=(S.ai.live&&S.ai.live[p])||[];
+  return [...new Set([...(pv.models||[]),...live])].filter(alive)}
+function aiChain(){const a=S.ai;
+  return [...new Set([a.model,a.okModel,...aiModels(a.provider)].filter(alive))].slice(0,5)}
+async function aiListModels(){
+  const a=S.ai, bad=/tts|audio|image|embed|realtime|transcri|search|vision-only|aqa|live/i;
+  const get=async(u,h)=>{const r=await fetch(u,{headers:h||{}});
+    if(!r.ok){const e=new Error("HTTP "+r.status);e.status=r.status;throw e}return r.json()};
+  let ids=[];
+  if(a.provider==="claude"){const j=await get("https://api.anthropic.com/v1/models?limit=100",
+      {"x-api-key":a.key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"});
+    ids=(j.data||[]).map(m=>m.id)}
+  else if(a.provider==="gemini"){const j=await get("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&key="+encodeURIComponent(a.key));
+    ids=(j.models||[]).filter(m=>(m.supportedGenerationMethods||[]).includes("generateContent"))
+      .map(m=>String(m.name||"").replace(/^models\//,"")).filter(x=>/^gemini/.test(x))}
+  else{const base=(a.url||"https://api.openai.com/v1/chat/completions").replace(/\/chat\/completions\/?$/,"");
+    const j=await get(base+"/models",a.key?{Authorization:"Bearer "+a.key}:{});
+    ids=(j.data||[]).map(m=>m.id); if(a.provider==="openai")ids=ids.filter(x=>/^(gpt|o\d|chatgpt)/.test(x))}
+  return ids.filter(x=>x&&!bad.test(x)&&alive(x)).slice(0,40);
+}
 function aiConnected(){return !!(S.ai.provider&&(S.ai.key||S.ai.url))}
 
 /* ===================== מנוע התאמת אבחנות ===================== */
@@ -730,30 +842,42 @@ function ruleSuggest(text,pool){
     return{item,sc}}).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc);
   return scored.slice(0,6).map(x=>x.item);
 }
-async function aiCall(prompt){
-  const a=S.ai;
+async function aiOnce(model,prompt){
+  const a=S.ai, fail=r=>{const e=new Error("HTTP "+r.status);e.status=r.status;return e};
   if(a.provider==="claude"){
     const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",
       headers:{"Content-Type":"application/json","x-api-key":a.key,"anthropic-version":"2023-06-01",
         "anthropic-dangerous-direct-browser-access":"true"},
-      body:JSON.stringify({model:a.model||"claude-sonnet-4-6",max_tokens:800,messages:[{role:"user",content:prompt}]})});
-    if(!r.ok)throw new Error("HTTP "+r.status);
+      body:JSON.stringify({model,max_tokens:800,messages:[{role:"user",content:prompt}]})});
+    if(!r.ok)throw fail(r);
     const d=await r.json();return (d.content&&d.content[0]&&d.content[0].text)||"";
   }
   if(a.provider==="gemini"){
-    const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+(a.model||"gemini-2.5-flash")+":generateContent?key="+a.key,
+    const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+encodeURIComponent(model)+":generateContent?key="+encodeURIComponent(a.key),
       {method:"POST",headers:{"Content-Type":"application/json"},
        body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:.2,maxOutputTokens:800}})});
-    if(!r.ok)throw new Error("HTTP "+r.status);
+    if(!r.ok)throw fail(r);
     const d=await r.json();return d?.candidates?.[0]?.content?.parts?.[0]?.text||"";
   }
-  /* openai / local (ollama, lm studio) / custom — כולם תואמי OpenAI */
+  /* openai / local (ollama, lm studio) — תואמי OpenAI */
   const url=a.url||"https://api.openai.com/v1/chat/completions";
   const h={"Content-Type":"application/json"}; if(a.key)h.Authorization="Bearer "+a.key;
   const r=await fetch(url,{method:"POST",headers:h,
-    body:JSON.stringify({model:a.model||"gpt-4o-mini",max_tokens:800,messages:[{role:"user",content:prompt}]})});
-  if(!r.ok)throw new Error("HTTP "+r.status);
+    body:JSON.stringify({model,max_tokens:800,messages:[{role:"user",content:prompt}]})});
+  if(!r.ok)throw fail(r);
   const d=await r.json();return d?.choices?.[0]?.message?.content||"";
+}
+/* מנסה מודל אחרי מודל; מפתח שגוי (401/403) עוצר מיד, מודל שלא קיים עובר לבא בתור */
+async function aiCall(prompt){
+  let chain=aiChain(); if(!chain.length)chain=[S.ai.model||""];
+  let last;
+  for(const m of chain){
+    try{const out=await aiOnce(m,prompt);
+      if(S.ai.okModel!==m){S.ai.okModel=m;store.set("ai",S.ai)}
+      return out}
+    catch(e){last=e;if(e.status===401||e.status===403)break}
+  }
+  throw last||new Error("AI");
 }
 /* הבינה בוחרת מתוך הרשימה הסגורה — לעולם לא מנסחת אבחנה חדשה */
 async function aiSuggest(text,pool){
@@ -768,7 +892,7 @@ async function aiSuggest(text,pool){
     const idx=(out.match(/\d+/g)||[]).map(n=>parseInt(n)-1).filter(i=>i>=0&&i<pool.length);
     const uniq=[...new Set(idx)].slice(0,6).map(i=>pool[i]);
     return uniq.length?uniq:ruleSuggest(text,pool);
-  }catch(e){toast("הבינה לא זמינה — עברתי למנוע החוקים");return ruleSuggest(text,pool)}
+  }catch(e){toast(T('ai_fallback'));return ruleSuggest(text,pool)}
 }
 
 /* ===================== מודל רשומה ===================== */
@@ -903,53 +1027,127 @@ function score(rec){const c=counts(rec);if(!c.done)return null;
   return Math.max(0,Math.min(100,Math.round(100-c.bad*6-c.safety*10)))}
 
 /* ===================== ניווט ===================== */
-function go(scr,arg){S.screen=scr;if(scr==="rec"&&arg)S.cur=arg;window.scrollTo(0,0);render()}
+/* חמש לשוניות קבועות בסרגל התחתון; כל מסך אחר הוא "מסך פנימי" שזוכר מאיפה הגיעו אליו. */
+const TABSCR=["home","diary","archive","dash","more"];
+const isTab=x=>TABSCR.includes(x);
+let navStack=[];
+function go(scr,arg,opt){
+  if(scr==="rec"&&arg)S.cur=arg;
+  if(isTab(scr))navStack=[];
+  else if(!(opt&&opt.replace)&&S.screen!==scr)navStack.push(S.screen);
+  S.screen=scr;window.scrollTo(0,0);render();syncHistory()}
 function home(){S.cur=null;S.tab=0;go("home")}
+function goBack(){
+  const prev=navStack.pop()||"home";
+  if(S.screen==="rec"){openRow=null;dq="";S.cur=null;S.tab=0}
+  S.screen=prev;if(isTab(prev))navStack=[];
+  window.scrollTo(0,0);render()}
+function scrName(x){return x==="rec"?((S.cur&&S.cur.veh.plate)||T('newins')):x==="gate"?T('newins'):
+  x==="editor"?T('editlists'):T(x)}
+
+/* צעד אחד אחורה — אותה פונקציה לכפתור שעל המסך ולכפתור החזרה של הטלפון.
+   מחזירה false רק בדף הבית, כשאין מה לסגור. */
+function stepBack(){
+  if(S.locked)return true;                                   /* מסך נעילה לא נעקף */
+  if($("#sheet")){closeSheet();return true}                  /* חלון פתוח — נסגר */
+  if(!S.seen){S.seen=true;store.set("seen",true);render();return true}   /* מדריך — דילוג */
+  if(!isTab(S.screen)){goBack();return true}                 /* מסך פנימי — למסך שממנו הגיעו */
+  if(S.screen!=="home"){S.screen="home";navStack=[];window.scrollTo(0,0);render();return true}
+  return false}
+
+/* רשומת "שומר" אחת בהיסטוריה. כרום מדלג על רשומה שנוספה בלי מגע של המשתמש,
+   ולכן היא נוספת רק אחרי המגע הראשון במסך. */
+const hist={guard:false,armed:false};let exitArm=0;
+function syncHistory(){
+  if(!hist.armed||exitArm||hist.guard)return;
+  try{history.pushState({g:1},"");hist.guard=true}catch(e){}}
+window.addEventListener("popstate",()=>{
+  hist.guard=false;
+  if(!stepBack()){
+    toast(T('pressAgainExit'),2000);
+    clearTimeout(exitArm);exitArm=setTimeout(()=>{exitArm=0;syncHistory()},2000);
+    return}
+  syncHistory()});
+["pointerdown","keydown","touchstart"].forEach(ev=>document.addEventListener(ev,()=>{
+  if(!hist.armed){hist.armed=true;syncHistory()}},{capture:true,passive:true}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#sheet"))closeSheet()});
 
 /* ===================== רינדור ===================== */
+function navHTML(){
+  if(S.screen==="rec"||S.screen==="gate")return "";          /* מסך עבודה מלא — בלי סרגל */
+  const cur=isTab(S.screen)?S.screen:"more";
+  const items=[["home","🏠"],["diary","🗓"],["archive","🗂"],["dash","📊"],["more","☰"]];
+  return `<nav class="nav" aria-label="${esc(T('home'))}">${items.map(([x,ic])=>
+    `<button data-act="nav" data-to="${x}" class="${cur===x?"on":""}"${cur===x?' aria-current="page"':""}>
+      <span class="ni" aria-hidden="true">${ic}</span><span>${esc(T(x))}</span></button>`).join("")}</nav>`}
 function render(){applyChrome();const a=$("#app");
-  if(S.locked){a.innerHTML=vLock();return}
-  if(!S.seen){a.innerHTML=vGuide();return}
-  const m={home:vHome,gate:vGate,rec:vRec,archive:vArchive,diary:vDiary,dash:vDash,
+  if(S.locked){document.body.classList.remove("tabs-on");a.innerHTML=vLock();return}
+  if(!S.seen){document.body.classList.remove("tabs-on");a.innerHTML=vGuide();return}
+  const m={home:vHome,gate:vGate,rec:vRec,archive:vArchive,diary:vDiary,dash:vDash,more:vMore,
     settings:vSettings,editor:vEditor,about:vAbout}[S.screen]||vHome;
-  a.className="fade";a.innerHTML=m();
+  const nav=navHTML();
+  document.body.classList.toggle("tabs-on",!!nav);
+  a.className="fade";a.innerHTML=m()+nav;
   if(S.screen==="rec")afterRec();
   if(S.screen==="gate")afterGate();
 }
-function bar(title,extra){return `<div class="topbar">
-  <button class="iconbtn" data-act="home" aria-label="${esc(T('back'))}">✕</button>
+/* כותרת: בלשונית — שם המסך; במסך פנימי — כפתור חזרה עם שם המסך שאליו חוזרים */
+function bar(title,extra){
+  const inner=!isTab(S.screen), to=navStack[navStack.length-1]||"home";
+  const arrow=(LANG[S.lang]||LANG.he).dir==="rtl"?"→":"←";
+  return `<div class="topbar">
+  ${inner?`<button class="backbtn" data-act="back" aria-label="${esc(T('back'))}">${arrow} ${esc(scrName(to))}</button>`:""}
   <h1>${esc(title)}</h1>${extra||""}
   <button class="iconbtn" data-act="mode" aria-label="${esc(T('mode'))}">${S.mode==="dark"?"☀":"☾"}</button></div>`}
 
 /* ---------- דף הבית ---------- */
 function vHome(){
-  const open=S.recs.filter(r=>r.status==="open");
-  const up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  const open=S.recs.filter(r=>r.status==="open").slice(0,5);
+  const td=today();
+  const up=S.appts.filter(a=>a.date>=td).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,4);
   return `<div class="topbar"><h1 style="color:var(--gold)">${esc(T('app'))}</h1>
     <button class="iconbtn" data-act="mode" aria-label="${esc(T('mode'))}">${S.mode==="dark"?"☀":"☾"}</button>
-    <button class="iconbtn" data-act="langmenu">⌘</button>
-    <button class="iconbtn" data-act="about">ℹ</button>
-    <button class="iconbtn" data-act="settings">⚙</button></div>
+    <button class="iconbtn" data-act="langmenu" aria-label="${esc(T('lang'))}">⌘</button>
+    <button class="iconbtn" data-act="about" aria-label="${esc(T('about'))}">ℹ</button></div>
   <div class="wrap">
     <div class="hero"><div class="mark">${esc(T('app'))}</div><div class="sub">${esc(T('tag'))}</div></div>
-    ${(()=>{const t=S.appts.filter(a=>a.date===today());
-      return t.length?`<div class="alert warn"><b>היום:</b> ${t.map(a=>esc(a.time+" · "+(a.plate||a.name||""))).join(" · ")}</div>`:""})()}
-    ${open.length?`<div class="alert info">יש ${open.length} בדיקות פתוחות. <button class="btn sm" data-act="open" data-id="${esc(open[0].id)}">המשך את האחרונה</button></div>`:""}
+    ${S.updated?`<div class="alert info">${esc(T('upd_ready'))}
+      <button class="btn sm" data-act="reload">${esc(T('upd_reload'))}</button></div>`:""}
+    ${location.protocol==="file:"?`<div class="alert warn">${esc(T('file_warn'))}</div>`:""}
     <div class="tiles">
       <button class="tile wide go" data-act="new"><div class="ic">＋</div>
         <div><div class="t">${esc(T('newins'))}</div><div class="d">${esc(T('newins_d'))}</div></div></button>
-      <button class="tile" data-act="diary"><div class="ic">🗓</div><div class="t">${esc(T('diary'))}</div>
-        <div class="d">${up.length?up.length+" מועדים":T('nodata')}</div></button>
-      <button class="tile" data-act="archive"><div class="ic">🗂</div><div class="t">${esc(T('archive'))}</div>
-        <div class="d">${S.recs.length?S.recs.length+" בדיקות":T('nodata')}</div></button>
-      <button class="tile" data-act="dash"><div class="ic">📊</div><div class="t">${esc(T('dash'))}</div>
-        <div class="d">${esc(T('dash_d'))}</div></button>
-      <button class="tile" data-act="settings"><div class="ic">⚙</div><div class="t">${esc(T('settings'))}</div>
-        <div class="d">${esc(S.user.name||T('username'))}</div></button>
     </div>
-    <div class="tiny" style="text-align:center;margin-top:26px">
-      גרסה 1.3 · ${esc(S.inst.name||T('draft'))}</div>
+    <div class="sec">${esc(T('open_recs'))}</div>
+    <div class="list">${open.length?open.map(r=>{const c=counts2(r);
+      return `<button class="it" data-act="open" data-id="${esc(r.id)}">
+        <div class="main"><div class="t"><bdi>${esc(r.veh.plate||T('noplate'))}</bdi> · <bdi>${esc((r.veh.make+" "+r.veh.model).trim())}</bdi></div>
+        <div class="d">${esc(dmy(r.ins.date))} · ${c.done}/${c.total} · ${c.bad} ${esc(T('n_defects'))}</div></div>
+        <span class="pill">${esc(T('cont'))}</span></button>`}).join("")
+      :`<div class="tiny" style="padding:6px 2px">${esc(T('home_empty'))}</div>`}</div>
+    ${up.length?`<div class="sec">${esc(T('upcoming'))}</div><div class="list">${up.map(a=>
+      `<button class="it" data-act="diary"><div class="main">
+        <div class="t">${esc(a.date===td?T('today_lbl'):dmy(a.date))} · ${esc(a.time||"")}</div>
+        <div class="d"><bdi>${esc(a.plate||"")}</bdi> · ${esc(a.name||"")}</div></div></button>`).join("")}</div>`:""}
+    <button class="tiny" data-act="about" style="display:block;width:100%;text-align:center;margin-top:26px;color:var(--tx3);background:none">
+      ${esc(T('app'))} · ${esc(T('ver'))} ${APP_VER} · AppNest</button>
   </div>`}
+/* ספירה לרשומה שאינה הרשומה הפתוחה (form() תלוי ב-S.cur) */
+function counts2(r){const keep=S.cur;S.cur=r;try{return counts(r)}finally{S.cur=keep}}
+
+/* ---------- עוד ---------- */
+function vMore(){
+  const it=(act,ic,t,d)=>`<button class="it" data-act="${act}"><span style="font-size:20px;width:26px;text-align:center" aria-hidden="true">${ic}</span>
+    <div class="main"><div class="t">${esc(t)}</div>${d?`<div class="d">${esc(d)}</div>`:""}</div></button>`;
+  return bar(T('more'))+`<div class="wrap"><div class="list">
+    ${it("settings","⚙",T('settings'),S.user.name||T('username'))}
+    ${it("editor","✎",T('editlists'))}
+    ${it("export","⬇",T('backup')+" (JSON)")}
+    ${it("theme","◑",T('theme'))}
+    ${it("langmenu","⌘",T('lang'),(LANG[S.lang]||LANG.he).lname)}
+    ${it("guideagain","📘",T('guide'))}
+    ${it("about","ℹ",T('about'),T('ver')+" "+APP_VER)}
+  </div></div>`}
 
 /* ---------- שער פתיחת בדיקה ---------- */
 let gate={kind:"full",lic:null,drv:null,sig:null};
@@ -1082,8 +1280,8 @@ function dual(label,pLic,pAct,blocking){
   return `<div class="dual ${bad?(blocking?"blocked":"mismatch"):""}">
     <div class="lbl">${esc(label)}</div>
     <div class="pair">
-      <div><label>${esc(T('onlic'))}</label><input data-p="${esc(pLic)}" value="${esc(a)}"></div>
-      <div><label>${esc(T('actual'))}</label><input data-p="${esc(pAct)}" value="${esc(b)}"></div>
+      <div><label>${esc(T('onlic'))}</label><input dir="auto" data-p="${esc(pLic)}" value="${esc(a)}"></div>
+      <div><label>${esc(T('actual'))}</label><input dir="auto" data-p="${esc(pAct)}" value="${esc(b)}"></div>
     </div>
     ${bad?`<div class="flag">${esc(blocking?T('vinblock'):T('mismatch'))}</div>`:""}</div>`}
 function vTVeh(r){
@@ -1114,15 +1312,30 @@ function vTVeh(r){
       </select><div class="hint">קובע איזו רשימת ליקויי שלדה תיפתח בסעיף השלדה.</div></div>
   </div>`}
 function moPanel(mo,r){
+  if(mo.v!==2)return `<div class="alert info" style="margin-top:12px">${esc(T('mo_old'))}</div>`;
   const cur=parseInt(String(r.veh.km).replace(/\D/g,""))||0;
   const roll=mo.lastKm&&cur&&cur<mo.lastKm-500;
+  const saved=(S.km[mo.plate]||[]).slice(0,8), failed=mo.failed||[];
+  const kv=(k,v)=>v?`<div class="kv-row"><span class="muted">${esc(T(k))}</span><b><bdi>${esc(v)}</bdi></b></div>`:"";
+  const flagTxt=f=>T(f.k)+(f.x?": "+f.x+(f.lease?" ("+T('mo_lease')+")":""):"");
   return `<div style="margin-top:12px">
-   ${roll?`<div class="alert bad"><b>${esc(T('rollback'))}</b><br>במאגר נרשמו ${mo.lastKm.toLocaleString()} ק״מ בבדיקה האחרונה, והזנת ${cur.toLocaleString()}.</div>`:""}
-   ${mo.flags.map(f=>`<div class="alert ${f.lv}">${esc(f.t)}</div>`).join("")}
-   ${mo.kmHistory.length?`<div class="tiny" style="margin-top:6px"><b>${esc(T('risk'))} — היסטוריית ק״מ:</b><br>${
-     mo.kmHistory.slice(0,6).map(h=>esc((h.date||"?")+" — "+(h.km?h.km.toLocaleString():"?"))).join(" · ")}</div>`:""}
-   ${mo.recalls.length?`<div class="tiny" style="margin-top:6px"><b>${esc(T('recall'))}:</b> ${esc(mo.recalls.join(" · "))}</div>`:""}
-  </div>`}
+   ${roll?`<div class="alert bad"><b>${esc(T('rollback'))}</b><br>${esc(TF('mo_roll',{a:mo.lastKm.toLocaleString(),b:cur.toLocaleString()}))}</div>`:""}
+   ${failed.includes("recall")?`<div class="alert warn">${esc(T('mo_recall_fail'))}</div>`
+     :mo.recalls.length?`<div class="alert bad"><b>${esc(T('mo_recall_n'))}: ${mo.recalls.length}</b>${mo.recalls.slice(0,5).map(x=>
+        `<div style="margin-top:6px">${esc([x.area,dmy(x.date)].filter(Boolean).join(" · "))}<br>${esc(x.text)}</div>`).join("")}</div>`
+     :`<div class="alert ok">${esc(T('mo_norecall'))}</div>`}
+   ${mo.flags.map(f=>`<div class="alert ${f.lv}">${esc(flagTxt(f))}</div>`).join("")}
+   ${failed.filter(x=>x!=="recall").length?`<div class="alert warn">${esc(T('mo_part_fail'))}</div>`:""}
+   <div class="card tight" style="margin:10px 0 0">
+     ${kv('mo_lasttest',dmy(mo.lastTest))}${kv('mo_tokef',dmy(mo.tokef))}
+     ${kv('mo_km_last',mo.lastKm?mo.lastKm.toLocaleString():"")}
+     ${kv('mo_owners',mo.owners.length?String(mo.owners.length):"")}
+     ${mo.owners.length?`<div class="tiny" style="padding:6px 0">${mo.owners.map(o=>
+        `<bdi>${esc(o.type+" "+o.ym.replace(/^(\d{4})(\d{2})$/,"$2/$1"))}</bdi>`).join(" ← ")}</div>`:""}
+     ${saved.length>1?`<div class="tiny" style="padding:6px 0"><b>${esc(T('mo_km_saved'))}:</b><br>${saved.map(h=>
+        `<bdi>${esc(dmy(h.date)+" — "+h.km.toLocaleString())}</bdi>`).join(" · ")}</div>`:""}
+     <div class="tiny" style="padding-top:6px">${esc(T('mo_km_note'))}<br>${esc(T('mo_src'))}</div>
+   </div></div>`}
 
 /* --- טאבים 2–5 --- */
 function person(pre){return `<div class="card">${fld(T('name'),pre+".name")}${fld(T('idno'),pre+".id")}
@@ -1277,7 +1490,7 @@ function vArchive(){
   return bar(T('archive'))+`<div class="wrap">
    <div class="f"><input data-act="aq" placeholder="${esc(T('search'))} — מספר רכב, שם, תאריך" value="${esc(aq)}"></div>
    <div class="tiny">הנוהל מחייב שמירת עותקי טפסים 24 חודשים לפחות. ייצא גיבוי בקביעות.</div>
-   <div class="list">${list.length?list.map(r=>{const c=counts(r);
+   <div class="list">${list.length?list.map(r=>{const c=counts2(r);
      return `<button class="it" data-act="open" data-id="${esc(r.id)}" data-lp="${esc(r.id)}">
        <div class="main"><div class="t">${esc(r.veh.plate||"ללא מספר")} · ${esc(r.veh.make||"")} ${esc(r.veh.model||"")}</div>
        <div class="d">${esc(r.ins.date)} · ${esc(r.buyer.name||r.seller.name||"")} · ${c.bad} ליקויים</div></div>
@@ -1299,7 +1512,7 @@ function vDiary(){
 
 /* ---------- דשבורד ---------- */
 function vDash(){
-  const now=new Date(),m=now.toISOString().slice(0,7);
+  const m=today().slice(0,7);
   const mon=S.recs.filter(r=>(r.ins.date||"").startsWith(m));
   const tot={};S.recs.forEach(r=>Object.values(r.defects).forEach(d=>(d.items||[]).forEach(i=>tot[i]=(tot[i]||0)+1)));
   const top=Object.entries(tot).sort((a,b)=>b[1]-a[1]).slice(0,8);
@@ -1390,7 +1603,7 @@ function vAbout(){
    <div style="text-align:center;padding:24px 0 6px">
      <div style="font-size:44px;font-weight:800;color:var(--gold);letter-spacing:-1px">${esc(T('app'))}</div>
      <div class="muted">${esc(T('tag'))}</div>
-     <div class="tiny" style="margin-top:4px">גרסה 1.3</div>
+     <div class="tiny" style="margin-top:4px">${esc(T('ver'))} ${APP_VER}</div>
    </div>
    <div class="card">
      <div class="kv-row"><span class="muted">${esc(T('about_dev'))}</span><b>Barak Aflalo</b></div>
@@ -1398,41 +1611,15 @@ function vAbout(){
      <div class="kv-row"><span class="muted">${esc(T('about_store'))}</span><b>${esc(T('about_ondev'))}</b></div>
      <div class="kv-row"><span class="muted">${esc(T('about_lic'))}</span><b>© AppNest 2026</b></div>
    </div>
-   <button class="btn" data-act="a_store">🏪 ${esc(T('about_store_link'))}</button>
+   <a class="btn" href="${STORE_URL}" target="_blank" rel="noopener">🏪 ${esc(T('about_store_link'))}</a>
    <button class="btn" data-act="a_share">↗ ${esc(T('about_share'))}</button>
    <button class="btn" data-act="a_fb">✉ ${esc(T('about_fb'))}</button>
    <button class="btn" data-act="guideagain">📘 ${esc(T('guide'))}</button>
-   <button class="btn" data-act="a_priv">🔒 ${esc(T('about_priv'))}</button>
+   <a class="btn" href="privacy_policy.html">🔒 ${esc(T('about_priv'))}</a>
    <div class="sec">${esc(T('about_disc'))}</div>
    <div class="card tight"><div class="tiny" style="line-height:1.7">${esc(T('disc_txt'))}</div></div>
    <div class="tiny" style="text-align:center;margin-top:20px;opacity:.6">AppNest · appnest55@gmail.com</div>
   </div>`}
-function privacyHTML(){return `<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>מדיניות פרטיות · ${esc(T('app'))}</title>
-<style>body{font-family:system-ui,'Segoe UI',sans-serif;max-width:720px;margin:0 auto;padding:24px;line-height:1.7;
-background:#0d0d0f;color:#f2f2f4}h1{color:#c9a227}h2{color:#e6c85c;font-size:17px;margin-top:24px}
-a{color:#e6c85c}.en{direction:ltr;text-align:left;border-top:1px solid #2a2a31;margin-top:32px;padding-top:16px}</style></head>
-<body><h1>מדיניות פרטיות — ${esc(T('app'))}</h1>
-<p>אפליקציית ${esc(T('app'))} של AppNest נבנתה כדי לשמור על פרטיותך באופן מלא.</p>
-<h2>נתונים על המכשיר בלבד</h2><p>כל הבדיקות, הצילומים, פרטי הלקוחות וההגדרות נשמרים מקומית על המכשיר שלך
-(localStorage ו-IndexedDB). אין חשבון, אין שרת של AppNest, ואיננו אוספים או רואים שום נתון שלך.</p>
-<h2>מה נשלח החוצה, ומתי</h2><p>שני דברים בלבד, ורק ביוזמתך:</p>
-<p>1. שליפת נתוני רכב — כשאתה לוחץ "שליפה", מספר הרכב נשלח ל-data.gov.il (מאגר משרד התחבורה הפתוח).<br>
-2. בינה מלאכותית — אם חיברת מפתח, הטקסט שאתה מזין נשלח ישירות לספק שבחרת (Anthropic / Google / OpenAI),
-ולא דרך AppNest. בלי מפתח, מנוע החוקים עובד מקומית ללא שליחה.</p>
-<h2>מצלמה</h2><p>הצילומים נשמרים על המכשיר בלבד ואינם נשלחים לשום מקום.</p>
-<h2>אין מעקב</h2><p>אין אנליטיקה, אין פרסום, אין קובצי מעקב. שליטה מלאה: גיבוי, ייצוא ומחיקה בכל עת.</p>
-<h2>הבהרה</h2><p>הדוחות והערכות הבינה הם עזר מקצועי בלבד ואינם תחליף לבדיקה מוסמכת במכון מורשה.</p>
-<h2>יצירת קשר</h2><p><a href="mailto:appnest55@gmail.com">appnest55@gmail.com</a></p>
-<div class="en"><h1>Privacy Policy — ${esc(T('app'))}</h1>
-<p>All data (inspections, photos, customer details, settings) is stored locally on your device only.
-No account, no AppNest server, no data collection.</p>
-<p>Data leaves the device only on your action: the plate number to Israel's open vehicle registry when you tap fetch,
-and — only if you connect an API key — the text you enter goes directly to your chosen AI provider, never through AppNest.
-Photos stay on the device. No tracking, analytics or ads. Reports and AI suggestions are a professional aid only,
-not a substitute for a certified inspection. Contact: appnest55@gmail.com</p></div>
-</body></html>`}
-
 /* ---------- הגדרות ---------- */
 function vSettings(){
   const th=[["black","שחור וזהב"],["blue","כחול כהה"],["green","ירוק"],["steel","פלדה"],["rust","חלודה"]];
@@ -1489,9 +1676,9 @@ function vSettings(){
         <input type="password" data-s="ai.key" value="${esc(S.ai.key)}" placeholder="••••••••"></div>`:""}
       ${pv.url?`<div class="f"><label>כתובת מקומית</label>
         <input data-s="ai.url" value="${esc(S.ai.url)}" placeholder="http://localhost:11434/v1/chat/completions"></div>`:""}
-      ${pv.models&&pv.models.length?`<div class="f"><label>${esc(T('ai_model'))}</label>
-        <select data-s="ai.model">${pv.models.map((m,i)=>`<option value="${esc(m)}" ${S.ai.model===m?"selected":""}>
-          ${esc(pv.modelNames[i]||m)}</option>`).join("")}</select></div>`:
+      ${!pv.url?`<div class="f"><label>${esc(T('ai_model'))}</label>
+        <select data-s="ai.model"><option value="">${esc(T('ai_auto'))}</option>${aiModels(S.ai.provider).map(m=>
+          `<option value="${esc(m)}" ${S.ai.model===m?"selected":""}>${esc(m)}</option>`).join("")}</select></div>`:
         pv.url?`<div class="f"><label>${esc(T('ai_model'))}</label>
           <input data-s="ai.model" value="${esc(S.ai.model)}" placeholder="llama3"></div>`:""}
       <div class="alert info" style="font-size:12.5px">${esc(pv.howto)}</div>
@@ -1531,7 +1718,7 @@ function vSettings(){
 
   <div class="sec">${esc(T('about'))}</div>
   <div class="card tight"><div class="tiny">
-    ${esc(T('app'))} · גרסה 1.3<br>בנוי לפי הוראת נוהל 127 של משרד התחבורה (עדכון 1.10.2014).<br>
+    ${esc(T('app'))} · ${esc(T('ver'))} ${APP_VER}<br>בנוי לפי הוראת נוהל 127 של משרד התחבורה (עדכון 1.10.2014).<br>
     Barak Aflalo · © AppNest 2026<br><br>
     כל הנתונים נשמרים על המכשיר בלבד ואינם עוברים לשום שרת. פניות למשרד התחבורה ולספק הבינה
     יוצאות רק כשאתה מבקש זאת.</div></div></div>`}
@@ -1635,6 +1822,12 @@ document.addEventListener("click",async e=>{
   const a=t.dataset.act, r=S.cur;
   switch(a){
     case "home":home();break;
+    case "back":stepBack();syncHistory();break;
+    case "nav":{const to=t.dataset.to;
+      if(S.screen===to){window.scrollTo({top:0,behavior:"smooth"});break}
+      if(to==="home")home();else{S.cur=null;go(to)}break}
+    case "more":go("more");break;
+    case "reload":location.reload();break;
     case "settings":go("settings");break;
     case "archive":go("archive");break;
     case "diary":go("diary");break;
@@ -1653,8 +1846,8 @@ document.addEventListener("click",async e=>{
       const rec=startRec(gate.kind);rec.decl=true;
       const a1=uid(),a2=uid();await phPut(a1,gate.lic);await phPut(a2,gate.drv);
       rec.photos.lic_veh=[a1];rec.photos.lic_drv=[a2];rec.sigOrd=gate.sig;
-      S.cur=rec;S.tab=0;saveCur();go("rec",rec);break}
-    case "open":{const rec=S.recs.find(x=>x.id===t.dataset.id);if(rec){S.tab=0;go("rec",rec)}break}
+      S.cur=rec;S.tab=0;saveCur();go("rec",rec,{replace:true});break}
+    case "open":{const rec=S.recs.find(x=>x.id===t.dataset.id);closeSheet();if(rec){S.tab=0;openRow=null;go("rec",rec)}break}
     case "tab":S.tab=+t.dataset.i;openRow=null;dq="";render();break;
     case "sys":{const n=+t.dataset.n;openRow=openRow===n?null:n;dq="";render();break}
     case "st":{const d=dget(r,+t.dataset.n);d.st=d.st===t.dataset.s?"":t.dataset.s;
@@ -1687,20 +1880,19 @@ document.addEventListener("click",async e=>{
       try{
         const m=await lookupPlate(p);
         if(!m){render();return toast(T('e_notfound'))}
-        r.mo=m; r.veh.plate=m.plate;
+        r.mo=m; r.veh.plate=m.plate; rememberKm(m);
         r.veh.make=r.veh.make||m.make; r.veh.model=r.veh.model||m.model;
         r.veh.year=r.veh.year||m.year; r.veh.vtype=r.veh.vtype||m.vtype;
         r.veh.vinLic=r.veh.vinLic||m.vin; r.veh.engLic=r.veh.engLic||m.engno;
         r.veh.colorLic=r.veh.colorLic||m.color;
         r.veh.tireLic=r.veh.tireLic||[m.tireF,m.tireR].filter(Boolean).join(" / ");
-        saveCur();render();toast("הנתונים נטענו — השלם את עמודת ״נמצא בפועל״");
+        saveCur();render();toast(T('loaded'));
       }catch(err){render();toast(T('e_net'))}
       break}
     case "motest":{const o=$("#motestout");o.innerHTML='<span class="spin"></span> בודק…';
       try{const rec=await moFetch(RES.veh,{mispar_rechev:"1"},1);
-        o.innerHTML='<span style="color:var(--ok)">✔ החיבור עובד. השליפה האוטומטית זמינה.</span>'}
-      catch(err){o.innerHTML='<span style="color:var(--bad)">✕ הפנייה הישירה נחסמה ('+esc(err.message)+
-        '). הזן כתובת proxy או המשך במילוי ידני.</span>'}
+        o.innerHTML='<span style="color:var(--ok)">'+esc(T('mo_ok'))+'</span>'}
+      catch(err){o.innerHTML='<span style="color:var(--bad)">'+esc(T('mo_fail'))+' ('+esc(err.message)+')</span>'}
       break}
     case "sigclear":{const cv=$(t.dataset.w==="1"?"#sig1":"#sig2");if(cv&&cv._clear)cv._clear();
       if(t.dataset.w==="1")r.sigIns=null;else r.sigOrd=null;saveCur();break}
@@ -1721,11 +1913,11 @@ document.addEventListener("click",async e=>{
     case "apptdel":S.appts=S.appts.filter(x=>x.id!==t.dataset.id);persist();render();break;
     case "apptgo":{const ap=S.appts.find(x=>x.id===t.dataset.id);
       gate={kind:ap.kind,lic:null,drv:null,sig:null};go("gate");break}
-    case "export":{const data={v:1,exported:new Date().toISOString(),user:S.user,inst:S.inst,
-        recs:S.recs,appts:S.appts,km:S.km};
+    case "export":{const data={v:2,app:"bdk",ver:APP_VER,exported:new Date().toISOString(),user:S.user,inst:S.inst,
+        recs:S.recs,appts:S.appts,km:S.km,map:S.map,scope:S.scope};
       dl("bdk-backup-"+today()+".json",JSON.stringify(data),"application/json");break}
     case "csv":{const rows=[["מספר רכב","תאריך","תוצר","דגם","סוג בדיקה","ליקויים","בטיחותי","מזמין","סכום","בודק"]];
-      S.recs.forEach(x=>{const c=counts(x);rows.push([x.veh.plate,x.ins.date,x.veh.make,x.veh.model,
+      S.recs.forEach(x=>{const c=counts2(x);rows.push([x.veh.plate,x.ins.date,x.veh.make,x.veh.model,
         x.kind==="full"?"מלאה":"ללא אלקטרוניקה",c.bad,c.safety,(x.orderer==="seller"?x.seller:x.buyer).name,
         x.pay.amount,x.ins.inspector])});
       dl("bdk-"+today()+".csv","\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"').join(",")).join("\n"),"text/csv");break}
@@ -1735,6 +1927,7 @@ document.addEventListener("click",async e=>{
           if(!confirm("השחזור יחליף את כל הנתונים הקיימים. להמשיך?"))return;
           S.recs=d.recs||[];S.appts=d.appts||[];S.km=d.km||{};
           if(d.user)S.user=d.user;if(d.inst)S.inst=d.inst;
+          if(d.map&&d.map.full&&d.map.basic){S.map=d.map;if(d.scope&&d.scope.engine&&d.scope.chassis)S.scope=d.scope;saveMap()}
           store.set("user",S.user);store.set("inst",S.inst);persist();render();toast("שוחזר")}
           catch(e){toast("הקובץ אינו תקין")}};
         fr.readAsText(f)};i.click();break}
@@ -1743,19 +1936,21 @@ document.addEventListener("click",async e=>{
         S.recs=[];S.appts=[];persist();indexedDB.deleteDatabase("bdk_photos");_db=null;home();toast(T('deleted'))}}break;
     case "editor":go("editor");break;
     case "about":go("about");break;
-    case "a_store":window.open(STORE_URL,"_blank");break;
     case "a_share":{const u=location.href;
       if(navigator.share)navigator.share({title:T('app'),text:T('tag'),url:u}).catch(()=>{});
       else{try{navigator.clipboard.writeText(u);toast("הקישור הועתק")}catch(e){toast(u)}}break}
     case "a_fb":window.location.href="mailto:"+FEEDBACK+"?subject="+encodeURIComponent(T('app')+" — משוב");break;
-    case "a_priv":{const w2=window.open("","_blank");
-      if(w2){w2.document.write(privacyHTML());w2.document.close()}
-      else{const b=new Blob([privacyHTML()],{type:"text/html"});window.open(URL.createObjectURL(b),"_blank")}break}
-    case "aitest":{const o=$("#aitestout");o.innerHTML='<span class="spin"></span> בודק…';
-      try{const r=await aiSuggest("נזילת שמן מהמנוע",D.engine.slice(0,10));
-        o.innerHTML=aiConnected()?'<span style="color:var(--ok)">✔ הבינה מגיבה. חיבור תקין.</span>'
-          :'<span style="color:var(--warn)">מנוע החוקים פעיל (לא חובר מפתח).</span>';}
-      catch(err){o.innerHTML='<span style="color:var(--bad)">✕ החיבור נכשל: '+esc(err.message)+'</span>'}break}
+    case "aitest":{const o=$("#aitestout");
+      if(!aiConnected()){o.innerHTML='<span style="color:var(--warn)">'+esc(T('ai_nokey'))+'</span>';break}
+      o.innerHTML='<span class="spin"></span> '+esc(T('ai_checking'));
+      try{const ids=await aiListModels();
+        S.ai.live=S.ai.live||{};S.ai.live[S.ai.provider]=ids;
+        if(!alive(S.ai.model))S.ai.model="";
+        store.set("ai",S.ai);render();
+        const o2=$("#aitestout");if(o2)o2.innerHTML='<span style="color:var(--ok)">'+esc(TF('ai_ok',{n:ids.length}))+'</span>'}
+      catch(err){const o2=$("#aitestout")||o;
+        o2.innerHTML='<span style="color:var(--bad)">'+esc(T('ai_fail'))+' ('+esc(err.message)+')</span>'}
+      break}
     case "aidisc":{S.ai={provider:"",key:"",url:"",model:""};store.set("ai",S.ai);render();toast(T('ai_disconnect'));break}
 
     case "phtab":phTab=t.dataset.k;render();break;
@@ -1838,7 +2033,9 @@ document.addEventListener("click",async e=>{
       break}
     case "shwa":{let ph=t.dataset.ph||"";
       if(ph.startsWith("0"))ph="972"+ph.slice(1);
-      window.open("https://wa.me/"+ph+"?text="+t.dataset.t,"_blank");break}
+      {const u="https://wa.me/"+ph+"?text="+t.dataset.t;
+       /* באפליקציה מותקנת window.open יכול להחזיר null */
+       const w=window.open(u,"_blank");if(!w)location.href=u}break}
     case "shmail":window.location.href="mailto:?subject="+encodeURIComponent("סיכום בדיקת רכב "+t.dataset.p)+
       "&body="+t.dataset.t;break;
     case "shcopy":try{await navigator.clipboard.writeText(decodeURIComponent(t.dataset.t));toast("הועתק")}
@@ -1871,7 +2068,7 @@ document.addEventListener("change",e=>{
     arr.sort((a,b)=>a-b);saveMap();return}
   if(el.dataset.s){const p=el.dataset.s,v=el.value;
     if(p==="ai.provider"){const pv=AI_PROVIDERS[v];
-      S.ai.provider=v;S.ai.model=pv&&pv.models&&pv.models[0]||"";store.set("ai",S.ai);render();return}
+      S.ai.provider=v;S.ai.model="";S.ai.okModel="";store.set("ai",S.ai);render();return}
     if(p.includes(".")){const[a,b]=p.split(".");S[a][b]=v;store.set(a,S[a])}
     else{S[p]=v;store.set(p,v)}
     render();return}
@@ -1896,6 +2093,8 @@ function dl(name,content,type){const b=new Blob([content],{type});const u=URL.cr
 function sheet(title,html){const d=document.createElement("div");d.className="sheet";d.id="sheet";
   d.innerHTML=`<div class="inner"><h3>${esc(title)}</h3>${html}
     <button class="btn" data-act="sheetclose">${esc(T('close'))}</button></div>`;
+  const born=Date.now();
+  d.addEventListener("click",e=>{if(Date.now()-born<350){e.preventDefault();e.stopPropagation()}},true);
   d.onclick=e=>{if(e.target===d)closeSheet()};document.body.appendChild(d)}
 function closeSheet(){const s=$("#sheet");if(s)s.remove()}
 
@@ -1905,7 +2104,13 @@ if(!S.scope)S.scope=JSON.parse(JSON.stringify(SCOPE_DEF));
 if(S.pin)S.locked=true;
 applyChrome();render();
 if(!S.locked)scheduleNotes();
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+if("serviceWorker" in navigator&&location.protocol!=="file:"){
+  const had=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{
+    if(had&&!S.updated){S.updated=true;if(S.screen==="home"&&!S.locked&&S.seen)render()}});
+}
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
 </script>
 </body>
 </html>

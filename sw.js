@@ -1,3 +1,6 @@
+/* sw.js — בדק · Service Worker
+   בכל עדכון של האפליקציה מעלים את VERSION (וגם את APP_VER ב-index.html). */
+
 /* ── AppNest · Cloudflare Pages fix (Oct 2026) ──
    Cloudflare redirects *.html to clean URLs (/index.html -> /). Chrome refuses a
    "redirected" response that a Service Worker hands to a page load (ERR_FAILED).
@@ -19,24 +22,45 @@
   CacheStorage.prototype.match=function(){return sm.apply(this,arguments).then(clean);};
 })();
 
-const CACHE = "bdk-v5";
-const FILES = ["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
+const VERSION = "1.4.0";
+const PREFIX = "bdk-";
+const CACHE = PREFIX + VERSION;
+/* "./" ולא "./index.html" — ראה ההערה למעלה */
+const SHELL = ["./", "./manifest.json", "./icon-192.png", "./icon-512.png"];
+
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(c => Promise.all(SHELL.map(u =>
+        fetch(u, { cache: "reload" }).then(r => { if (!r.ok) throw new Error(u + " " + r.status); return c.put(u, r); }))))
+      .then(() => self.skipWaiting())
+  );
 });
+
 self.addEventListener("activate", e => {
-  e.waitUntil(caches.keys().then(ks =>
-    Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  e.waitUntil(
+    caches.keys()
+      .then(ks => Promise.all(ks.filter(k => k.startsWith(PREFIX) && k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
 });
+
 self.addEventListener("fetch", e => {
-  const url = new URL(e.request.url);
-  // בקשות רשת חיצוניות (משרד התחבורה, ספק הבינה) — תמיד ישירות, בלי מטמון
-  if (url.origin !== location.origin) return;
+  const req = e.request;
+  if (req.method !== "GET") return;
+  const url = new URL(req.url);
+  /* משרד התחבורה וספקי הבינה — תמיד ישר לרשת, בלי מטמון */
+  if (url.origin !== self.location.origin) return;
+
+  /* רשת קודם (כדי לקבל עדכונים), ובלי רשת — מהמטמון */
   e.respondWith(
-    caches.match(e.request).then(hit => hit || fetch(e.request).then(res => {
-      const copy = res.clone();
-      caches.open(CACHE).then(c => c.put(e.request, copy)).catch(() => {});
-      return res;
-    }).catch(() => caches.match("./index.html")))
+    fetch(req)
+      .then(res => {
+        if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {}); }
+        return res;
+      })
+      .catch(() => caches.match(req, { ignoreSearch: true })
+        .then(hit => hit || (req.mode === "navigate" ? caches.match("./") : undefined))
+        .then(hit => hit || new Response("", { status: 503, statusText: "Offline" })))
   );
 });
