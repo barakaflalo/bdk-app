@@ -943,6 +943,104 @@ const slotT=sl=>{const i=LIDX();return i<0?sl.t:((SLOTX[sl.k]||[])[i]||sl.t)};
 const SEVK={"משמעות גבוהה":"sev_high","משמעות נמוכה":"sev_low","ליקויים שוליים":"sev_minor"};
 const grpT=g=>SEVK[g]?T(SEVK[g]):g;
 ["he","en","ar","ru","es"].forEach((l,i)=>{for(const k in LX)LANG[l][k]=LX[k][i]});
+
+/* ===== סבב 3 — [עברית, English, العربية, Русский, Español] ===== */
+Object.assign(LX,{
+dict_btn:["🎤 הכתבת ליקויים","🎤 Dictate defects","🎤 إملاء الأعطال","🎤 Диктовка дефектов","🎤 Dictar defectos"],
+dict_ph:["אמור או הקלד את הליקויים ברצף, למשל: רפידות שחוקות, צמיג קדמי ימני פגום, נזילת שמן מהמנוע","Say or type the defects, e.g. worn pads, front right tyre damaged, oil leak (Hebrew works best)","قل أو اكتب الأعطال (العبرية تعمل بأفضل شكل)","Продиктуйте или введите дефекты (лучше всего на иврите)","Di o escribe los defectos (funciona mejor en hebreo)"],
+dict_mic:["🎤 הקלטה","🎤 Record","🎤 تسجيل","🎤 Запись","🎤 Grabar"],
+dict_stop:["⏹ עצור","⏹ Stop","⏹ إيقاف","⏹ Стоп","⏹ Parar"],
+dict_go:["נתח והצע לטופס","Analyse and suggest","حلّل واقترح","Разобрать и предложить","Analizar y proponer"],
+dict_listening:["מקשיב… דבר ברצף, ולחץ עצור כשסיימת","Listening… speak freely, tap stop when done","أستمع… تحدث ثم اضغط إيقاف","Слушаю… говорите, затем нажмите стоп","Escuchando… habla y pulsa parar"],
+dict_nosr:["המיקרופון של האפליקציה לא זמין בדפדפן הזה. אפשר להשתמש במיקרופון של המקלדת.","The app microphone is not available in this browser. Use the keyboard's microphone.","ميكروفون التطبيق غير متاح هنا. استخدم ميكروفون لوحة المفاتيح.","Микрофон приложения недоступен. Используйте микрофон клавиатуры.","El micrófono de la app no está disponible. Usa el del teclado."],
+dict_offline:["בלי רשת המיקרופון של האפליקציה לא מתמלל. המיקרופון של המקלדת, עם עברית שהורדה מראש, עובד גם בלי רשת — והניתוח עצמו תמיד עובד במכשיר.","Without a connection the app microphone cannot transcribe. The keyboard microphone with an offline language pack works — and the analysis itself always runs on the device.","بدون اتصال لا يعمل ميكروفون التطبيق. ميكروفون لوحة المفاتيح مع حزمة لغة دون اتصال يعمل — والتحليل يعمل دائماً على الجهاز.","Без сети микрофон приложения не распознаёт речь. Микрофон клавиатуры с офлайн-пакетом работает, а разбор всегда идёт на устройстве.","Sin conexión el micrófono de la app no transcribe. El del teclado con idioma sin conexión sí, y el análisis siempre funciona en el dispositivo."],
+dict_empty:["לא זוהו ליקויים מהרשימה. נסה לנסח אחרת, או בחר ידנית בסעיף.","No findings from the list were recognised. Rephrase, or pick manually in the row.","لم يُتعرف على تشخيصات من القائمة. أعد الصياغة أو اختر يدوياً.","Диагнозы из списка не распознаны. Переформулируйте или выберите вручную.","No se reconocieron diagnósticos. Reformula o elige a mano."],
+dict_byai:["נותח בבינה","Analysed by AI","حُلّل بالذكاء","Разобрано ИИ","Analizado con IA"],
+dict_byrules:["נותח במנוע החוקים (במכשיר)","Analysed by the rule engine (on device)","حُلّل بمحرك القواعد (على الجهاز)","Разобрано движком правил (на устройстве)","Analizado con el motor de reglas (en el dispositivo)"],
+pr_title:["לאשר ולהכניס לטופס","Confirm and add to the form","تأكيد وإضافة للنموذج","Подтвердить и внести","Confirmar y añadir"],
+pr_note:["סמן מה נכון. האבחנות בנוסח הרשמי של נספח 5.","Tick what is right. Findings are in the official Annex 5 wording.","حدد الصحيح. التشخيصات بالصيغة الرسمية للملحق 5.","Отметьте верное. Диагнозы в официальной редакции Приложения 5.","Marca lo correcto. Los diagnósticos van en la redacción oficial del Anexo 5."],
+pr_ins:["הכנס {n} לטופס","Add {n} to the form","أضف {n} للنموذج","Внести: {n}","Añadir {n}"],
+pr_noteonly:["הערת בוחן","Inspector note","ملاحظة الفاحص","Заметка инспектора","Nota del inspector"],
+pr_unsure:["לא בטוח — בדוק","Not sure — check","غير مؤكد — تحقق","Не уверен — проверьте","No seguro: revisa"],
+pr_outscope:["מחוץ לבדיקה הזו","Outside this inspection","خارج هذا الفحص","Вне этой проверки","Fuera de esta inspección"],
+pr_added:["נוספו {n} פריטים לטופס","{n} items added to the form","أضيفت {n} عناصر","Внесено: {n}","Añadidos {n} elementos"],
+pr_skipped:["{n} דולגו כי הסעיף מחוץ לבדיקה","{n} skipped: row outside the inspection","تم تخطي {n}: البند خارج الفحص","Пропущено {n}: пункт вне проверки","{n} omitidos: fuera de la inspección"],
+pr_leftover:["לא זוהה ברשימה — יישמר כהערה כללית","Not in the list — kept as a general remark","غير موجود في القائمة — يُحفظ كملاحظة عامة","Нет в списке — сохранится как примечание","No está en la lista: se guarda como observación"],
+pr_none:["לא נבחר שום פריט","Nothing selected","لم يُحدد شيء","Ничего не выбрано","Nada seleccionado"],
+rest_ok:["✓ כל השאר תקין","✓ Everything else OK","✓ الباقي سليم","✓ Остальное исправно","✓ Todo lo demás correcto"],
+rest_done:["{n} סעיפים סומנו תקין","{n} rows marked OK","تم تعليم {n} بنود سليمة","Отмечено исправными: {n}","{n} apartados marcados correctos"],
+rest_none:["אין סעיפים פתוחים","No open rows","لا توجد بنود مفتوحة","Открытых пунктов нет","No hay apartados abiertos"],
+freq_star:["נבחר הרבה אצלך","Often chosen by you","تختاره كثيراً","Часто выбираете","Lo eliges a menudo"],
+asst:["עוזר","Assistant","المساعد","Помощник","Asistente"],
+seen_before:["הרכב הזה כבר נבדק אצלך: {d}","You already inspected this vehicle: {d}","فحصت هذه المركبة من قبل: {d}","Вы уже проверяли этот автомобиль: {d}","Ya inspeccionaste este vehículo: {d}"],
+open_it:["פתח","Open","فتح","Открыть","Abrir"],
+obd_title:["סריקת מחשב (OBD)","Computer scan (OBD)","فحص الكمبيوتر (OBD)","Сканирование (OBD)","Escaneo (OBD)"],
+obd_btn:["🔌 סריקת מחשב (OBD)","🔌 Computer scan (OBD)","🔌 فحص الكمبيوتر (OBD)","🔌 Сканирование (OBD)","🔌 Escaneo (OBD)"],
+obd_ble:["Bluetooth (BLE)","Bluetooth (BLE)","Bluetooth (BLE)","Bluetooth (BLE)","Bluetooth (BLE)"],
+obd_serial:["Bluetooth קלאסי / USB","Classic Bluetooth / USB","Bluetooth كلاسيكي / USB","Классический Bluetooth / USB","Bluetooth clásico / USB"],
+obd_demo:["הדגמה (בלי מתאם)","Demo (no adapter)","عرض تجريبي (بدون محوّل)","Демо (без адаптера)","Demostración (sin adaptador)"],
+obd_note:["חבר מתאם ELM327 לשקע ה-OBD, הדלק הצתה (ON) ובחר חיבור. עובד בכרום באנדרואיד ובמחשב.","Plug an ELM327 adapter into the OBD port, switch the ignition ON and choose a connection. Works in Chrome on Android and desktop.","وصّل محوّل ELM327 بمنفذ OBD، شغّل الإشعال واختر الاتصال. يعمل في كروم.","Подключите ELM327 к разъёму OBD, включите зажигание и выберите связь. Работает в Chrome.","Conecta un ELM327 al puerto OBD, pon el contacto y elige la conexión. Funciona en Chrome."],
+obd_nobt:["הדפדפן לא תומך ב-Bluetooth. צריך כרום באנדרואיד או במחשב.","This browser has no Bluetooth support. Use Chrome on Android or desktop.","المتصفح لا يدعم Bluetooth. استخدم كروم.","Браузер не поддерживает Bluetooth. Нужен Chrome.","El navegador no admite Bluetooth. Usa Chrome."],
+obd_noser:["הדפדפן לא תומך בחיבור קלאסי / USB (צריך כרום 137 ומעלה).","This browser has no classic/USB serial support (Chrome 137+ needed).","المتصفح لا يدعم الاتصال الكلاسيكي / USB (كروم 137+).","Нет поддержки классического/USB (нужен Chrome 137+).","Sin soporte clásico/USB (Chrome 137+)."],
+obd_connecting:["מתחבר…","Connecting…","جارٍ الاتصال…","Подключение…","Conectando…"],
+obd_reading:["קורא נתונים מהרכב…","Reading the vehicle…","جارٍ قراءة المركبة…","Чтение данных…","Leyendo el vehículo…"],
+obd_ready:["הסריקה הושלמה ונשמרה בבדיקה","Scan complete and saved to the inspection","اكتمل الفحص وحُفظ","Сканирование завершено и сохранено","Escaneo completo y guardado"],
+obd_fail:["החיבור נכשל","Connection failed","فشل الاتصال","Ошибка подключения","Falló la conexión"],
+obd_nocar:["המתאם מחובר אבל מחשב הרכב לא ענה. ודא שההצתה דלוקה ונסה שוב.","The adapter is connected but the car's computer did not answer. Check the ignition is ON and retry.","المحوّل متصل لكن كمبيوتر السيارة لم يرد. تأكد من الإشعال وأعد المحاولة.","Адаптер подключён, но ЭБУ не ответил. Проверьте зажигание.","El adaptador conecta pero la centralita no responde. Revisa el contacto."],
+obd_again:["סרוק שוב","Scan again","افحص مجدداً","Сканировать снова","Escanear de nuevo"],
+obd_disc:["נתק","Disconnect","قطع","Отключить","Desconectar"],
+obd_add:["הוסף לבדיקה","Add to the inspection","أضف إلى الفحص","Внести в проверку","Añadir a la inspección"],
+obd_codes:["קודי תקלה","Fault codes","رموز الأعطال","Коды ошибок","Códigos de avería"],
+obd_stored:["שמור","stored","مخزّن","сохр.","guardado"],
+obd_pending:["ממתין","pending","معلّق","ожид.","pendiente"],
+obd_perm:["קבוע","permanent","دائم","пост.","permanente"],
+obd_nocodes:["אין קודי תקלה במחשב המנוע","No fault codes in the engine computer","لا توجد رموز أعطال","Кодов ошибок нет","Sin códigos de avería"],
+obd_mil:["נורית תקלת מנוע","Engine warning light","ضوء عطل المحرك","Лампа Check Engine","Testigo de motor"],
+obd_on:["דולקת","ON","مضاء","горит","encendido"],
+obd_off:["כבויה","off","مطفأ","не горит","apagado"],
+obd_vin:["VIN מהמחשב","VIN from the computer","VIN من الكمبيوتر","VIN из ЭБУ","VIN de la centralita"],
+obd_vinok:["תואם לרישיון","matches the licence","مطابق للرخصة","совпадает","coincide"],
+obd_vinbad:["שונה מהרישיון","differs from the licence","مختلف عن الرخصة","не совпадает","no coincide"],
+obd_clear:["מאז מחיקת הקודים","Since codes were cleared","منذ مسح الرموز","После сброса кодов","Desde el borrado"],
+obd_recent:["הקודים נמחקו לאחרונה — ייתכן שתקלות הוסתרו","Codes were cleared recently — faults may be hidden","مُسحت الرموز مؤخراً — قد تكون أعطال مخفية","Коды недавно сброшены — ошибки могут быть скрыты","Códigos borrados hace poco: puede haber averías ocultas"],
+obd_ready_inc:["{n} בדיקות מוכנות לא הושלמו","{n} readiness monitors incomplete","{n} اختبارات جاهزية غير مكتملة","Не завершено мониторов: {n}","{n} monitores sin completar"],
+obd_volt:["מתח","Voltage","الجهد","Напряжение","Tensión"],
+obd_proto:["פרוטוקול","Protocol","البروتوكول","Протокол","Protocolo"],
+obd_last:["סריקה אחרונה","Last scan","آخر فحص","Последнее сканирование","Último escaneo"],
+obd_limit:["הסריקה קוראת את מחשב המנוע לפי התקן. כריות אוויר, ABS ומחשבי יצרן נסרקים באפליקציית סורק התקלות.","This scan reads the engine computer by the standard. Airbag, ABS and maker modules are scanned in the OBD Scanner app.","يقرأ هذا الفحص كمبيوتر المحرك وفق المعيار. الوسائد وABS تُفحص في تطبيق ماسح الأعطال.","Читается ЭБУ двигателя по стандарту. Подушки, ABS и др. — в приложении OBD Scanner.","Se lee la centralita del motor según el estándar. Airbag, ABS y otros, en la app OBD Scanner."],
+obd_nocur:["פתח בדיקה כדי לשמור את הסריקה בה","Open an inspection to save the scan to it","افتح فحصاً لحفظ النتيجة فيه","Откройте проверку, чтобы сохранить результат","Abre una inspección para guardar el escaneo"],
+obd_log:["יומן חיבור","Connection log","سجل الاتصال","Журнал связи","Registro de conexión"],
+obd_km:["{n} ק״מ","{n} km","{n} كم","{n} км","{n} km"],
+obd_wu:["{n} התחממויות","{n} warm-ups","{n} تسخينات","{n} прогревов","{n} calentamientos"],
+obd_milkm:["נסע עם נורית דולקת","Driven with the light on","سار والضوء مضاء","Пробег с горящей лампой","Recorrido con testigo"],
+obd_coolant:["טמפרטורת מנוע","Engine temperature","حرارة المحرك","Температура двигателя","Temperatura del motor"],
+fam_fuel:["דלק ואוויר","Fuel and air","الوقود والهواء","Топливо и воздух","Combustible y aire"],
+fam_ign:["הצתה / פספוסים","Ignition / misfire","الإشعال / خلل الاحتراق","Зажигание / пропуски","Encendido / fallos"],
+fam_emis:["בקרת פליטה","Emission control","التحكم بالانبعاثات","Контроль выбросов","Control de emisiones"],
+fam_idle:["מהירות וסרק","Speed and idle","السرعة والخمول","Скорость и ХХ","Velocidad y ralentí"],
+fam_ecu:["מחשב ומעגלי פלט","Computer and outputs","الكمبيوتر والمخارج","ЭБУ и выходы","Centralita y salidas"],
+fam_trans:["תיבת הילוכים","Transmission","علبة السرعة","Коробка передач","Transmisión"],
+fam_hyb:["הנעה היברידית / חשמלית","Hybrid / electric drive","الدفع الهجين / الكهربائي","Гибрид / электропривод","Híbrido / eléctrico"],
+fam_mfr:["קוד יצרן — מנוע והנעה","Maker code — engine and drive","رمز الصانع — المحرك","Код производителя — двигатель","Código del fabricante: motor"],
+fam_p2:["מנוע והנעה","Engine and drive","المحرك والدفع","Двигатель и привод","Motor y tracción"],
+fam_c:["שלדה — בלמים, היגוי, מתלים","Chassis — brakes, steering, suspension","الشاسيه — فرامل، توجيه، تعليق","Шасси — тормоза, руль, подвеска","Chasis: frenos, dirección, suspensión"],
+fam_bsrs:["כריות אוויר וחגורות","Airbags and belts","الوسائد والأحزمة","Подушки и ремни","Airbags y cinturones"],
+fam_b:["מרכב ונוחות","Body and comfort","الهيكل والراحة","Кузов и комфорт","Carrocería y confort"],
+fam_u:["תקשורת בין מחשבים","Network between computers","الاتصال بين الحواسيب","Связь между блоками","Red entre centralitas"],
+asst_welcome:["היי! אני העוזר של בדק 🪄 אפשר להכתיב לי ליקויים ואכניס אותם לסעיף הנכון, לבקש \"כל השאר תקין\", לשאול מה חסר כדי לסגור את הבדיקה, או לפתוח סעיף. בלי מפתח בינה אני עובד במנוע החוקים.","Hi! I'm the BDK assistant 🪄 Dictate defects and I'll place them in the right row, say \"everything else OK\", ask what is missing, or open a row. Without an AI key I use the rule engine.","مرحباً! أنا مساعد BDK 🪄 أملِ عليّ الأعطال وسأضعها في البند الصحيح، أو اسأل ما الناقص.","Привет! Я помощник BDK 🪄 Продиктуйте дефекты — я разнесу их по пунктам, или спросите, чего не хватает.","¡Hola! Soy el asistente de BDK 🪄 Díctame defectos y los pondré en su apartado, o pregunta qué falta."],
+asst_help:["אני יכול: להכניס ליקויים שתכתוב או תגיד, לסמן \"כל השאר תקין\", לומר מה חסר לסגירה, לפתוח סעיף (\"פתח בלמים\"), ולפתוח סריקת מחשב. לשאלות חופשיות צריך מפתח בינה בהגדרות.","I can: add defects you type or say, mark everything else OK, tell what is missing, open a row (\"open brakes\") and open the computer scan. Free questions need an AI key.","أستطيع: إضافة الأعطال، تعليم الباقي سليماً، إخبارك بما ينقص، فتح بند، وفتح فحص الكمبيوتر. الأسئلة الحرة تحتاج مفتاح ذكاء.","Могу: внести дефекты, отметить остальное исправным, сказать, чего не хватает, открыть пункт и сканирование. Для свободных вопросов нужен ключ ИИ.","Puedo: añadir defectos, marcar el resto correcto, decir qué falta, abrir un apartado y el escaneo. Las preguntas libres necesitan clave de IA."],
+asst_nocur:["פתח קודם בדיקה (או המשך בדיקה פתוחה), ואז אכניס את הליקויים.","Open an inspection first (or continue an open one), then I'll add the defects.","افتح فحصاً أولاً ثم سأضيف الأعطال.","Сначала откройте проверку, затем я внесу дефекты.","Abre primero una inspección y añadiré los defectos."],
+asst_found:["מצאתי {n} פריטים — פתחתי לך חלון לאישור.","Found {n} items — opened them for your confirmation.","وجدت {n} عناصر — فتحتها للتأكيد.","Нашёл {n} — открыл для подтверждения.","Encontré {n}: los abrí para que confirmes."],
+asst_missing:["כדי לסגור את הבדיקה חסר:","Still missing to close the inspection:","ينقص لإغلاق الفحص:","Чтобы закрыть проверку, не хватает:","Falta para cerrar la inspección:"],
+asst_allset:["הכול מולא — אפשר לחתום ולהפיק דוח.","Everything is filled in — you can sign and produce the report.","كل شيء مكتمل — يمكنك التوقيع وإصدار التقرير.","Всё заполнено — можно подписывать и выводить отчёт.","Todo completo: puedes firmar y generar el informe."],
+asst_opened:["פתחתי את סעיף {n}.","Opened row {n}.","فتحت البند {n}.","Открыл пункт {n}.","Abrí el apartado {n}."],
+asst_c1:["מה חסר לי?","What is missing?","ما الناقص؟","Чего не хватает?","¿Qué falta?"],
+asst_c2:["כל השאר תקין","Everything else OK","الباقي سليم","Остальное исправно","Todo lo demás correcto"],
+asst_c3:["סריקת מחשב","Computer scan","فحص الكمبيوتر","Сканирование","Escaneo"],
+asst_c4:["רפידות שחוקות, צמיג קדמי ימני פגום","רפידות שחוקות, צמיג קדמי ימני פגום","رפידות שחוקות, צמיג קדמי ימני פגום","רפידות שחוקות, צמיג קדמי ימני פגום","רפידות שחוקות, צמיג קדמי ימני פגום"]
+});
+LX.asst_c4=["רפידות שחוקות, צמיג קדמי ימני פגום","רפידות שחוקות, צמיג קדמי ימני פגום","רפידות שחוקות, צמיג קדמי ימני פגום","רפידות שחוקות, צמיג קדמי ימני פגום","רפידות שחוקות, צמיג קדמי ימני פגום"];
+["he","en","ar","ru","es"].forEach((l,i)=>{for(const k in LX)LANG[l][k]=LX[k][i]});
 const kindName=k=>T(k==="full"?"kind_full":k==="basic"?"kind_basic":k==="engine"?"kind_engine":"kind_chassis");
 const TF=(k,o)=>T(k).replace(/\{(\w+)\}/g,(m,x)=>o[x]!==undefined?o[x]:m);
 function T(k){const L=LANG[S.lang]||LANG.he;return L[k]!==undefined?L[k]:(LANG.en[k]!==undefined?LANG.en[k]:k)}
@@ -963,7 +1061,7 @@ let S={
   mo:store.get("mo",{proxy:""}),
   recs:store.get("recs",[]), appts:store.get("appts",[]), km:store.get("km",{}),
   map:null, scope:store.get("scope",null),
-  pin:store.get("pin",null), notify:store.get("notify",false),
+  pin:store.get("pin",null), notify:store.get("notify",false), freq:store.get("freq",{}),
   cur:null, tab:0, screen:"home", seen:store.get("seen",false), locked:false
 };
 function hash(x){let h=5381;for(let i=0;i<x.length;i++)h=((h<<5)+h+x.charCodeAt(i))>>>0;return String(h)}
@@ -1042,7 +1140,7 @@ function compress(file,max=1400,q=.72){return new Promise((res,rej)=>{
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const APP_VER="1.6.0";
+const APP_VER="1.7.0";
 /* תאריך מקומי — toISOString מזיז את היום אחורה בישראל בשעות הלילה */
 const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 const today=()=>ymd(new Date());
@@ -1069,7 +1167,9 @@ function askConfirm(msg,yes,danger){
   return new Promise(res=>{closeSheet();cfRes=res;
     sheet(T('ok')+"?",`<div style="line-height:1.7;margin-bottom:6px">${esc(msg)}</div>
       <button class="btn ${danger?"danger":"solid"}" data-act="cfyes">${esc(yes||T('ok'))}</button>`,T('cancel'))})}
+let asstLang=null;
 function applyChrome(){
+  if(asstLang!==S.lang){if(asstLang!==null&&window.AppNestAssistant)try{AppNestAssistant.refresh()}catch(e){}asstLang=S.lang}
   document.body.dataset.theme=S.theme; document.body.dataset.mode=S.mode;
   const L=LANG[S.lang]||LANG.he;
   document.documentElement.lang=S.lang; document.documentElement.dir=L.dir;
@@ -1399,12 +1499,13 @@ function goBack(){
   S.screen=prev;if(isTab(prev))navStack=[];
   window.scrollTo(0,0);render()}
 function scrName(x){return x==="rec"?((S.cur&&S.cur.veh.plate)||T('newins')):x==="gate"?T('newins'):
-  x==="editor"?T('editlists'):T(x)}
+  x==="editor"?T('editlists'):x==="obd"?T('obd_title'):T(x)}
 
 /* צעד אחד אחורה — אותה פונקציה לכפתור שעל המסך ולכפתור החזרה של הטלפון.
    מחזירה false רק בדף הבית, כשאין מה לסגור. */
 function stepBack(){
   if(S.locked)return true;                                   /* מסך נעילה לא נעקף */
+  if(window.AppNestAssistant&&AppNestAssistant.isOpen()){AppNestAssistant.close();return true}
   if($("#sheet")){closeSheet();return true}                  /* חלון פתוח — נסגר */
   if(!S.seen){S.seen=true;store.set("seen",true);render();return true}   /* מדריך — דילוג */
   if(!isTab(S.screen)){goBack();return true}                 /* מסך פנימי — למסך שממנו הגיעו */
@@ -1440,7 +1541,7 @@ function render(){applyChrome();const a=$("#app");
   if(S.locked){document.body.classList.remove("tabs-on");a.innerHTML=vLock();return}
   if(!S.seen){document.body.classList.remove("tabs-on");a.innerHTML=vGuide();return}
   const m={home:vHome,gate:vGate,rec:vRec,archive:vArchive,diary:vDiary,dash:vDash,more:vMore,
-    settings:vSettings,editor:vEditor,about:vAbout,diag:vDiag}[S.screen]||vHome;
+    settings:vSettings,editor:vEditor,about:vAbout,diag:vDiag,obd:vObd}[S.screen]||vHome;
   const nav=navHTML();
   document.body.classList.toggle("tabs-on",!!nav);
   a.className="fade";a.innerHTML=m()+nav;
@@ -1454,6 +1555,7 @@ function bar(title,extra){
   return `<div class="topbar">
   ${inner?`<button class="backbtn" data-act="back" aria-label="${esc(T('back'))}">${arrow} ${esc(scrName(to))}</button>`:""}
   <h1>${esc(title)}</h1>${extra||""}
+  <button class="iconbtn" data-act="asst" aria-label="${esc(T('asst'))}" style="color:var(--gold-soft)">🪄</button>
   <button class="iconbtn" data-act="mode" aria-label="${esc(T('mode'))}">${S.mode==="dark"?"☀":"☾"}</button></div>`}
 
 /* ---------- דף הבית ---------- */
@@ -1462,6 +1564,7 @@ function vHome(){
   const td=today();
   const up=S.appts.filter(a=>a.date>=td).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,4);
   return `<div class="topbar"><h1 style="color:var(--gold)">${esc(T('app'))}</h1>
+    <button class="iconbtn" data-act="asst" aria-label="${esc(T('asst'))}" style="color:var(--gold-soft)">🪄</button>
     <button class="iconbtn" data-act="mode" aria-label="${esc(T('mode'))}">${S.mode==="dark"?"☀":"☾"}</button>
     <button class="iconbtn" data-act="langmenu" aria-label="${esc(T('lang'))}">⌘</button>
     <button class="iconbtn" data-act="about" aria-label="${esc(T('about'))}">ℹ</button></div>
@@ -1648,6 +1751,11 @@ function vTVeh(r){
       <input data-p="veh.plate" value="${esc(r.veh.plate)}" inputmode="numeric" placeholder="12-345-67">
       <div class="hint">${esc(T('v_hint'))}</div></div>
     <button class="btn primary" data-act="lookup">${esc(T('fetch'))}</button>
+    ${(()=>{const pd=String(r.veh.plate||"").replace(/\D/g,"");if(pd.length<7)return "";
+      const prev=S.recs.filter(x=>x.id!==r.id&&String(x.veh.plate||"").replace(/\D/g,"").replace(/^0/,"")===pd.replace(/^0/,""));
+      return prev.length?`<div class="alert info">${esc(TF('seen_before',{d:prev.map(x=>dmy(x.ins.date)).join(", ")}))}
+        <br>${prev.slice(0,3).map(x=>`<button class="btn sm" data-act="open" data-id="${esc(x.id)}">${esc(T('open_it'))} · ${esc(dmy(x.ins.date))}</button>`).join("")}</div>`:""})()}
+    <button class="btn sm" data-act="obd">${esc(T('obd_btn'))}</button>
     ${mo?moPanel(mo,r):""}
   </div>
   <div class="sec">${esc(T('v_ident'))}</div>
@@ -1740,7 +1848,10 @@ function vTPho(r){
 let openRow=null,dq="";
 function vTDef(r){
   const c=counts(r);
-  return (T('official_he')?`<div class="alert info" style="font-size:12.5px">${esc(T('official_he'))}</div>`:"")+`<div class="card tight"><div class="row">
+  return `<div class="row" style="flex-wrap:wrap;gap:8px;margin-top:10px">
+      <button class="btn solid" style="margin:0" data-act="dictopen">${esc(T('dict_btn'))}</button>
+      <button class="btn primary" style="margin:0" data-act="restok">${esc(T('rest_ok'))}</button></div>
+    <button class="btn sm" data-act="obd">${esc(T('obd_btn'))}</button>`+(T('official_he')?`<div class="alert info" style="font-size:12.5px">${esc(T('official_he'))}</div>`:"")+`<div class="card tight"><div class="row">
       <div><div class="tiny">${esc(T('st_ok'))}</div><b style="color:var(--ok)">${c.ok}</b></div>
       <div><div class="tiny">${esc(T('st_bad'))}</div><b style="color:var(--bad)">${c.bad}</b></div>
       <div><div class="tiny">${esc(T('safety'))}</div><b style="color:var(--bad)">${c.safety}</b></div>
@@ -1759,10 +1870,10 @@ function sysRow(r,row){
     ${on?sysBody(r,row,d):""}</div>`}
 function sysBody(r,row,d){
   const pool=poolFor(row,r);
-  const mk=(list,gname)=>list.map(x=>{const on=d.items.includes(x);
+  const mk=(list,gname)=>list.slice().sort((a,b)=>(S.freq[b]||0)-(S.freq[a]||0)).map(x=>{const on=d.items.includes(x);
     if(dq&&!normalize(x).includes(normalize(dq)))return "";
     return `<label class="ditem ${on?"on":""}"><input type="checkbox" data-act="pick" data-n="${row.n}"
-      data-v="${esc(x)}" ${on?"checked":""}><span>${esc(x)}</span></label>`}).join("");
+      data-v="${esc(x)}" ${on?"checked":""}><span>${esc(x)}${(S.freq[x]||0)>=2?` <span title="${esc(T('freq_star'))}" style="color:var(--gold-soft)">★</span>`:""}</span></label>`}).join("");
   const list=pool.flat?mk(pool.flat):Object.entries(pool.grouped).map(([g,items])=>{
     const inner=mk(items,g);return inner.trim()?`<div class="dgroup">${esc(grpT(g))}</div>`+inner:""}).join("");
   return `<div class="sysbody">
@@ -2229,6 +2340,11 @@ async function buildPrint(){
     return `<div style="margin:8px 0"><b>${x.n}. ${esc(x.t)}</b>${d.notes?`<div>${esc(d.notes)}</div>`:""}
       <div class="pgrid">${(d.photos||[]).map(id=>ph[id]?`<figure><img src="${ph[id]}">
       <figcaption>${esc(x.t)}</figcaption></figure>`:"").join("")}</div></div>`}).join("");
+  const ob=r.obd, obdPage=ob?`<div style="margin:8px 0"><b>סריקת מחשב הרכב (OBD) — ${esc(dmy(ymd(new Date(ob.at))))}</b>
+    <div style="font-size:9pt">${[ob.vin?"VIN במחשב: "+esc(ob.vin):"",ob.ready?"נורית תקלת מנוע: "+(ob.ready.mil?"דולקת":"כבויה"):"",
+      ob.sinceKm!=null?"מאז מחיקת הקודים: "+ob.sinceKm+" ק״מ"+(ob.warmups!=null?", "+ob.warmups+" התחממויות":""):"",
+      ob.ready&&ob.ready.undone?ob.ready.undone+" בדיקות מוכנות לא הושלמו":""].filter(Boolean).join(" · ")}<br>
+    קודי תקלה: ${[...ob.codes.stored,...ob.codes.pending,...ob.codes.permanent].map(c=>esc(c+" ("+FAM_HE[codeFam(c)]+")")).join(", ")||"אין"}</div></div>`:"";
   $("#printarea").innerHTML=`<div class="pform" dir="rtl">
     ${official?`<div style="text-align:center;font-size:9pt">${esc(S.inst.name)} · ${esc(S.inst.addr)} ·
       ${esc(S.inst.phone)} · רישיון מפעל ${esc(S.inst.lic)}</div>`:
@@ -2260,12 +2376,482 @@ async function buildPrint(){
         חתימה וחותמת הבודק</div>
       <div><div style="border-bottom:1px solid #000;height:52px"></div>חותמת מכון הבדיקה</div>
     </div>
-    ${(defPages||photoPages)?`<div class="pagebreak"><h2>נספח ממצאים וצילומים</h2>
+    ${(defPages||photoPages||obdPage)?`<div class="pagebreak"><h2>נספח ממצאים וצילומים</h2>
       <div style="font-size:8.5pt;text-align:center">נספח זה אינו חלק מטופס הסיכום האחיד ומצורף כתיעוד נוסף.</div>
-      ${defPages}${photoPages}</div>`:""}
+      ${obdPage}${defPages}${photoPages}</div>`:""}
     <div style="text-align:center;font-size:7.5pt;margin-top:10px">הופק ב-${esc(T('app'))} · ${esc(S.user.name)} · ${esc(today())}</div>
   </div>`;
 }
+
+
+/* ═════════════════════ סבב 3 — הכתבה, אישור, OBD ═════════════════════ */
+
+/* ---------- מנוע ההכתבה: טקסט חופשי → סעיף + אבחנה מנספח 5 ----------
+   כלל: הבינה ומנוע החוקים רק בוחרים מתוך הרשימה הסגורה. כל הצעה עוברת אישור של הבוחן. */
+const HFIN={"ך":"כ","ם":"מ","ן":"נ","ף":"פ","ץ":"צ"};
+const DSTOP=new Set(["של","עם","על","יש","אין","את","לא","כן","זה","זאת","היא","הוא","וגם","גם","או","גם","קצת","מאוד","יותר","פחות","אצל","רכב","הרכב","יש","מה","כל","שם","פה","כמו","עוד","בנוסף","אחר","כך","טוב","בסדר","אז","צריך","להחליף","להחלפה","קיים","קיימת","נמצא","נמצאה","נראה","נראית","ממש","די","קל","קלה","אינו","אינה","אינם","אינן"]);
+/* מילים נרדפות מהשטח — מוסיפות צורה משותפת למילה */
+const DEQ={"רועש":"רעש","רועשת":"רעש","רועשים":"רעש","רעשים":"רעש","רקוב":"ריקבנ","רקובה":"ריקבנ","ריקבון":"ריקבנ","שבור":"שבר","שבורה":"שבר","שבורים":"שבר","סדוק":"סדק","סדוקה":"סדק","סדוקים":"סדק","נוזל":"נזיל","דולף":"נזיל","דולפת":"נזיל","נזילה":"נזיל","נזילות":"נזיל","נזילת":"נזיל","עובד":"פועל","עובדת":"פועל","עובדים":"פועל","פועלת":"פועל","רצפה":"ריצפה","שחוק":"שחוק","שחוקה":"שחוק","שחוקים":"שחוק","שחוקות":"שחוק"};
+const DEQN={};for(const k in DEQ)DEQN[k.replace(/[ךםןףץ]/g,c=>HFIN[c])]=DEQ[k];
+/* ביטויים מהשטח → המילים של הנוסח הרשמי */
+const SLANG=[
+ [/פדים|פדי בלם|רפידות גמורות|רפידות בסוף/g,"רפידות שחוקות"],[/דיסקים|דיסקיות בלם|דיסקי בלם/g,"צלחות"],
+ [/קלאץ'?|קלאץ׳/g,"מצמד"],[/גיר אוטומטי/g,"תיבה אוטומטית"],[/(^|[\sו])גיר(?![א-ת])/g,"$1תיבת הילוכים"],
+ [/אמורטיזטורים|אמורטיזטור|בולמים/g,"בולמי זעזועים"],[/בירינגים|בירינג|מיסבים/g,"מסבי גלגלים"],
+ [/דינמו/g,"אלטרנטור"],[/סטרטר|סטארטר/g,"מתנע"],[/רדיאטור/g,"מצנן"],[/טרמוסטט/g,"תרמוסטט"],
+ [/אגזוז/g,"מערכת פליטה"],[/קטליזטור|קטליטי/g,"ממיר קטליטי"],[/טורבו/g,"מגדש טורבו"],
+ [/מזיע שמן|הזעת שמן|מזיעה שמן|דולף שמן|דליפת שמן|נוזל שמן|מטפטף שמן/g,"נזילות שמן"],
+ [/דולף מים|דליפת מים|מטפטף מים/g,"נזילות מים"],[/חלודה|חלוד|ריקבון(?= ב(?:סף|רצפה|ריצפה|קורה|עמוד|גג|דופן|שלדה))/g,"איכול"],[/מכה|תאונה|מעוך/g,"פגיעה"],
+ [/ימין/g,"ימני"],[/שמאל(?!י)/g,"שמאלי"],[/קדימה/g,"קדמי"],[/אחורה/g,"אחורי"],
+ [/צמיג רזרבי|רזרבי|ספייר/g,"גלגל חילוף"],[/נורה|פנס שרוף/g,"פנס"],[/מגבונים|מגב/g,"מגבים"],
+ [/מצבר חלש מאוד|מצבר מת/g,"מצבר פגום"],[/סיבובים לא יציבים|סרק לא יציב/g,"סיבובי מנוע לא יציבים"],
+ [/זיופים|מזייף/g,"מנוע מזייף"],[/תפוס|תפוסה/g,"פגום"],[/גומיות מייצב/g,"תותבים מייצב"]
+];
+function dWords(t){return String(t||"").replace(/[״"׳'.,;:!?()\[\]\/\\\-–—]/g," ").split(/\s+/).filter(Boolean)}
+/* צורות אפשריות של מילה: בלי תחיליות (ו, ה, ב, ל, מ, ש, כ) ובלי סיומות רבים/נקבה */
+function dForms(w){
+  w=w.replace(/[ךםןףץ]/g,c=>HFIN[c]).toLowerCase();
+  const out=new Set(),add=x=>{if(x.length>=2)out.add(x)};
+  const bases=[w];
+  if(/^[א-ת]/.test(w)){
+    if(w.length>=3&&/^[והבלמשכ]/.test(w))bases.push(w.slice(1));
+    if(w.length>4&&/^[והבלמשכ][הבלמכ]/.test(w))bases.push(w.slice(2));}
+  bases.slice().forEach(b=>{const q=DEQN[b];if(q)out.add(q)});
+  for(const b of bases){add(b);
+    const s=b.replace(/(יות|ים|ות)$/,"");if(s!==b)add(s);
+    const s2=b.replace(/[התי]$/,"");if(s2!==b&&s2.length>=3)add(s2)}
+  if(!out.size&&w.length)out.add(w);
+  return out}
+let DIDX=null;
+function dIndex(rec){
+  const key=formKey()+"|"+rec.veh.chassis+"|"+JSON.stringify(S.map[formKey()]).length;
+  if(DIDX&&DIDX.key===key)return DIDX;
+  const ents=[],byItem=new Map();
+  form().forEach(row=>{flatPool(row,rec).forEach(item=>{
+    if(!byItem.has(item)){const toks=dWords(item).filter(w=>w.length>=2&&!DSTOP.has(w)).map(w=>({w,f:dForms(w)}));
+      const e={item,rows:[],toks};byItem.set(item,e);ents.push(e)}
+    byItem.get(item).rows.push(row.n)})});
+  const df=new Map();
+  ents.forEach(e=>{const seen=new Set();e.toks.forEach(t=>t.f.forEach(f=>seen.add(f)));seen.forEach(f=>df.set(f,(df.get(f)||0)+1))});
+  const N=ents.length;
+  ents.forEach(e=>e.toks.forEach(t=>{let m=0;t.f.forEach(f=>{m=Math.max(m,df.get(f)||0)});t.wt=Math.log((N+1)/(1+m))+0.15}));
+  const rowF=form().map(row=>({n:row.n,f:dWords(row.t).filter(w=>w.length>2&&!/מערכת|מערכות/.test(w)).map(dForms)}));
+  DIDX={key,ents,rowF};return DIDX}
+const fHit=(a,b)=>{for(const x of a)if(b.has(x))return true;return false};
+function ruleParse(text,rec){
+  let t=" "+String(text||"")+" ";
+  SLANG.forEach(([re,rep])=>{t=t.replace(re,rep)});
+  const W=dWords(t).map(w=>({w,f:dForms(w),stop:DSTOP.has(w)}));
+  const X=dIndex(rec),cands=[];
+  for(const e of X.ents){
+    const tot=e.toks.reduce((a,b)=>a+b.wt,0);if(!tot)continue;
+    const hits=[];
+    e.toks.forEach((tk,ti)=>W.forEach((w,wi)=>{if(!w.stop&&fHit(tk.f,w.f))hits.push({ti,wi})}));
+    if(!hits.length)continue;
+    const span=e.toks.length+1;let best=null;
+    hits.forEach(h0=>{const inWin=hits.filter(h=>h.wi>=h0.wi&&h.wi<h0.wi+span);
+      const tis=new Set(inWin.map(h=>h.ti));let got=0;tis.forEach(i=>{got+=e.toks[i].wt});
+      if(!best||got>best.got)best={got,pos:[...new Set(inWin.map(h=>h.wi))],tis}});
+    const ratio=best.got/tot;
+    if(ratio<0.5||best.tis.size<Math.min(2,e.toks.length))continue;
+    cands.push({e,ratio,got:best.got,pos:best.pos})}
+  cands.sort((a,b)=>(b.ratio>=.85)-(a.ratio>=.85)||b.got-a.got||b.ratio-a.ratio);
+  const used=new Set(),picked=[];
+  for(const c of cands){
+    const over=c.pos.filter(p=>used.has(p)).length;
+    if(over&&over>=c.pos.length/2)continue;
+    c.pos.forEach(p=>used.add(p));picked.push(c);if(picked.length>=12)break}
+  const props=picked.map(c=>{
+    const lo=Math.min(...c.pos),hi=Math.max(...c.pos),ctx=W.slice(Math.max(0,lo-4),hi+5);
+    let n=c.e.rows[0];
+    if(c.e.rows.length>1){let bs=0;c.e.rows.forEach(rn=>{const rf=X.rowF.find(x=>x.n===rn);
+      const s=rf?rf.f.filter(f=>ctx.some(w=>fHit(f,w.f))).length:0;if(s>bs){bs=s;n=rn}})}
+    const alts=cands.filter(o=>o!==c&&o.e.rows.includes(n)&&o.pos.some(p=>c.pos.includes(p))).slice(0,3).map(o=>o.e.item);
+    return {n,item:c.e.item,alts,score:c.ratio,checked:c.ratio>=.7,src:"rules",pos:c.pos}});
+  /* מה שנשאר לא מזוהה — מוצע כהערה כללית (לא מסומן) */
+  const left=W.map((w,i)=>used.has(i)||w.stop?null:w.w).reduce((acc,w)=>{
+    if(w===null){if(acc.cur.length)acc.out.push(acc.cur);acc.cur=[]}else acc.cur.push(w);return acc},{out:[],cur:[]});
+  if(left.cur.length)left.out.push(left.cur);
+  const leftover=left.out.filter(g=>g.length>=2).map(g=>g.join(" ")).join(", ");
+  return {props,leftover}}
+async function aiParse(text,rec){
+  const X=dIndex(rec),list=[];
+  X.ents.forEach(e=>e.rows.forEach(n=>list.push({n,item:e.item})));
+  const rowName=n=>(form().find(r=>r.n===n)||{}).t||"";
+  const numbered=list.map((x,i)=>(i+1)+". ["+rowName(x.n)+"] "+x.item).join("\n");
+  const prompt="אתה עוזר לבוחן רכב בישראל. להלן רשימה סגורה וממוספרת של אבחנות לפי סעיפי הטופס (נספח 5, הוראת נוהל 127).\n\n"+numbered+
+    "\n\nהבוחן הכתיב: \""+text+"\"\n\nזהה כל ליקוי שהבוחן ציין ובחר עבורו את המספר המתאים ביותר מהרשימה (שים לב לסעיף בסוגריים). "+
+    "החזר אך ורק JSON בפורמט [{\"i\":מספר,\"sure\":true/false}] בלי טקסט נוסף. אל תמציא פריט שאינו ברשימה. ליקוי שאין לו התאמה — אל תכלול.";
+  const out=await aiCall(prompt);
+  const m=out.match(/\[[\s\S]*\]/);if(!m)throw new Error("AI format");
+  const arr=JSON.parse(m[0]);const seen=new Set(),props=[];
+  arr.forEach(o=>{const i=parseInt(o&&o.i)-1;if(!(i>=0&&i<list.length))return;const x=list[i];
+    const k=x.n+"|"+x.item;if(seen.has(k))return;seen.add(k);
+    props.push({n:x.n,item:x.item,alts:[],score:o.sure===false?.6:.95,checked:o.sure!==false,src:"ai"})});
+  return {props,leftover:""}}
+async function dictParse(text,rec){
+  const base=ruleParse(text,rec);
+  if(aiConnected()){
+    try{const a=await aiParse(text,rec);if(a.props.length){a.leftover=base.leftover&&!a.props.length?base.leftover:"";return Object.assign(a,{by:"ai"})}}
+    catch(e){toast(T('ai_fallback'))}}
+  return Object.assign(base,{by:"rules"})}
+
+/* ---------- חלון אישור משותף (הכתבה, עוזר, סריקת מחשב) ---------- */
+let PROPS=[],PROPBY="";
+function remarksRow(){const r=form().find(x=>x.notesonly);return r?r.n:form()[form().length-1].n}
+function openProposals(props,leftover,by){
+  const rec=S.cur;if(!rec)return toast(T('asst_nocur'));
+  PROPS=props.map(p=>Object.assign({},p));PROPBY=by||"";
+  if(leftover)PROPS.push({n:remarksRow(),item:null,note:leftover,checked:false,src:"left"});
+  if(!PROPS.length){toast(T('dict_empty'),3500);return}
+  closeSheet();
+  sheet(T('pr_title'),`<div class="tiny">${esc(T('pr_note'))}${PROPBY?" · "+esc(T(PROPBY==="ai"?'dict_byai':PROPBY==="rules"?'dict_byrules':'obd_title')):""}</div>
+    <div class="dlist" style="max-height:52vh;margin-top:10px">${PROPS.map((p,i)=>{
+      const row=form().find(x=>x.n===p.n)||{t:"",n:p.n},d=rec.defects[p.n]||{},out=d.st==="ns";
+      return `<label class="ditem ${p.checked?"on":""}" style="flex-wrap:wrap">
+        <input type="checkbox" data-act="propchk" data-i="${i}" ${p.checked&&!out?"checked":""} ${out?"disabled":""}>
+        <span style="flex:1;min-width:0"><b class="tiny" style="color:var(--gold-soft)">${p.n}. ${esc(rowT(row))}</b><br>
+        ${p.item?(p.alts&&p.alts.length?`<select data-act="propalt" data-i="${i}" style="max-width:100%;margin-top:4px;padding:6px;border-radius:8px;background:var(--card);color:var(--tx);border:1px solid var(--line)">
+            ${[p.item].concat(p.alts).map(x=>`<option ${x===p.item?"selected":""}>${esc(x)}</option>`).join("")}</select>`:esc(p.item)):""}
+        ${p.note?`<div class="tiny">📝 ${esc(p.note)}</div>`:""}
+        ${p.src==="left"?`<div class="tiny" style="color:var(--warn)">${esc(T('pr_leftover'))}</div>`:""}
+        ${p.score!=null&&p.score<.7?`<div class="tiny" style="color:var(--warn)">${esc(T('pr_unsure'))}</div>`:""}
+        ${out?`<div class="tiny" style="color:var(--tx3)">${esc(T('pr_outscope'))}</div>`:""}</span></label>`}).join("")}</div>
+    <button class="btn solid" data-act="propins" id="propbtn">${esc(TF('pr_ins',{n:PROPS.filter((p,i)=>p.checked&&!((rec.defects[p.n]||{}).st==="ns")).length}))}</button>`)}
+function bumpFreq(item){S.freq[item]=(S.freq[item]||0)+1;store.set("freq",S.freq)}
+function insertProposals(){
+  const rec=S.cur;if(!rec)return;
+  const snap=JSON.stringify(rec.defects);let n=0,skip=0;
+  PROPS.forEach(p=>{if(!p.checked)return;const d=dget(rec,p.n);
+    if(d.st==="ns"){skip++;return}
+    if(p.item){if(!d.items.includes(p.item))d.items.push(p.item);if(!form().find(x=>x.n===p.n).notesonly)d.st="bad";bumpFreq(p.item)}
+    if(p.note){d.notes=(d.notes?d.notes+"\n":"")+p.note}
+    n++});
+  if(!n){toast(T('pr_none'));return}
+  saveCur();closeSheet();S.tab=3;openRow=null;
+  if(S.screen!=="rec")go("rec",rec);else render();
+  undoBar(TF('pr_added',{n})+(skip?" · "+TF('pr_skipped',{n:skip}):""),()=>{rec.defects=JSON.parse(snap);saveCur()})}
+
+/* ---------- "כל השאר תקין" ---------- */
+function restOk(){
+  const rec=S.cur;if(!rec)return 0;
+  const snap=JSON.stringify(rec.defects);let n=0;
+  form().forEach(row=>{if(row.notesonly)return;const d=dget(rec,row.n);if(!d.st){d.st="ok";n++}});
+  if(!n){toast(T('rest_none'));return 0}
+  saveCur();render();
+  undoBar(TF('rest_done',{n}),()=>{rec.defects=JSON.parse(snap);saveCur()});return n}
+
+/* ---------- חלון ההכתבה ---------- */
+let DREC=null,DLISTEN=false;
+function openDictation(prefill){
+  closeSheet();
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  sheet(T('dict_btn'),`<div class="f" style="margin-top:0"><textarea id="dictx" rows="5" placeholder="${esc(T('dict_ph'))}">${esc(prefill||"")}</textarea></div>
+    ${SR?`<button class="btn primary" data-act="dictmic" id="dictmic">${esc(T('dict_mic'))}</button>`:`<div class="alert warn">${esc(T('dict_nosr'))}</div>`}
+    <div class="tiny" id="dictst" role="status">${navigator.onLine?"":esc(T('dict_offline'))}</div>
+    <button class="btn solid" data-act="dictgo">${esc(T('dict_go'))}</button>
+    <div class="tiny" style="margin-top:6px">${esc(T('dict_offline'))}</div>`,T('cancel'))}
+function dictMic(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition,b=$("#dictmic"),st=$("#dictst"),ta=$("#dictx");
+  if(!SR||!ta)return;
+  if(DLISTEN&&DREC){DLISTEN=false;try{DREC.stop()}catch(e){};return}
+  const base=ta.value?ta.value.replace(/\s*$/,", "):"";let fin="";
+  DREC=new SR();DREC.lang=({he:"he-IL",en:"he-IL",ar:"he-IL",ru:"he-IL",es:"he-IL"})[S.lang]||"he-IL";
+  DREC.continuous=true;DREC.interimResults=true;
+  DREC.onresult=e=>{let tmp="";for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];
+      if(r.isFinal)fin+=(fin?", ":"")+r[0].transcript.trim();else tmp+=r[0].transcript}
+    const t=$("#dictx");if(t)t.value=base+fin+(tmp?" "+tmp:"")};
+  DREC.onerror=e=>{const s=$("#dictst");if(s){s.textContent=e.error==="network"?T('dict_offline'):
+    (e.error==="not-allowed"||e.error==="service-not-allowed")?T('dict_nosr'):e.error;s.style.color="var(--warn)"}};
+  DREC.onend=()=>{if(DLISTEN){try{DREC.start();return}catch(e){}}DLISTEN=false;const b2=$("#dictmic");if(b2)b2.textContent=T('dict_mic')};
+  try{DREC.start();DLISTEN=true;if(b)b.textContent=T('dict_stop');if(st){st.textContent=T('dict_listening');st.style.color=""}}
+  catch(e){if(st)st.textContent=T('dict_nosr')}}
+async function dictGo(text){
+  if(DLISTEN&&DREC){DLISTEN=false;try{DREC.stop()}catch(e){}}
+  const rec=S.cur;if(!rec){toast(T('asst_nocur'));return 0}
+  text=(text!=null?text:(($("#dictx")||{}).value||"")).trim();if(!text)return 0;
+  const st=$("#dictst");if(st)st.innerHTML='<span class="spin"></span>';
+  const r=await dictParse(text,rec);
+  openProposals(r.props,r.leftover,r.by);return r.props.length}
+
+/* ═════════════════════ סריקת מחשב — ELM327 (מבוסס על OBD Scanner Pro) ═════════════════════ */
+const OBD_BLE=[
+ {name:"Vgate iCar Pro",svc:"e7810a71-73ae-499d-8c15-faa9aef0c3f2",tx:"bef8d6c9-9c21-4c9e-b632-bd58c1009f9f",rx:"bef8d6c9-9c21-4c9e-b632-bd58c1009f9f"},
+ {name:"Vgate (FFF0)",svc:"0000fff0-0000-1000-8000-00805f9b34fb",tx:"0000fff2-0000-1000-8000-00805f9b34fb",rx:"0000fff1-0000-1000-8000-00805f9b34fb"},
+ {name:"Generic ELM327",svc:"0000ffe0-0000-1000-8000-00805f9b34fb",tx:"0000ffe1-0000-1000-8000-00805f9b34fb",rx:"0000ffe1-0000-1000-8000-00805f9b34fb"},
+ {name:"KONNWEI",svc:"0000ffe5-0000-1000-8000-00805f9b34fb",tx:"0000ffe9-0000-1000-8000-00805f9b34fb",rx:"0000ffe9-0000-1000-8000-00805f9b34fb"},
+ {name:"OBDLink",svc:"0000fef1-0000-1000-8000-00805f9b34fb",tx:"0000fef2-0000-1000-8000-00805f9b34fb",rx:"0000fef2-0000-1000-8000-00805f9b34fb"}];
+const OBD={ch:null,dev:null,buf:"",waiter:null,q:Promise.resolve(),st:"off",log:[],res:null,proto:""};
+function olog(m){OBD.log.push(m);if(OBD.log.length>60)OBD.log.shift();const el=$("#obdlog");if(el)el.textContent=OBD.log.join("\n")}
+function oSet(st){OBD.st=st;if(S.screen==="obd")render()}
+function elmLines(raw){return String(raw||"").split(/[\r\n>]+/).map(l=>l.trim()).filter(l=>l&&!/^SEARCHING/i.test(l)&&!/^BUS INIT/i.test(l)&&l!=="OK")}
+function elmMsgs(raw){const msgs=[];let cur=null;
+  for(const l of elmLines(raw)){const h=l.replace(/\s/g,"").toUpperCase(),fr=h.match(/^([0-9A-F]):([0-9A-F]*)$/);
+    if(fr){if(fr[1]==="0"){cur={hex:fr[2]};msgs.push(cur)}else if(cur)cur.hex+=fr[2];continue}
+    if(/^[0-9A-F]{3}$/.test(h))continue;
+    if(/^[0-9A-F]+$/.test(h)){msgs.push({hex:h});cur=null}}
+  return msgs.map(m=>m.hex)}
+function pidAll(raw,pid){const want=("41"+pid).toUpperCase();return elmMsgs(raw).filter(h=>h.startsWith(want)).map(h=>h.slice(want.length))}
+const pidBytes=(raw,pid)=>{const d=pidAll(raw,pid)[0];return d?(d.match(/../g)||[]).map(x=>parseInt(x,16)):null};
+function parseDTCs(raw,resp,isCan){const out=[];
+  for(const h of elmMsgs(raw)){if(!h.startsWith(resp))continue;let b=(h.slice(2).match(/../g)||[]);
+    if(isCan===true||(isCan==null&&b.length%2===1)){const c=parseInt(b[0],16);b=b.slice(1,1+c*2)}
+    for(let i=0;i+1<b.length;i+=2){if(b[i]==="00"&&b[i+1]==="00")continue;
+      const n=parseInt(b[i][0],16),code=["P","C","B","U"][n>>2]+(n&3).toString(16)+b[i][1]+b[i+1];
+      if(!out.includes(code.toUpperCase()))out.push(code.toUpperCase())}}
+  return out}
+function parseVIN(raw){const msgs=elmMsgs(raw).filter(h=>h.startsWith("4902"));let by=[];
+  const full=msgs.find(m=>m.length>=40);
+  if(full)by=(full.slice(4).match(/../g)||[]).slice(1);else msgs.forEach(m=>{by=by.concat((m.slice(4).match(/../g)||[]).slice(1))});
+  const s=by.map(b=>parseInt(b,16)).filter(n=>n>0).map(n=>String.fromCharCode(n)).join("").replace(/[^A-HJ-NPR-Z0-9]/gi,"").toUpperCase();
+  return s.length>=17?s.slice(-17):""}
+function readiness(raw){
+  const rs=pidAll(raw,"01").map(d=>(d.match(/../g)||[]).map(x=>parseInt(x,16))).filter(b=>b.length>=4&&!b.some(isNaN)).map(([A,B,C,D])=>{
+    const mon=[],add=(av,inc)=>{if(av)mon.push(!inc)};
+    add(B&1,B&0x10);add(B&2,B&0x20);add(B&4,B&0x40);for(let i=0;i<8;i++)add(C&(1<<i),D&(1<<i));
+    return{mil:!!(A&0x80),count:A&0x7F,total:mon.length,undone:mon.filter(x=>!x).length}});
+  if(!rs.length)return null;rs.sort((a,b)=>b.total-a.total);
+  return Object.assign({},rs[0],{mil:rs.some(r=>r.mil),count:Math.max(...rs.map(r=>r.count))})}
+function obdSend(cmd,timeout=5000){
+  const run=()=>new Promise(resolve=>{const ch=OBD.ch;if(!ch){resolve("");return}
+    if(ch.demo){setTimeout(()=>resolve(ch.respond(cmd)),25);return}
+    OBD.buf="";let done=false;const fin=v=>{if(done)return;done=true;clearTimeout(tm);OBD.waiter=null;resolve(v)};
+    const tm=setTimeout(()=>fin(OBD.buf),timeout);OBD.waiter=fin;
+    const bytes=new TextEncoder().encode(cmd+"\r"),pr=ch.properties||{};
+    if(ch.serial){ch.write(bytes).catch(()=>fin(""));return}
+    (async()=>{try{for(let i=0;i<bytes.length;i+=20){const part=bytes.slice(i,i+20);
+      if(pr.write&&ch.writeValueWithResponse)await ch.writeValueWithResponse(part);
+      else if(pr.writeWithoutResponse&&ch.writeValueWithoutResponse)await ch.writeValueWithoutResponse(part);
+      else await ch.writeValue(part)}}catch(e){fin("")}})()});
+  const p=OBD.q.then(run,run);OBD.q=p.catch(()=>{});return p}
+function obdFeed(txt){OBD.buf+=txt;if(OBD.buf.includes(">")&&OBD.waiter){const w=OBD.waiter;OBD.waiter=null;w(OBD.buf)}}
+async function obdBle(){
+  if(!navigator.bluetooth){olog("✕ "+T('obd_nobt'));oSet("err");return}
+  try{OBD.log=[];oSet("conn");
+    const dev=await navigator.bluetooth.requestDevice({acceptAllDevices:true,optionalServices:OBD_BLE.map(p=>p.svc)});
+    OBD.dev=dev;olog("📡 "+(dev.name||"BLE"));
+    dev.addEventListener("gattserverdisconnected",()=>{OBD.ch=null;if(OBD.waiter){const w=OBD.waiter;OBD.waiter=null;w(OBD.buf)}if(OBD.st!=="done")oSet("off")});
+    const server=await dev.gatt.connect();let wr=null;
+    for(const pr of OBD_BLE){try{const svc=await server.getPrimaryService(pr.svc),rx=await svc.getCharacteristic(pr.rx);
+        await rx.startNotifications();rx.addEventListener("characteristicvaluechanged",e=>obdFeed(new TextDecoder().decode(e.target.value)));
+        wr=pr.tx===pr.rx?rx:await svc.getCharacteristic(pr.tx).catch(()=>rx);olog("✓ "+pr.name);break}catch(e){}}
+    if(!wr){olog("✕ ELM327 BLE service not found");try{dev.gatt.disconnect()}catch(e){};oSet("err");return}
+    OBD.ch=wr;await obdRun()}
+  catch(e){const m=String(e&&e.message||e);olog((/cancel/i.test(m)?"· ":"✕ ")+m);oSet(/cancel/i.test(m)?"off":"err")}}
+async function obdSerial(){
+  if(!navigator.serial){olog("✕ "+T('obd_noser'));oSet("err");return}
+  try{OBD.log=[];oSet("conn");
+    const port=await navigator.serial.requestPort({allowedBluetoothServiceClassIds:["00001101-0000-1000-8000-00805f9b34fb"]});
+    await port.open({baudRate:38400});
+    const writer=port.writable.getWriter(),reader=port.readable.getReader(),dec=new TextDecoder();let alive=true;
+    (async()=>{try{while(alive){const{value,done}=await reader.read();if(done)break;if(value)obdFeed(dec.decode(value))}}catch(e){}
+      if(alive){alive=false;OBD.ch=null;if(OBD.st!=="done")oSet("off")}})();
+    OBD.ch={serial:true,write:b=>writer.write(b),close:async()=>{alive=false;try{await reader.cancel()}catch(e){}
+      try{reader.releaseLock()}catch(e){}try{writer.releaseLock()}catch(e){}try{await port.close()}catch(e){}}};
+    olog("✓ Serial");await obdRun()}
+  catch(e){const m=String(e&&e.message||e);olog((/cancel|No port/i.test(m)?"· ":"✕ ")+m);oSet(/cancel|No port/i.test(m)?"off":"err")}}
+/* מתאם מדומה — לבדיקות ולהדגמה, לפי ההדגמה של OBD Scanner Pro */
+function obdDemoAdapter(){
+  const vin="JTDBR32E720123456",hx=(n,l=2)=>Math.max(0,Math.round(n)).toString(16).toUpperCase().padStart(l,"0");
+  const vinF=()=>{const b=["49","02","01"].concat(vin.split("").map(c=>c.charCodeAt(0).toString(16).toUpperCase()));
+    const o=["014","0:"+b.slice(0,6).join("")];let i=6,s=1;while(i<b.length){o.push(s+":"+b.slice(i,i+7).join("").padEnd(14,"0"));i+=7;s++}return o.join("\r")};
+  return {demo:true,respond(cmd){const c=cmd.replace(/\s/g,"").toUpperCase();
+    if(c==="ATZ")return "\r\rELM327 v2.3 (DEMO)\r\r>";if(c==="ATRV")return "14.1V\r\r>";if(c==="ATDPN")return "A6\r\r>";
+    if(c.startsWith("AT"))return "OK\r\r>";
+    if(c==="0100")return "4100BE3FA813\r\r>";if(c==="0101")return "410182076504\r\r>";
+    if(c==="03")return "430201070300\r\r>";if(c==="07")return "47010420\r\r>";if(c==="0A")return "4A00\r\r>";
+    if(c==="0902")return vinF()+"\r\r>";if(c==="0131")return "4131"+hx(96,4)+"\r\r>";if(c==="0130")return "4130"+hx(4)+"\r\r>";
+    if(c==="0121")return "41210000\r\r>";if(c==="0105")return "4105"+hx(88+40)+"\r\r>";if(c==="010C")return "410C"+hx(820*4,4)+"\r\r>";
+    if(c==="0142")return "4142"+hx(14100,4)+"\r\r>";return "NO DATA\r\r>"}}}
+async function obdDemo(){OBD.log=[];OBD.ch=obdDemoAdapter();olog("DEMO");await obdRun()}
+async function obdRun(){
+  oSet("read");
+  const id=elmLines(await obdSend("ATZ",4000)).find(l=>/ELM|v\d/i.test(l));if(id)olog(id);
+  for(const c of ["ATE0","ATL0","ATS0","ATH0","ATAT1","ATSP0"])await obdSend(c,2500);
+  const rv=(elmLines(await obdSend("ATRV",2500)).find(l=>/\d/.test(l))||"").replace(/[^\d.]/g,"");
+  let p=await obdSend("0100",12000);
+  if(!elmMsgs(p).some(h=>h.startsWith("4100"))){olog("… retry");await new Promise(r=>setTimeout(r,1200));p=await obdSend("0100",14000)}
+  if(!elmMsgs(p).some(h=>h.startsWith("4100"))){olog("✕ "+(elmLines(p).join(" | ")||"no answer"));olog(T('obd_nocar'));oSet("err");return}
+  OBD.proto=elmLines(await obdSend("ATDPN",2500)).join("").replace(/^A/i,"").trim();
+  const can=/^[6-9ABC]$/i.test(OBD.proto)?true:/^[1-5]$/.test(OBD.proto)?false:null;
+  const vin=parseVIN(await obdSend("0902",6000));
+  const rd=readiness(await obdSend("0101",4000));
+  const stored=parseDTCs(await obdSend("03",8000),"43",can);
+  const pending=parseDTCs(await obdSend("07",8000),"47",can).filter(c=>!stored.includes(c));
+  const permanent=parseDTCs(await obdSend("0A",8000),"4A",can).filter(c=>!stored.includes(c)&&!pending.includes(c));
+  const g=async pid=>pidBytes(await obdSend("01"+pid,3000),pid);
+  const b31=await g("31"),b30=await g("30"),b21=await g("21"),b05=await g("05"),b0C=await g("0C"),b42=await g("42");
+  const res={at:Date.now(),vin,proto:OBD.proto,batt:rv?parseFloat(rv):null,ready:rd,codes:{stored,pending,permanent},
+    sinceKm:b31?b31[0]*256+b31[1]:null,warmups:b30?b30[0]:null,milKm:b21?b21[0]*256+b21[1]:null,
+    coolant:b05?b05[0]-40:null,rpm:b0C?Math.round((b0C[0]*256+b0C[1])/4):null,volt:b42?(b42[0]*256+b42[1])/1000:null};
+  OBD.res=res;olog("✓ "+[stored.length+pending.length+permanent.length+" DTC",vin].filter(Boolean).join(" · "));
+  if(S.cur){S.cur.obd=res;saveCur()}
+  oSet("done");toast(S.cur?T('obd_ready'):T('obd_nocur'))}
+async function obdDisconnect(){try{if(OBD.dev&&OBD.dev.gatt&&OBD.dev.gatt.connected)OBD.dev.gatt.disconnect()}catch(e){}
+  try{if(OBD.ch&&OBD.ch.close)await OBD.ch.close()}catch(e){}OBD.ch=null;OBD.dev=null;oSet("off")}
+function codeFam(c){const L=c[0],d=c.slice(1);
+  if(L==="C")return "fam_c";if(L==="U")return "fam_u";
+  if(L==="B")return /^00/.test(d)?"fam_bsrs":"fam_b";
+  if(/^[13]/.test(d))return "fam_mfr";if(/^2/.test(d))return "fam_p2";
+  const x=d.slice(1,2).toUpperCase();
+  return {"0":"fam_fuel","1":"fam_fuel","2":"fam_fuel","3":"fam_ign","4":"fam_emis","5":"fam_idle","6":"fam_ecu","7":"fam_trans","8":"fam_trans","9":"fam_trans","A":"fam_hyb","B":"fam_hyb","C":"fam_hyb"}[x]||"fam_p2"}
+const FAM_HE={fam_fuel:"דלק ואוויר",fam_ign:"הצתה / פספוסים",fam_emis:"בקרת פליטה",fam_idle:"מהירות וסרק",fam_ecu:"מחשב ומעגלי פלט",
+  fam_trans:"תיבת הילוכים",fam_hyb:"הנעה היברידית / חשמלית",fam_mfr:"קוד יצרן — מנוע והנעה",fam_p2:"מנוע והנעה",fam_c:"שלדה — בלמים, היגוי, מתלים",
+  fam_bsrs:"כריות אוויר וחגורות",fam_b:"מרכב ונוחות",fam_u:"תקשורת בין מחשבים"};
+/* תוצאת סריקה → הצעות לטופס. האבחנות מרשימת המערכות הממוחשבות של נספח 5; קודי התקלה נרשמים כהערת בוחן. */
+function obdProposals(res,rec){
+  const props=[],full=rec.kind==="full"||rec.kind==="engine";
+  const has=n=>form().some(r=>r.n===n), rem=remarksRow();
+  const bucket={};
+  const st=x=>res.codes.stored.includes(x)?"שמור":res.codes.pending.includes(x)?"ממתין":"קבוע";
+  [...res.codes.stored,...res.codes.pending,...res.codes.permanent].forEach(c=>{
+    const f=codeFam(c);let n=rem,item=null,alts=[];
+    if(full){
+      if(f==="fam_trans"){n=24;item=D.ecu[1]}
+      else if(f==="fam_c"){n=24;item=D.ecu[8]}
+      else if(f==="fam_bsrs"){n=21;item=D.ecu[5]}
+      else if(f==="fam_b"){n=24;item=D.ecu[4]}
+      else if(f==="fam_u"){n=24}
+      else if(f==="fam_emis"&&/^P04[23]/.test(c)){n=20;item="ממיר קטליטי לא תקין";alts=[D.ecu[0]]}
+      else if(f==="fam_hyb"){n=7;item=D.ecu[0]}
+      else {n=2;item=D.ecu[0];if(f==="fam_ign")alts=["מנוע מזייף"]}
+      if(!has(n))n=rem}
+    const k=n+"|"+(item||"");(bucket[k]=bucket[k]||{n,item,alts,codes:[]}).codes.push(c+" ("+st(c)+") — "+FAM_HE[f])});
+  Object.values(bucket).forEach(b=>props.push({n:b.n,item:b.n===rem?null:b.item,alts:b.alts,checked:true,src:"obd",
+    note:"סריקת מחשב: "+b.codes.join("; ")}));
+  const obs=[];
+  if(res.ready&&res.ready.mil)obs.push("נורית תקלת מנוע דולקת (לפי מחשב הרכב)");
+  if(res.sinceKm!=null&&(res.sinceKm<150||(res.warmups!=null&&res.warmups<8)))
+    obs.push("קודי התקלה נמחקו לאחרונה: "+res.sinceKm+" ק״מ"+(res.warmups!=null?", "+res.warmups+" התחממויות":"")+" מאז המחיקה");
+  if(res.ready&&res.ready.undone)obs.push(res.ready.undone+" בדיקות מוכנות של מחשב המנוע לא הושלמו");
+  if(res.milKm)obs.push("הרכב נסע "+res.milKm+" ק״מ עם נורית תקלה דולקת");
+  const vl=(rec.veh.vinLic||rec.veh.vinAct||"").toUpperCase();
+  if(res.vin&&vl.length===17&&res.vin!==vl)obs.push("מספר השלדה במחשב המנוע ("+res.vin+") שונה מהרשום ("+vl+")");
+  if(obs.length)props.push({n:rem,item:null,note:obs.join(". "),checked:true,src:"obd"});
+  const v=res.rpm>400?res.volt||res.batt:null;
+  if(v&&(v<13.2||v>15)){const cn=form().find(r=>/טעינה/.test(r.t));if(cn)props.push({n:cn.n,item:null,note:"מתח טעינה "+v.toFixed(1)+"V — מחוץ לטווח התקין",checked:true,src:"obd"})}
+  return props}
+function vObd(){
+  const r=OBD.res||(S.cur&&S.cur.obd)||null, busy=OBD.st==="conn"||OBD.st==="read";
+  const kv=(k,v,c)=>v==null||v===""?"":`<div class="kv-row"><span class="muted">${esc(k)}</span><b style="${c?"color:"+c:""}"><bdi>${esc(v)}</bdi></b></div>`;
+  const vl=S.cur?(S.cur.veh.vinLic||S.cur.veh.vinAct||"").toUpperCase():"";
+  const all=r?[...r.codes.stored,...r.codes.pending,...r.codes.permanent]:[];
+  const recent=r&&r.sinceKm!=null&&(r.sinceKm<150||(r.warmups!=null&&r.warmups<8));
+  return bar(T('obd_title'))+`<div class="wrap">
+   <div class="card tight"><div class="tiny">${esc(T('obd_note'))}</div>
+     <div class="row" style="flex-wrap:wrap">
+       <button class="btn primary" data-act="obdble" ${busy?"disabled":""}>${esc(T('obd_ble'))}</button>
+       <button class="btn" data-act="obdser" ${busy?"disabled":""}>${esc(T('obd_serial'))}</button></div>
+     <button class="btn sm" data-act="obddemo" ${busy?"disabled":""}>${esc(T('obd_demo'))}</button>
+     ${OBD.ch?`<button class="btn sm" data-act="obddisc">${esc(T('obd_disc'))}</button>`:""}
+     ${busy?`<div class="tiny" role="status"><span class="spin"></span> ${esc(T(OBD.st==="conn"?'obd_connecting':'obd_reading'))}</div>`:""}
+     ${OBD.st==="err"?`<div class="alert bad">${esc(T('obd_fail'))}</div>`:""}
+   </div>
+   ${r?`<div class="sec">${esc(T('obd_last'))} · <bdi>${esc(dmy(ymd(new Date(r.at))))}</bdi></div>
+   <div class="card">
+     ${kv(T('obd_mil'),r.ready?T(r.ready.mil?'obd_on':'obd_off'):"",r.ready&&r.ready.mil?"var(--bad)":"")}
+     ${kv(T('obd_vin'),r.vin?r.vin+(vl.length===17?" · "+T(r.vin===vl?'obd_vinok':'obd_vinbad'):""):"",r.vin&&vl.length===17&&r.vin!==vl?"var(--bad)":"")}
+     ${kv(T('obd_clear'),r.sinceKm!=null?[TF('obd_km',{n:r.sinceKm}),r.warmups!=null?TF('obd_wu',{n:r.warmups}):""].filter(Boolean).join(" · "):"",recent?"var(--warn)":"")}
+     ${r.milKm?kv(T('obd_milkm'),TF('obd_km',{n:r.milKm}),"var(--bad)"):""}
+     ${kv(T('obd_coolant'),r.coolant!=null?r.coolant+"°C":"")}
+     ${kv(T('obd_volt'),(r.volt||r.batt)?((r.volt||r.batt).toFixed(1)+"V"):"")}
+     ${kv(T('obd_proto'),r.proto||"")}
+   </div>
+   ${recent?`<div class="alert warn">${esc(T('obd_recent'))}</div>`:""}
+   ${r.ready&&r.ready.undone?`<div class="alert warn">${esc(TF('obd_ready_inc',{n:r.ready.undone}))}</div>`:""}
+   <div class="sec">${esc(T('obd_codes'))}</div>
+   <div class="card tight">${all.length?all.map(c=>`<div class="kv-row"><span><b><bdi>${esc(c)}</bdi></b> · ${esc(T(codeFam(c)))}</span>
+      <span class="pill ${r.codes.stored.includes(c)?"bad":""}">${esc(T(r.codes.stored.includes(c)?'obd_stored':r.codes.pending.includes(c)?'obd_pending':'obd_perm'))}</span></div>`).join("")
+     :`<div class="alert ok" style="margin:0">${esc(T('obd_nocodes'))}</div>`}</div>
+   ${S.cur?`<button class="btn solid" data-act="obdadd">${esc(T('obd_add'))}</button>`:`<div class="alert info">${esc(T('obd_nocur'))}</div>`}
+   <div class="tiny">${esc(T('obd_limit'))}</div>`:""}
+   <details style="margin-top:14px"><summary class="tiny">${esc(T('obd_log'))}</summary>
+     <pre id="obdlog" class="tiny" style="white-space:pre-wrap;direction:ltr;text-align:left">${esc(OBD.log.join("\n"))}</pre></details>
+  </div>`}
+
+/* ═════════════════════ העוזר: מפה של בדק למנוע AppNest Assistant ═════════════════════ */
+function missingList(r){const c=counts(r),m=[];
+  if(!r.veh.plate)m.push(T('plate'));
+  if(!r.ins.inspector||!r.ins.cert)m.push(T('inspector')+" / "+T('certno'));
+  if(!r.ins.roadtest)m.push(T('roadtest'));
+  const open=form().filter(row=>!row.notesonly&&!(r.defects[row.n]||{}).st).map(row=>row.n);
+  if(open.length)m.push(TF('s_unmarked',{n:open.length})+" ("+open.join(", ")+")");
+  if(!(r.photos.lic_veh||[]).length)m.push(T('s_m_lic'));
+  if(!(r.photos.lic_drv||[]).length)m.push(T('s_m_id'));
+  if(!r.sigIns)m.push(T('sig_ins'));if(!r.sigOrd)m.push(T('sig_ord'));
+  return m}
+function openRowN(n){if(!S.cur)return false;const row=form().find(x=>x.n===+n);if(!row)return false;
+  S.tab=3;openRow=row.n;dq="";if(S.screen!=="rec")go("rec",S.cur);else render();
+  setTimeout(()=>{const el=document.querySelector('[data-act="sys"][data-n="'+row.n+'"]');if(el)el.scrollIntoView({block:"center"})},60);return true}
+function asstNav(s){if(window.AppNestAssistant)AppNestAssistant.close();
+  const m=String(s).match(/^rec:(\d)$/);
+  if(m){if(!S.cur){toast(T('asst_nocur'));return}S.tab=+m[1];if(S.screen!=="rec")go("rec",S.cur);else render();return}
+  if(isTab(s)){if(s==="home")home();else{S.cur=null;go(s)}}else go(s)}
+function asstBrain(msg,ctx){
+  const t=String(msg||"").trim(),n=t.replace(/[?!.,]/g," ");
+  if(/כל השאר תקין|שאר .*תקין|everything else ok|rest ok/i.test(n)){
+    if(!S.cur)return{text:T('asst_nocur')};return{text:"",actions:[{action:"appAction",target:"markRestOk"}]}}
+  if(/מה חסר|מה נשאר|what.?s missing|what is missing/i.test(n)){
+    if(!S.cur)return{text:T('asst_nocur')};const m=missingList(S.cur);
+    return{text:m.length?T('asst_missing')+"\n• "+m.join("\n• "):T('asst_allset')}}
+  if(/סריק|obd|מתאם|scan/i.test(n)&&n.length<40)return{text:"",actions:[{action:"navigate",target:"סריקת מחשב"}]};
+  const sm=n.match(/(?:פתח|תפתח|עבור ל|לך ל|open)\s*(?:את\s*)?(?:סעיף\s*)?(\d{1,2})\b/i);
+  if(sm)return{text:"",actions:[{action:"appAction",target:"openRow",args:{n:+sm[1]}}]};
+  const om=n.match(/^(?:פתח|תפתח|עבור ל|לך ל)\s*(?:את\s*)?(?:ה)?(.+)$/);
+  if(om){const w=dWords(om[1]).map(dForms);
+    const row=form().find(r=>dWords(r.t).filter(x=>x.length>2&&!/מערכת|מערכות/.test(x)).some(x=>w.some(f=>fHit(dForms(x),f))));
+    if(row&&S.cur)return{text:"",actions:[{action:"appAction",target:"openRow",args:{n:row.n}}]};
+    const nav={"ארכיון":"ארכיון","יומן":"יומן הזמנות","הגדרות":"הגדרות","דשבורד":"דשבורד","אודות":"אודות","אבחון":"אבחון","רשימות":"עריכת רשימות ליקויים","סיכום":"סיכום","צילומים":"תעודות וצילומים","רכב":"פרטי רכב"};
+    for(const k in nav)if(om[1].includes(k))return{text:"",actions:[{action:"navigate",target:nav[k]}]}}
+  if(S.cur&&/[א-ת]/.test(t)){const r=ruleParse(t,S.cur);
+    if(r.props.some(p=>p.score>=.7))return{text:"",actions:[{action:"appAction",target:"fillFindings",args:{text:t}}]}}
+  if(ctx&&ctx.noAI)return{text:T('asst_help'),chips:asstChips()};
+  return null}
+function asstChips(){return [T('asst_c1'),T('asst_c2'),T('asst_c3'),{label:"🎤 "+T('asst_c4'),value:T('asst_c4')}]}
+window.APPNEST_ASSISTANT_CONFIG={
+  appName:'בדק',
+  lang:function(){return S.lang},
+  appDescription:'אפליקציה לבוחן רכב בישראל: בדיקת רכב לצרכי קנייה ומכירה לפי הוראת נוהל 127 של משרד התחבורה. '+
+    'בדיקה כוללת פרטי רכב (עם שליפה ממשרד התחבורה), פרטי בדיקה וקונה/מוכר, צילומים, ליקויים לפי סעיפי הטופס האחיד, וסיכום עם חתימות והפקת דוח. '+
+    'האבחנות הן רשימה סגורה מנספח 5 — לעולם אל תנסח אבחנה משלך. כשהבוחן מתאר ליקויים, הפעל את הפעולה fillFindings עם הטקסט שלו; האפליקציה משבצת ומבקשת אישור. '+
+    'אל תיתן המלצת קנייה ואל תמציא מחירים.',
+  tabs:[{name:'בית',screen:'home'},{name:'יומן הזמנות',screen:'diary'},{name:'ארכיון',screen:'archive'},{name:'דשבורד',screen:'dash'},
+    {name:'עוד',screen:'more'},{name:'הגדרות',screen:'settings'},{name:'עריכת רשימות ליקויים',screen:'editor'},{name:'אודות',screen:'about'},
+    {name:'אבחון',screen:'diag'},{name:'סריקת מחשב',screen:'obd'},{name:'פרטי רכב',screen:'rec:0'},{name:'פרטי בדיקה',screen:'rec:1'},
+    {name:'תעודות וצילומים',screen:'rec:2'},{name:'ליקויים',screen:'rec:3'},{name:'סיכום',screen:'rec:4'}],
+  fields:[],
+  navigate:function(s){asstNav(s)},
+  readAiConfig:function(){return aiConnected()?{provider:S.ai.provider}:null},
+  callAI:function(p){return aiCall(p)},
+  readState:function(){
+    let o='מסך: '+S.screen+(S.screen==='rec'?' / טאב '+T(TABS[S.tab]):'');
+    const r=S.cur;if(!r)return o+'\nאין בדיקה פתוחה.';
+    const c=counts(r);
+    o+='\nבדיקה: '+(r.veh.plate||'ללא מספר')+' '+(r.veh.make||'')+' '+(r.veh.model||'')+' · סוג: '+kindName(r.kind)+
+      '\nסעיפים: '+c.done+'/'+c.total+' סומנו, '+c.bad+' לא תקין, '+c.safety+' בטיחותי';
+    const bad=form().filter(x=>(r.defects[x.n]||{}).st==='bad').map(x=>x.n+'. '+x.t+': '+((r.defects[x.n].items||[]).join(', ')||'—'));
+    if(bad.length)o+='\nליקויים שנרשמו:\n'+bad.join('\n');
+    const m=missingList(r);if(m.length)o+='\nחסר לסגירה: '+m.join('; ');
+    if(r.obd)o+='\nסריקת מחשב: '+[...r.obd.codes.stored,...r.obd.codes.pending,...r.obd.codes.permanent].join(', ');
+    o+='\nסעיפי הטופס: '+form().map(x=>x.n+'='+x.t).join(' | ');
+    return o},
+  actions:{
+    fillFindings:{desc:'שיבוץ ליקויים שהבוחן תיאר בטקסט חופשי לסעיפים ולאבחנות מנספח 5 — נפתח חלון אישור',args:'{text: התיאור של הבוחן כפי שנאמר}',
+      run:function(a){if(!S.cur)return T('asst_nocur');if(window.AppNestAssistant)AppNestAssistant.close();
+        return dictGo(String(a.text||'')).then(n=>n?TF('asst_found',{n}):T('dict_empty'))}},
+    markRestOk:{desc:'סימון כל הסעיפים שעדיין לא סומנו כתקין',run:function(){if(!S.cur)return T('asst_nocur');
+      if(window.AppNestAssistant)AppNestAssistant.close();const n=restOk();return n?TF('rest_done',{n}):T('rest_none')}},
+    openRow:{desc:'פתיחת סעיף בטופס הליקויים לפי מספר',args:'{n: מספר הסעיף}',run:function(a){if(window.AppNestAssistant)AppNestAssistant.close();
+      return openRowN(a.n)?TF('asst_opened',{n:a.n}):T('asst_nocur')}},
+    newInspection:{desc:'פתיחת בדיקה חדשה',run:function(){if(window.AppNestAssistant)AppNestAssistant.close();gate={kind:'full',lic:null,drv:null,sig:null};go('gate');return T('ok')}}
+  },
+  ui:{noFab:true,panelBottom:'84px',panelH:'480px'},
+  chipsFill:false,
+  welcome:function(){return T('asst_welcome')},
+  suggestions:function(){return asstChips()},
+  localBrain:function(msg,ctx){return asstBrain(msg,ctx)},
+  onToggle:function(){syncHistory()}
+};
 
 /* ===================== אירועים ===================== */
 let pickTarget=null;
@@ -2414,6 +3000,20 @@ document.addEventListener("click",async e=>{
     case "dgcopy":try{await navigator.clipboard.writeText(diagReport());toast(T('dg_copied'))}catch(e){toast(diagReport().slice(0,80))}break;
     case "dgclear":localStorage.removeItem("bdk_errlog");loadDiag();break;
     case "editor":go("editor");break;
+    case "asst":if(window.AppNestAssistant){AppNestAssistant.toggle();syncHistory()}break;
+    case "dictopen":openDictation();break;
+    case "dictmic":dictMic();break;
+    case "dictgo":await dictGo();break;
+    case "propins":insertProposals();break;
+    case "restok":restOk();break;
+    case "obd":go("obd");break;
+    case "obdble":await obdBle();break;
+    case "obdser":await obdSerial();break;
+    case "obddemo":await obdDemo();break;
+    case "obddisc":await obdDisconnect();break;
+    case "obdadd":{const res=OBD.res||(S.cur&&S.cur.obd);if(!S.cur||!res)break;
+      const props=obdProposals(res,S.cur);if(!props.length){toast(T('obd_nocodes'));break}
+      openProposals(props,"","obd");break}
     case "about":go("about");break;
     case "a_share":{const u=location.href;
       if(navigator.share)navigator.share({title:T('app'),text:T('tag'),url:u}).catch(()=>{});
@@ -2554,8 +3154,12 @@ document.addEventListener("change",e=>{
     if(/vin|eng|color|tire|chassis/.test(el.dataset.p))render();return}
   if(el.dataset.chk&&S.cur){setP(S.cur,el.dataset.chk,el.checked);saveCur();return}
   if(el.dataset.act==="pick"&&S.cur){const d=dget(S.cur,+el.dataset.n);
-    const v=el.dataset.v; if(el.checked){if(!d.items.includes(v))d.items.push(v)}
+    const v=el.dataset.v; if(el.checked){if(!d.items.includes(v))d.items.push(v);bumpFreq(v)}
     else d.items=d.items.filter(x=>x!==v); if(!d.st)d.st="bad"; saveCur();render();return}
+  if(el.dataset.act==="propchk"){const p=PROPS[+el.dataset.i];if(p)p.checked=el.checked;
+    const lab=el.closest(".ditem");if(lab)lab.classList.toggle("on",el.checked);
+    const b=$("#propbtn");if(b&&S.cur)b.textContent=TF('pr_ins',{n:PROPS.filter(x=>x.checked&&!((S.cur.defects[x.n]||{}).st==="ns")).length});return}
+  if(el.dataset.act==="propalt"){const p=PROPS[+el.dataset.i];if(p){const old=p.item;p.item=el.value;p.alts=[old].concat((p.alts||[]).filter(x=>x!==el.value))}return}
   if(el.dataset.act==="safety"&&S.cur){dget(S.cur,+el.dataset.n).safety=el.checked;saveCur();render();return}
   if(el.dataset.act==="edform"){edForm=el.value;edRow=null;render();return}
   if(el.dataset.act==="edscope"){const l=el.dataset.l,n=+el.dataset.n;
@@ -2624,5 +3228,6 @@ if("serviceWorker" in navigator&&location.protocol!=="file:"){
 }
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
 </script>
+<script src="appnest-assistant.js?v=3.0"></script>
 </body>
 </html>
