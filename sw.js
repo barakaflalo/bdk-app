@@ -22,11 +22,11 @@
   CacheStorage.prototype.match=function(){return sm.apply(this,arguments).then(clean);};
 })();
 
-const VERSION = "1.7.0";
+const VERSION = "1.8.0";
 const PREFIX = "bdk-";
 const CACHE = PREFIX + VERSION;
 /* "./" ולא "./index.html" — ראה ההערה למעלה */
-const SHELL = ["./", "./appnest-assistant.js?v=3.0", "./manifest.json", "./icon-192.png", "./icon-512.png"];
+const SHELL = ["./", "./lang.js?v=1.8.0", "./appnest-assistant.js?v=3.0", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(
