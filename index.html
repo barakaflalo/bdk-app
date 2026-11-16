@@ -187,6 +187,15 @@ a.btn{text-decoration:none}
   background:var(--card);border:1px solid var(--gold);color:var(--tx);padding:11px 18px;border-radius:24px;
   z-index:200;font-size:14px;box-shadow:0 8px 26px rgba(0,0,0,.4)}
 
+.undo{position:fixed;bottom:22px;inset-inline:0;margin:0 auto;width:max-content;max-width:92%;z-index:210;
+  display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--gold);color:var(--tx);
+  padding:9px 10px 9px 16px;border-radius:24px;font-size:14px;box-shadow:0 8px 26px rgba(0,0,0,.4)}
+[dir="rtl"] .undo{padding:9px 16px 9px 10px}
+.undo button{border:1px solid var(--gold);color:var(--gold-soft);border-radius:18px;padding:6px 14px;font-weight:700}
+body.tabs-on .undo{bottom:calc(78px + env(safe-area-inset-bottom))}
+.toast.above{bottom:84px}
+body.tabs-on .toast.above{bottom:calc(140px + env(safe-area-inset-bottom))}
+body.away #app{filter:blur(16px)}
 .spin{width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--gold);border-radius:50%;
   animation:sp .7s linear infinite;display:inline-block;vertical-align:-3px}
 @keyframes sp{to{transform:rotate(360deg)}}
@@ -241,6 +250,14 @@ body.tabs-on .toast{bottom:calc(78px + env(safe-area-inset-bottom))}
 <div id="printarea"></div>
 <input type="file" id="picker" accept="image/*" capture="environment" hidden>
 <script>
+/* יומן שגיאות — 10 האחרונות נשמרות במכשיר ומוצגות במסך האבחון */
+(function(){var KEY="bdk_errlog";
+  function add(m,src,ln){try{var a=JSON.parse(localStorage.getItem(KEY)||"[]");
+    a.unshift({t:new Date().toISOString(),m:String(m).slice(0,220),s:String(src||"").split("/").pop().split("?")[0],l:ln||0});
+    localStorage.setItem(KEY,JSON.stringify(a.slice(0,10)))}catch(e){}}
+  window.addEventListener("error",function(e){add(e.message,e.filename,e.lineno)});
+  window.addEventListener("unhandledrejection",function(e){add("promise: "+((e.reason&&e.reason.message)||e.reason))});
+})();
 /* =====================================================================
    בדק — נתוני נוהל 127 (נספח 5): נוסח האבחנות המחייב
    הטקסטים כאן הם לשון משרד התחבורה ואין לשנותם.
@@ -650,6 +667,283 @@ ai_auto:["אוטומטי (מומלץ)","Automatic (recommended)","تلقائي (
 back_home:["חזרה לאפליקציה","Back to the app","العودة للتطبيق","Назад в приложение","Volver a la app"]
 };
 ["he","en","ar","ru","es"].forEach((l,i)=>{for(const k in LX)LANG[l][k]=LX[k][i]});
+
+Object.assign(LX,{
+pin_set:["קביעת קוד נעילה","Set a lock code","تعيين رمز القفل","Задать код блокировки","Definir código de bloqueo"],
+pin_change:["שינוי או ביטול הקוד","Change or remove the code","تغيير الرمز أو إلغاؤه","Изменить или убрать код","Cambiar o quitar el código"],
+pin_new:["קוד חדש (4–8 ספרות)","New code (4–8 digits)","رمز جديد (4–8 أرقام)","Новый код (4–8 цифр)","Código nuevo (4–8 dígitos)"],
+pin_again:["הקלד שוב לאימות","Type it again to confirm","اكتبه مرة أخرى للتأكيد","Введите ещё раз","Escríbelo otra vez"],
+pin_after:["נעילה אחרי שהייה ברקע","Lock after time in the background","القفل بعد البقاء في الخلفية","Блокировать после нахождения в фоне","Bloquear tras estar en segundo plano"],
+pin_now:["מיד","Immediately","فوراً","Сразу","Al instante"],
+pin_min:["{n} דקות","{n} minutes","{n} دقائق","{n} мин","{n} minutos"],
+pin_remove:["ביטול הנעילה","Remove the lock","إلغاء القفل","Убрать блокировку","Quitar el bloqueo"],
+pin_saved:["הקוד נקבע","Code saved","تم حفظ الرمز","Код сохранён","Código guardado"],
+pin_removed:["הנעילה בוטלה","Lock removed","تم إلغاء القفل","Блокировка снята","Bloqueo quitado"],
+pin_digits:["נדרשות 4–8 ספרות","4–8 digits are required","مطلوب 4–8 أرقام","Нужно 4–8 цифр","Se necesitan 4–8 dígitos"],
+pin_nomatch:["שני הקודים אינם זהים","The two codes do not match","الرمزان غير متطابقين","Коды не совпадают","Los códigos no coinciden"],
+pin_wrong:["קוד שגוי","Wrong code","رمز خاطئ","Неверный код","Código incorrecto"],
+pin_wait:["יותר מדי ניסיונות. נסה שוב בעוד {n} שניות","Too many attempts. Try again in {n} seconds","محاولات كثيرة. حاول بعد {n} ثانية","Слишком много попыток. Повторите через {n} с","Demasiados intentos. Prueba en {n} segundos"],
+pin_on:["נעילה פעילה. זו נעילת מסך בלבד — הנתונים עצמם אינם מוצפנים.","Lock is on. It is a screen lock only — the data itself is not encrypted.","القفل مفعّل. هو قفل شاشة فقط — البيانات نفسها غير مشفرة.","Блокировка включена. Это только блокировка экрана — данные не шифруются.","Bloqueo activo. Es solo bloqueo de pantalla; los datos no se cifran."],
+pin_off:["האפליקציה מחזיקה תעודות זהות של לקוחות וצילומי רישיונות. מומלץ לקבוע קוד.","The app holds customers' ID numbers and licence photos. Setting a code is recommended.","التطبيق يحتوي على هويات الزبائن وصور الرخص. يُنصح بتعيين رمز.","В приложении хранятся данные клиентов и фото документов. Рекомендуется задать код.","La app guarda documentos de clientes y fotos de permisos. Se recomienda un código."],
+pin_note:["נעילת מסך מקומית. אינה מצפינה את הנתונים על המכשיר.","Local screen lock. It does not encrypt the data on the device.","قفل شاشة محلي. لا يشفّر البيانات على الجهاز.","Локальная блокировка экрана. Данные на устройстве не шифруются.","Bloqueo local de pantalla. No cifra los datos del dispositivo."],
+pin_forgot:["אין שחזור לקוד שנשכח: מנקים את נתוני האתר בדפדפן ומשחזרים מגיבוי.","A forgotten code cannot be recovered: clear the site data in the browser and restore from a backup.","لا يمكن استرجاع رمز منسي: امسح بيانات الموقع واستعد من نسخة احتياطية.","Забытый код не восстановить: очистите данные сайта и восстановите из копии.","Un código olvidado no se recupera: borra los datos del sitio y restaura una copia."],
+bk_full:["גיבוי מלא (כולל צילומים)","Full backup (with photos)","نسخة كاملة (مع الصور)","Полная копия (с фото)","Copia completa (con fotos)"],
+bk_data:["גיבוי נתונים בלבד","Data-only backup","نسخة البيانات فقط","Копия только данных","Copia solo de datos"],
+bk_csv:["ייצוא רשימת בדיקות (CSV)","Export inspection list (CSV)","تصدير قائمة الفحوصات (CSV)","Экспорт списка проверок (CSV)","Exportar lista de inspecciones (CSV)"],
+bk_last:["גיבוי מלא אחרון","Last full backup","آخر نسخة كاملة","Последняя полная копия","Última copia completa"],
+bk_never:["עדיין לא בוצע גיבוי מלא","No full backup yet","لا توجد نسخة كاملة بعد","Полной копии ещё нет","Aún no hay copia completa"],
+bk_remind:["עבר יותר משבוע מאז הגיבוי המלא האחרון","More than a week since the last full backup","مر أكثر من أسبوع على آخر نسخة كاملة","Прошло больше недели с последней полной копии","Ha pasado más de una semana desde la última copia completa"],
+bk_remind0:["יש בדיקות במכשיר ועדיין אין גיבוי מלא","There are inspections on the device and no full backup yet","توجد فحوصات على الجهاز ولا توجد نسخة كاملة بعد","На устройстве есть проверки, а полной копии нет","Hay inspecciones en el dispositivo y aún no hay copia completa"],
+bk_later:["אחר כך","Later","لاحقاً","Позже","Más tarde"],
+bk_building:["מכין גיבוי… {n}/{t} צילומים","Preparing backup… {n}/{t} photos","جارٍ تجهيز النسخة… {n}/{t} صور","Подготовка копии… {n}/{t} фото","Preparando copia… {n}/{t} fotos"],
+bk_done:["הגיבוי נשמר · {r} בדיקות · {n} צילומים","Backup saved · {r} inspections · {n} photos","تم حفظ النسخة · {r} فحوصات · {n} صور","Копия сохранена · проверок: {r} · фото: {n}","Copia guardada · {r} inspecciones · {n} fotos"],
+bk_missing:["{n} צילומים לא נמצאו במכשיר ולא נכנסו לגיבוי","{n} photos were not found on the device and are not in the backup","{n} صور غير موجودة على الجهاز ولم تدخل النسخة","{n} фото не найдено на устройстве, в копию не вошли","{n} fotos no se encontraron y no están en la copia"],
+bk_note:["הגיבוי אינו כולל את קוד הנעילה ואת מפתח הבינה. שמור את הקובץ מחוץ לטלפון.","The backup does not include the lock code or the AI key. Keep the file outside the phone.","النسخة لا تشمل رمز القفل ولا مفتاح الذكاء. احفظ الملف خارج الهاتف.","Копия не содержит код блокировки и ключ ИИ. Храните файл вне телефона.","La copia no incluye el código ni la clave de IA. Guarda el archivo fuera del teléfono."],
+rs_title:["שחזור מגיבוי","Restore from backup","الاستعادة من نسخة","Восстановление из копии","Restaurar copia"],
+rs_sum:["בקובץ: {r} בדיקות · {p} צילומים · נוצר ב-{d}","In the file: {r} inspections · {p} photos · created {d}","في الملف: {r} فحوصات · {p} صور · أُنشئ {d}","В файле: проверок {r} · фото {p} · создан {d}","En el archivo: {r} inspecciones · {p} fotos · creado {d}"],
+rs_warn:["השחזור יחליף את כל הבדיקות וההזמנות שבמכשיר.","Restoring replaces all inspections and appointments on this device.","الاستعادة تستبدل كل الفحوصات والمواعيد على الجهاز.","Восстановление заменит все проверки и записи на устройстве.","Restaurar reemplaza todas las inspecciones y citas del dispositivo."],
+rs_nophoto:["הקובץ אינו כולל צילומים. הצילומים שבמכשיר יישארו.","The file has no photos. Photos on the device are kept.","الملف لا يحتوي صوراً. الصور على الجهاز ستبقى.","В файле нет фото. Фото на устройстве останутся.","El archivo no tiene fotos. Las del dispositivo se conservan."],
+rs_go:["שחזר","Restore","استعادة","Восстановить","Restaurar"],
+rs_done:["שוחזר","Restored","تمت الاستعادة","Восстановлено","Restaurado"],
+rs_bad:["הקובץ אינו קובץ גיבוי של בדק","This is not a BDK backup file","هذا ليس ملف نسخة احتياطية للتطبيق","Это не файл копии BDK","No es un archivo de copia de BDK"],
+rs_fail:["השחזור נכשל — הנתונים הקיימים לא שונו","Restore failed — existing data was not changed","فشلت الاستعادة — البيانات الحالية لم تتغير","Сбой восстановления — текущие данные не изменены","Falló la restauración; los datos actuales no cambiaron"],
+wipe_q1:["למחוק את כל הבדיקות, ההזמנות, הצילומים וההגדרות? אין דרך חזרה.","Erase all inspections, appointments, photos and settings? This cannot be undone.","حذف كل الفحوصات والمواعيد والصور والإعدادات؟ لا يمكن التراجع.","Удалить все проверки, записи, фото и настройки? Отменить нельзя.","¿Borrar todas las inspecciones, citas, fotos y ajustes? No se puede deshacer."],
+wipe_q2:["אישור אחרון. האפליקציה תחזור למצב התקנה ראשונה.","Final confirmation. The app returns to its first-install state.","تأكيد أخير. سيعود التطبيق لحالة التثبيت الأول.","Последнее подтверждение. Приложение вернётся к исходному состоянию.","Confirmación final. La app vuelve al estado inicial."],
+wipe_yes:["מחק הכל","Erase everything","حذف الكل","Удалить всё","Borrar todo"],
+undo:["בטל","Undo","تراجع","Отменить","Deshacer"],
+rec_deleted:["הבדיקה נמחקה","Inspection deleted","تم حذف الفحص","Проверка удалена","Inspección eliminada"],
+appt_deleted:["ההזמנה נמחקה","Appointment deleted","تم حذف الموعد","Запись удалена","Cita eliminada"],
+photo_deleted:["הצילום נמחק","Photo deleted","تم حذف الصورة","Фото удалено","Foto eliminada"],
+item_deleted:["האבחנה הוסרה מהרשימה","Finding removed from the list","تمت إزالة التشخيص من القائمة","Диагноз убран из списка","Diagnóstico quitado de la lista"],
+reset_q:["לאפס את כל רשימות הליקויים לברירת המחדל? השינויים שעשית יימחקו.","Reset all finding lists to the default? Your changes will be lost.","إعادة كل القوائم للوضع الافتراضي؟ ستفقد تعديلاتك.","Сбросить все списки к исходным? Ваши правки пропадут.","¿Restablecer todas las listas? Se perderán tus cambios."],
+reset_yes:["אפס","Reset","إعادة ضبط","Сбросить","Restablecer"],
+del_q:["למחוק את הבדיקה?","Delete this inspection?","حذف هذا الفحص؟","Удалить эту проверку?","¿Eliminar esta inspección?"],
+diag:["אבחון","Diagnostics","التشخيص","Диагностика","Diagnóstico"],
+dg_sw:["עבודה בלי רשת","Offline support","العمل دون اتصال","Работа офлайн","Uso sin conexión"],
+dg_on:["פעיל","Active","مفعّل","Активно","Activo"],
+dg_off:["לא פעיל","Not active","غير مفعّل","Не активно","No activo"],
+dg_storage:["אחסון בשימוש","Storage used","التخزين المستخدم","Занято хранилища","Almacenamiento usado"],
+dg_persist:["אחסון מתמשך (לא יימחק בלחץ מקום)","Persistent storage (not cleared under pressure)","تخزين دائم","Постоянное хранилище","Almacenamiento persistente"],
+dg_yes:["כן","Yes","نعم","Да","Sí"],
+dg_no:["לא","No","لا","Нет","No"],
+dg_photos:["צילומים שמורים","Stored photos","الصور المحفوظة","Сохранённых фото","Fotos guardadas"],
+dg_recs:["בדיקות","Inspections","الفحوصات","Проверок","Inspecciones"],
+dg_installed:["מותקנת כאפליקציה","Installed as an app","مثبّت كتطبيق","Установлено как приложение","Instalada como app"],
+dg_keyenc:["מפתח הבינה מוצפן במכשיר","AI key encrypted on the device","مفتاح الذكاء مشفّر على الجهاز","Ключ ИИ зашифрован на устройстве","Clave de IA cifrada en el dispositivo"],
+dg_nokey:["אין מפתח","No key","لا يوجد مفتاح","Нет ключа","Sin clave"],
+dg_errors:["שגיאות אחרונות","Recent errors","الأخطاء الأخيرة","Последние ошибки","Errores recientes"],
+dg_noerr:["לא נרשמו שגיאות","No errors recorded","لا توجد أخطاء","Ошибок нет","Sin errores"],
+dg_copy:["העתק דוח אבחון","Copy diagnostics report","نسخ تقرير التشخيص","Скопировать отчёт","Copiar informe"],
+dg_copied:["הועתק","Copied","تم النسخ","Скопировано","Copiado"],
+dg_clear:["נקה יומן שגיאות","Clear error log","مسح سجل الأخطاء","Очистить журнал ошибок","Borrar registro de errores"],
+dg_note:["הדוח אינו כולל פרטי לקוחות, צילומים או מפתחות.","The report contains no customer details, photos or keys.","التقرير لا يحتوي بيانات زبائن أو صوراً أو مفاتيح.","Отчёт не содержит данных клиентов, фото и ключей.","El informe no incluye datos de clientes, fotos ni claves."],
+key_enc_note:["המפתח מוצפן ונשמר במכשיר בלבד, ואינו נכלל בגיבויים.","The key is encrypted, stored on this device only, and never included in backups.","المفتاح مشفّر ومحفوظ على الجهاز فقط ولا يدخل النسخ الاحتياطية.","Ключ зашифрован, хранится только на устройстве и не входит в копии.","La clave está cifrada, se guarda solo en el dispositivo y no entra en las copias."]
+});
+["he","en","ar","ru","es"].forEach((l,i)=>{for(const k in LX)LANG[l][k]=LX[k][i]});
+
+/* ===== תרגום מלא של הממשק — [עברית, English, العربية, Русский, Español] ===== */
+Object.assign(LX,{
+s_fail:["השמירה נכשלה — ייתכן שהאחסון מלא. ייצא גיבוי ומחק בדיקות ישנות.","Saving failed — storage may be full. Export a backup and delete old inspections.","فشل الحفظ — قد يكون التخزين ممتلئاً. صدّر نسخة واحذف فحوصات قديمة.","Не удалось сохранить — возможно, память заполнена. Сделайте копию и удалите старые проверки.","No se pudo guardar; puede que el almacenamiento esté lleno. Exporta una copia y borra inspecciones antiguas."],
+ai_how_claude:["היכנס ל-console.anthropic.com ← API Keys ← Create Key ← העתק והדבק כאן. הכי מדויק לעברית.","Go to console.anthropic.com → API Keys → Create Key → copy and paste here. Most accurate for Hebrew.","ادخل إلى console.anthropic.com ← API Keys ← Create Key ← انسخ والصق هنا. الأدق للعبرية.","Откройте console.anthropic.com → API Keys → Create Key → скопируйте сюда. Точнее всех для иврита.","Entra en console.anthropic.com → API Keys → Create Key → copia y pega aquí. El más preciso para hebreo."],
+ai_how_gemini:["יש שכבה חינמית ללא כרטיס אשראי. aistudio.google.com/app/apikey ← Create API key ← העתק.","Has a free tier with no credit card. aistudio.google.com/app/apikey → Create API key → copy.","توجد خطة مجانية بدون بطاقة ائتمان. aistudio.google.com/app/apikey ← Create API key ← انسخ.","Есть бесплатный тариф без карты. aistudio.google.com/app/apikey → Create API key → скопируйте.","Tiene nivel gratuito sin tarjeta. aistudio.google.com/app/apikey → Create API key → copia."],
+ai_how_openai:["platform.openai.com ← API Keys ← Create ← העתק. דורש כרטיס אשראי.","platform.openai.com → API Keys → Create → copy. Requires a credit card.","platform.openai.com ← API Keys ← Create ← انسخ. يتطلب بطاقة ائتمان.","platform.openai.com → API Keys → Create → скопируйте. Нужна карта.","platform.openai.com → API Keys → Create → copia. Requiere tarjeta."],
+ai_how_local:["התקן Ollama או LM Studio, הפעל מודל, והזן את הכתובת המקומית. פרטי לגמרי, בלי עלות ובלי אינטרנט.","Install Ollama or LM Studio, run a model and enter the local address. Fully private, free and offline.","ثبّت Ollama أو LM Studio، شغّل نموذجاً وأدخل العنوان المحلي. خاص تماماً، مجاني ودون إنترنت.","Установите Ollama или LM Studio, запустите модель и введите локальный адрес. Приватно, бесплатно, без интернета.","Instala Ollama o LM Studio, ejecuta un modelo e introduce la dirección local. Privado, gratis y sin internet."],
+ai_local_name:["מודל מקומי (Ollama / LM Studio)","Local model (Ollama / LM Studio)","نموذج محلي (Ollama / LM Studio)","Локальная модель (Ollama / LM Studio)","Modelo local (Ollama / LM Studio)"],
+sev_high:["משמעות גבוהה","High significance","أهمية عالية","Высокая значимость","Importancia alta"],
+sev_low:["משמעות נמוכה","Low significance","أهمية منخفضة","Низкая значимость","Importancia baja"],
+sev_minor:["ליקויים שוליים","Minor defects","أعطال ثانوية","Мелкие дефекты","Defectos menores"],
+g_auto_e:["כל הסעיפים שאינם במנוע יסומנו אוטומטית:","All rows outside the engine are marked automatically:","كل البنود خارج المحرك تُعلَّم تلقائياً:","Все пункты вне двигателя помечаются автоматически:","Los apartados fuera del motor se marcan automáticamente:"],
+g_auto_c:["כל הסעיפים שאינם בשילדה יסומנו אוטומטית:","All rows outside the body are marked automatically:","كل البنود خارج الهيكل تُعلَّم تلقائياً:","Все пункты вне кузова помечаются автоматически:","Los apartados fuera de la carrocería se marcan automáticamente:"],
+g_change:["אפשר לשנות אילו סעיפים נכללים: עוד ← הגדרות ← {x}.","You can change which rows are included: More → Settings → {x}.","يمكن تغيير البنود المشمولة: المزيد ← الإعدادات ← {x}.","Состав пунктов меняется: Ещё → Настройки → {x}.","Puedes cambiar qué apartados se incluyen: Más → Ajustes → {x}."],
+g_kindnote:["הבחירה נדפסת מודגשת בראש טופס הסיכום ומשנה את רשימת המערכות הנבדקות.","The choice is printed in bold at the top of the summary form and changes the list of inspected systems.","يُطبع الاختيار بخط عريض أعلى النموذج ويغيّر قائمة الأنظمة المفحوصة.","Выбор печатается вверху формы и меняет список проверяемых систем.","La elección se imprime en negrita arriba del formulario y cambia la lista de sistemas."],
+g_must:["צילומי חובה","Required photos","صور إلزامية","Обязательные фото","Fotos obligatorias"],
+g_mustnote:["סעיף ה.4 לנוהל מחייב צילום רישיון הרכב המקורי ותעודה מזהה של מביא הרכב.","Section E.4 of the procedure requires a photo of the original vehicle licence and an ID of the person bringing the vehicle.","البند هـ.4 يُلزم بتصوير رخصة المركبة الأصلية وهوية مُحضر المركبة.","Пункт Е.4 требует фото оригинала лицензии ТС и удостоверения того, кто привёз автомобиль.","El apartado E.4 exige foto del permiso original y de un documento de quien trae el vehículo."],
+g_lic:["רישיון רכב","Vehicle licence","رخصة المركبة","Лицензия ТС","Permiso del vehículo"],
+g_id:["תעודה מזהה","ID document","وثيقة هوية","Удостоверение","Documento de identidad"],
+g_need:["בלי שני הצילומים והחתימה אי אפשר להמשיך.","You cannot continue without both photos and the signature.","لا يمكن المتابعة دون الصورتين والتوقيع.","Без двух фото и подписи продолжить нельзя.","No se puede continuar sin las dos fotos y la firma."],
+decl_he:["","The declaration is signed in its binding Hebrew wording.","يُوقَّع الإقرار بصيغته العبرية الملزمة.","Заявление подписывается в обязательной редакции на иврите.","La declaración se firma en su redacción vinculante en hebreo."],
+official_he:["","Row names, findings and the printed form stay in Hebrew — the wording required by the Ministry of Transport.","أسماء البنود والتشخيصات والنموذج المطبوع تبقى بالعبرية — الصيغة التي تفرضها وزارة المواصلات.","Названия пунктов, диагнозы и печатная форма остаются на иврите — так требует Минтранс.","Los apartados, diagnósticos y el formulario impreso siguen en hebreo: es la redacción que exige el Ministerio."],
+gd1t:["בדיקה מתחילה במספר רכב","An inspection starts with the plate number","الفحص يبدأ برقم اللوحة","Проверка начинается с номера","La inspección empieza por la matrícula"],
+gd1d:["הזן מספר ולחץ שליפה — תוצר, דגם, שנה, שלדה, צבע ומידות צמיגים נטענים ממשרד התחבורה, יחד עם הק״מ מהטסט האחרון, בעלויות, ריקולים ושינוי מבנה.","Enter the number and tap fetch — make, model, year, VIN, colour and tyre sizes load from the Ministry of Transport, with the last test odometer, owners, recalls and structural changes.","أدخل الرقم واضغط جلب — الصانع والطراز والسنة والهيكل واللون ومقاسات الإطارات تُحمَّل من وزارة المواصلات مع عداد آخر فحص والملاك والاستدعاءات.","Введите номер и нажмите запрос — марка, модель, год, VIN, цвет и шины загрузятся из Минтранса вместе с пробегом, владельцами и отзывами.","Introduce el número y pulsa consultar: marca, modelo, año, bastidor, color y neumáticos se cargan del Ministerio, con kilometraje, titulares y llamadas a revisión."],
+gd2t:["רשום ברישיון מול נמצא בפועל","On the licence versus actually found","المسجل في الرخصة مقابل الواقع","По документу и фактически","Según permiso frente a lo real"],
+gd2d:["שדות הזיהוי כפולים. אי-התאמה במספר שלדה עוצרת את הבדיקה; אי-התאמה בצבע, בצמיגים או במספר מנוע נרשמת לבד בהערות הכלליות.","Identification fields are double. A VIN mismatch stops the inspection; a colour, tyre or engine-number mismatch is recorded automatically in the general remarks.","حقول التعريف مزدوجة. عدم تطابق رقم الهيكل يوقف الفحص؛ عدم تطابق اللون أو الإطارات أو رقم المحرك يُسجَّل تلقائياً في الملاحظات.","Поля идентификации двойные. Несовпадение VIN останавливает проверку; цвет, шины или номер двигателя попадают в примечания автоматически.","Los campos de identificación son dobles. Una discrepancia de bastidor detiene la inspección; color, neumáticos o número de motor se anotan solos en observaciones."],
+gd3t:["ליקויים בלשון הנוהל","Defects in the procedure's wording","الأعطال بصيغة الإجراء","Дефекты в формулировках регламента","Defectos con la redacción oficial"],
+gd3d:["כל אבחנה נבחרת מרשימת נספח 5 בניסוח המחייב. אפשר להוסיף הערת בוחן חופשית וצילומים — הם נדפסים בנספח נפרד, לא בטופס האחיד.","Each finding is chosen from the Annex 5 list in its binding wording. You can add free inspector notes and photos — they print in a separate annex, not on the uniform form.","كل تشخيص يُختار من قائمة الملحق 5 بصيغته الملزمة. يمكن إضافة ملاحظات وصور — تُطبع في ملحق منفصل.","Каждый диагноз выбирается из списка Приложения 5. Заметки и фото можно добавить — они печатаются в отдельном приложении.","Cada diagnóstico se elige de la lista del Anexo 5. Puedes añadir notas y fotos: se imprimen en un anexo aparte."],
+gd4t:["הרשימות בשליטתך","The lists are yours to edit","القوائم تحت تحكمك","Списки можно менять","Las listas son tuyas"],
+gd4d:["עוד ← הגדרות ← עריכת רשימות ליקויים: העבר אבחנה לסעיף אחר, שנה סדר, הוסף אבחנות משלך, וקבע מה נכלל בבדיקת מנוע או שילדה בלבד.","More → Settings → Edit finding lists: move a finding to another row, reorder, add your own, and set what an engine-only or body-only inspection includes.","المزيد ← الإعدادات ← تعديل القوائم: انقل تشخيصاً لبند آخر، غيّر الترتيب، أضف تشخيصاتك، وحدّد ما يشمله فحص المحرك أو الهيكل فقط.","Ещё → Настройки → Редактор списков: переносите диагнозы, меняйте порядок, добавляйте свои, задавайте состав проверок.","Más → Ajustes → Editar listas: mueve diagnósticos, cambia el orden, añade los tuyos y define qué incluye cada inspección."],
+gd5t:["עובד בלי רשת","Works offline","يعمل دون اتصال","Работает без сети","Funciona sin conexión"],
+gd5d:["הכול נשמר על המכשיר. בבור אין קליטה — פתח את ההזמנה מראש והנתונים כבר יהיו שמורים. גבה באופן קבוע: הגיבוי המלא כולל גם את הצילומים.","Everything is saved on the device. There is no reception in the pit — open the appointment beforehand and the data will already be there. Back up regularly: the full backup includes the photos.","كل شيء يُحفظ على الجهاز. لا تغطية في الحفرة — افتح الموعد مسبقاً. انسخ احتياطياً بانتظام: النسخة الكاملة تشمل الصور.","Всё хранится на устройстве. В яме нет связи — откройте запись заранее. Делайте копии регулярно: полная копия включает фото.","Todo se guarda en el dispositivo. En el foso no hay cobertura: abre la cita antes. Haz copias a menudo: la completa incluye las fotos."],
+skip:["דלג","Skip","تخطي","Пропустить","Omitir"],
+note_title:["בדיקה בעוד 15 דקות","Inspection in 15 minutes","فحص بعد 15 دقيقة","Проверка через 15 минут","Inspección en 15 minutos"],
+v_hint:["הזן מספר ולחץ שליפה — שאר השדות יתמלאו לבד.","Enter the number and tap fetch — the other fields fill in by themselves.","أدخل الرقم واضغط جلب — باقي الحقول تُملأ تلقائياً.","Введите номер и нажмите запрос — остальные поля заполнятся сами.","Introduce el número y pulsa consultar: el resto se rellena solo."],
+v_ident:["נתוני זיהוי","Identification","بيانات التعريف","Идентификация","Identificación"],
+v_tires:["מידות צמיגים","Tyre sizes","مقاسات الإطارات","Размер шин","Medida de neumáticos"],
+v_chhint:["קובע איזו רשימת ליקויי שלדה תיפתח בסעיף השלדה.","Determines which body-defect list opens in the body row.","يحدد أي قائمة أعطال هيكل تُفتح في بند الهيكل.","Определяет, какой список дефектов кузова откроется.","Determina qué lista de defectos de carrocería se abre."],
+i_ordhint:["שמו מודפס בטופס כמזמין הבדיקה.","Their name is printed on the form as the person who ordered the inspection.","يُطبع اسمه في النموذج كطالب الفحص.","Его имя печатается в форме как заказчика.","Su nombre se imprime como solicitante."],
+i_payhint:["פנימי בלבד — לא מודפס בטופס הסיכום.","Internal only — not printed on the summary form.","داخلي فقط — لا يُطبع في النموذج.","Только для себя — в форму не печатается.","Solo interno: no se imprime en el formulario."],
+p_free:["צילומים חופשיים של הבוחן. נדפסים בנספח הממצאים, לא בטופס האחיד.","Free inspector photos. They print in the findings annex, not on the uniform form.","صور حرة للفاحص. تُطبع في ملحق النتائج لا في النموذج الموحد.","Свободные фото инспектора. Печатаются в приложении, не в единой форме.","Fotos libres del inspector. Se imprimen en el anexo, no en el formulario."],
+p_auto:["כל צילום נדחס אוטומטית לפני שמירה ונשמר על המכשיר בלבד.","Each photo is compressed before saving and stays on this device only.","كل صورة تُضغط تلقائياً قبل الحفظ وتبقى على الجهاز فقط.","Каждое фото сжимается перед сохранением и остаётся только на устройстве.","Cada foto se comprime antes de guardar y queda solo en el dispositivo."],
+d_unlock:["בכל זאת לבדוק סעיף זה","Inspect this row anyway","افحص هذا البند على أي حال","Всё же проверить этот пункт","Inspeccionar este apartado igualmente"],
+d_nomatch:["אין התאמה לחיפוש","Nothing matches the search","لا نتائج مطابقة","Ничего не найдено","Nada coincide con la búsqueda"],
+d_noteph:["תיאור חופשי — נדפס בנספח הממצאים","Free description — printed in the findings annex","وصف حر — يُطبع في ملحق النتائج","Свободное описание — печатается в приложении","Descripción libre: se imprime en el anexo"],
+s_roadnote:["הנוהל מחייב מבחן דרך לפני חתימה על טופס הסיכום.","The procedure requires a road test before the summary form is signed.","الإجراء يُلزم باختبار طريق قبل توقيع النموذج.","Регламент требует тест-драйв до подписания формы.","El procedimiento exige prueba en carretera antes de firmar."],
+s_unmarked:["{n} מערכות ללא סימון","{n} systems not marked","{n} أنظمة دون تعليم","Не отмечено систем: {n}","{n} sistemas sin marcar"],
+s_m_lic:["צילום רישיון רכב","Vehicle licence photo","صورة رخصة المركبة","Фото лицензии ТС","Foto del permiso"],
+s_m_id:["צילום תעודה מזהה","ID photo","صورة الهوية","Фото удостоверения","Foto del documento"],
+s_safety:["נמצאו {n} ליקויים בטיחותיים.","{n} safety defects were found.","تم العثور على {n} أعطال أمان.","Найдено опасных дефектов: {n}.","Se encontraron {n} defectos de seguridad."],
+s_safety2:["חובה ליידע את מזמין הבדיקה מיידית ולציין זאת בטופס.","The customer must be informed immediately and it must be noted on the form.","يجب إبلاغ طالب الفحص فوراً وتدوين ذلك في النموذج.","Заказчика нужно уведомить немедленно и отметить это в форме.","Hay que informar al cliente de inmediato y anotarlo en el formulario."],
+s_score:["ציון פנימי (לא בטופס)","Internal score (not on the form)","تقييم داخلي (ليس في النموذج)","Внутренняя оценка (не в форме)","Puntuación interna (no en el formulario)"],
+s_allok:["כל הפרטים הנדרשים מולאו.","All required details are filled in.","تم تعبئة كل التفاصيل المطلوبة.","Все обязательные данные заполнены.","Todos los datos requeridos están completos."],
+s_signnote:["סעיף ה.11 מחייב להחתים את מזמין הבדיקה על הממצאים.","Section E.11 requires the customer to sign the findings.","البند هـ.11 يُلزم بتوقيع طالب الفحص على النتائج.","Пункт Е.11 требует подписи заказчика под результатами.","El apartado E.11 exige que el cliente firme los resultados."],
+s_share:["שליחת סיכום ללקוח","Send a summary to the customer","إرسال ملخص للزبون","Отправить итог клиенту","Enviar resumen al cliente"],
+s_closed:["בדיקה סגורה — פתח מחדש","Inspection closed — reopen","الفحص مغلق — إعادة فتح","Проверка закрыта — открыть снова","Inspección cerrada: reabrir"],
+s_close:["סגירת הבדיקה","Close the inspection","إغلاق الفحص","Закрыть проверку","Cerrar la inspección"],
+a_ph:["מספר רכב, שם, תאריך","plate, name, date","رقم اللوحة، الاسم، التاريخ","номер, имя, дата","matrícula, nombre, fecha"],
+a_note:["הנוהל מחייב שמירת עותקי טפסים 24 חודשים לפחות. גבה באופן קבוע.","The procedure requires keeping form copies for at least 24 months. Back up regularly.","الإجراء يُلزم بحفظ نسخ النماذج 24 شهراً على الأقل. انسخ احتياطياً بانتظام.","Регламент требует хранить копии форм не менее 24 месяцев. Делайте копии регулярно.","El procedimiento exige conservar copias 24 meses como mínimo. Haz copias a menudo."],
+dy_tip:["טיפ: פתח את ההזמנה מראש כדי שנתוני משרד התחבורה יישלפו בזמן שיש רשת — בבור הם כבר יהיו שמורים.","Tip: open the appointment beforehand so registry data is fetched while online — in the pit it will already be saved.","نصيحة: افتح الموعد مسبقاً لجلب بيانات السجل أثناء توفر الشبكة.","Совет: откройте запись заранее, чтобы данные реестра загрузились, пока есть сеть.","Consejo: abre la cita antes para consultar el registro con conexión."],
+ds_total:["סה״כ בדיקות","Total inspections","إجمالي الفحوصات","Всего проверок","Inspecciones totales"],
+ds_month:["החודש","This month","هذا الشهر","В этом месяце","Este mes"],
+ds_full:["בדיקות מלאות","Full inspections","فحوصات شاملة","Полных проверок","Inspecciones completas"],
+ds_income:["הכנסות החודש","Income this month","دخل هذا الشهر","Доход за месяц","Ingresos del mes"],
+ds_top:["הליקויים הנפוצים אצלך","Your most common findings","التشخيصات الأكثر شيوعاً لديك","Ваши частые диагнозы","Tus diagnósticos más frecuentes"],
+e_note:["גע בסעיף כדי לפתוח את רשימת האבחנות שלו. אפשר להעביר אבחנה לסעיף אחר, לשנות סדר, למחוק ולהוסיף אבחנות משלך. השינויים נשמרים מיד ומשפיעים על כל בדיקה חדשה.","Tap a row to open its finding list. You can move a finding to another row, reorder, delete and add your own. Changes are saved at once and apply to every new inspection.","اضغط بنداً لفتح قائمة تشخيصاته. يمكن النقل وتغيير الترتيب والحذف والإضافة. التغييرات تُحفظ فوراً وتؤثر على كل فحص جديد.","Нажмите пункт, чтобы открыть его список. Диагнозы можно переносить, сортировать, удалять и добавлять. Изменения сохраняются сразу.","Toca un apartado para abrir su lista. Puedes mover, reordenar, borrar y añadir diagnósticos. Los cambios se guardan al instante."],
+e_empty:["ריק","Empty","فارغ","Пусто","Vacío"],
+e_export:["ייצוא הרשימות (JSON)","Export the lists (JSON)","تصدير القوائم (JSON)","Экспорт списков (JSON)","Exportar listas (JSON)"],
+e_import:["ייבוא רשימות","Import lists","استيراد القوائم","Импорт списков","Importar listas"],
+e_moved:["הועבר","Moved","تم النقل","Перенесено","Movido"],
+e_notlists:["הקובץ אינו קובץ רשימות","This is not a lists file","هذا ليس ملف قوائم","Это не файл списков","No es un archivo de listas"],
+e_imported:["יובא","Imported","تم الاستيراد","Импортировано","Importado"],
+e_badfile:["הקובץ אינו תקין","The file is not valid","الملف غير صالح","Файл повреждён","El archivo no es válido"],
+th_black:["שחור וזהב","Black and gold","أسود وذهبي","Чёрный с золотом","Negro y oro"],
+th_blue:["כחול כהה","Dark blue","أزرق داكن","Тёмно-синий","Azul oscuro"],
+th_green:["ירוק","Green","أخضر","Зелёный","Verde"],
+th_steel:["פלדה","Steel","فولاذي","Сталь","Acero"],
+th_rust:["חלודה","Rust","صدئي","Ржавый","Óxido"],
+st_usernote:["מופיע בכל דוח, ייצוא ושיתוף.","Appears on every report, export and share.","يظهر في كل تقرير وتصدير ومشاركة.","Указывается в каждом отчёте и экспорте.","Aparece en cada informe, exportación y envío."],
+st_inst_ok:["פרטי מכון מולאו — הדוח יופק כטופס סיכום.","Centre details are filled in — the report is issued as a summary form.","تم إدخال بيانات المركز — يصدر التقرير كنموذج ملخص.","Данные станции заполнены — отчёт выводится как итоговая форма.","Datos del centro completos: el informe se emite como formulario."],
+st_inst_no:["בלי מספר רישיון מפעל הדוח מסומן כטיוטה. הטופס האחיד מחייב לוגו ומספר רישיון של מכון מורשה.","Without a centre licence number the report is marked as a draft. The uniform form requires the logo and licence number of a licensed centre.","دون رقم ترخيص المركز يُعلَّم التقرير كمسودة. النموذج الموحد يتطلب شعار ورقم ترخيص مركز مرخّص.","Без номера лицензии станции отчёт помечается как черновик. Единая форма требует логотип и номер лицензии.","Sin número de licencia el informe se marca como borrador. El formulario exige logotipo y licencia de un centro autorizado."],
+st_mo:["משרד התחבורה","Ministry of Transport","وزارة المواصلات","Минтранс","Ministerio de Transporte"],
+st_proxy_ph:["ריק = פנייה ישירה","empty = direct request","فارغ = طلب مباشر","пусто = прямой запрос","vacío = consulta directa"],
+st_mo_note:["הפנייה למאגרים יוצאת ישירות מהמכשיר. שרת-ביניים נדרש רק אם הפנייה הישירה נחסמת.","Registry requests go directly from the device. A relay is needed only if the direct request is blocked.","طلبات السجل تخرج مباشرة من الجهاز. الخادم الوسيط مطلوب فقط إذا حُجب الطلب المباشر.","Запросы идут напрямую с устройства. Прокси нужен, только если прямой запрос блокируется.","Las consultas salen directamente del dispositivo. El proxy solo hace falta si se bloquean."],
+st_rules:["מנוע חוקים (אופליין)","rule engine (offline)","محرك القواعد (دون اتصال)","движок правил (офлайн)","motor de reglas (sin conexión)"],
+st_localurl:["כתובת מקומית","Local address","العنوان المحلي","Локальный адрес","Dirección local"],
+st_notif_on:["התראות מופעלות ✓","Reminders are on ✓","التنبيهات مفعّلة ✓","Напоминания включены ✓","Recordatorios activados ✓"],
+st_notif_off:["הפעלת תזכורות ליומן","Turn on appointment reminders","تفعيل تذكيرات المواعيد","Включить напоминания","Activar recordatorios"],
+st_notif_note:["התזכורת קופצת 15 דקות לפני מועד, רק כל עוד האפליקציה פתוחה.","The reminder appears 15 minutes before an appointment, only while the app is open.","يظهر التذكير قبل الموعد بـ15 دقيقة، فقط ما دام التطبيق مفتوحاً.","Напоминание появляется за 15 минут, только пока приложение открыто.","El recordatorio aparece 15 minutos antes, solo con la app abierta."],
+st_guide:["הצגת המדריך שוב","Show the guide again","عرض الدليل مجدداً","Показать инструкцию снова","Ver la guía otra vez"],
+st_ednote:["שינוי מיקום האבחנות, סדר הרשימות, ואילו סעיפים נכללים בבדיקת מנוע או שילדה בלבד.","Change where findings sit, list order, and which rows an engine-only or body-only inspection includes.","تغيير مواضع التشخيصات وترتيب القوائم والبنود المشمولة في فحص المحرك أو الهيكل فقط.","Расположение диагнозов, порядок списков и состав ограниченных проверок.","Cambia la ubicación de diagnósticos, el orden y qué incluye cada inspección parcial."],
+st_about1:["בנוי לפי הוראת נוהל 127 של משרד התחבורה (עדכון 1.10.2014).","Built to Ministry of Transport Procedure 127 (update of 1.10.2014).","مبني وفق إجراء 127 لوزارة المواصلات (تحديث 1.10.2014).","Создано по регламенту 127 Минтранса (редакция 1.10.2014).","Basado en el Procedimiento 127 del Ministerio de Transporte (actualización 1.10.2014)."],
+st_about2:["כל הנתונים נשמרים על המכשיר בלבד. פניות למשרד התחבורה ולספק הבינה יוצאות רק כשאתה מבקש זאת.","All data stays on the device. Requests to the registry and to the AI provider go out only when you ask.","كل البيانات تبقى على الجهاز. الطلبات للسجل ولمزود الذكاء تخرج فقط عند طلبك.","Все данные остаются на устройстве. Запросы в реестр и к ИИ уходят только по вашей команде.","Todos los datos quedan en el dispositivo. Las consultas al registro y a la IA salen solo cuando tú lo pides."],
+t_photo_fail:["הצילום נכשל","The photo failed","فشل التصوير","Не удалось сделать фото","Falló la foto"],
+t_need2:["נדרשים שני הצילומים","Both photos are required","الصورتان مطلوبتان","Нужны оба фото","Se necesitan las dos fotos"],
+t_needsig:["נדרשת חתימת מזמין הבדיקה","The customer's signature is required","توقيع طالب الفحص مطلوب","Нужна подпись заказчика","Se necesita la firma del cliente"],
+t_writefirst:["כתוב תיאור חופשי ואז לחץ","Write a description first, then tap","اكتب وصفاً أولاً ثم اضغط","Сначала введите описание","Escribe primero una descripción"],
+t_nosug:["לא נמצאה אבחנה מתאימה","No matching finding was found","لم يُعثر على تشخيص مناسب","Подходящий диагноз не найден","No se encontró un diagnóstico adecuado"],
+sug_title:["אבחנות מוצעות","Suggested findings","تشخيصات مقترحة","Предложенные диагнозы","Diagnósticos sugeridos"],
+sug_note:["בחר מה להוסיף. הניסוח קבוע לפי נספח 5.","Choose what to add. The wording is fixed by Annex 5.","اختر ما تريد إضافته. الصيغة ثابتة وفق الملحق 5.","Выберите, что добавить. Формулировки заданы Приложением 5.","Elige qué añadir. La redacción la fija el Anexo 5."],
+t_closed:["הבדיקה נסגרה","Inspection closed","تم إغلاق الفحص","Проверка закрыта","Inspección cerrada"],
+t_reopened:["הבדיקה נפתחה מחדש","Inspection reopened","أُعيد فتح الفحص","Проверка открыта снова","Inspección reabierta"],
+t_linkcopied:["הקישור הועתק","Link copied","تم نسخ الرابط","Ссылка скопирована","Enlace copiado"],
+fb_subj:["משוב","Feedback","ملاحظات","Отзыв","Comentarios"],
+t_nonotif:["הדפדפן לא תומך בהתראות","This browser does not support notifications","المتصفح لا يدعم التنبيهات","Браузер не поддерживает уведомления","El navegador no admite notificaciones"],
+t_notif_on:["התראות הופעלו","Reminders turned on","تم تفعيل التنبيهات","Напоминания включены","Recordatorios activados"],
+t_notif_denied:["ההרשאה נדחתה","Permission was denied","تم رفض الإذن","В разрешении отказано","Permiso denegado"],
+t_copyfail:["ההעתקה נכשלה","Copy failed","فشل النسخ","Не удалось скопировать","No se pudo copiar"],
+csv_head:["מספר רכב|תאריך|תוצר|דגם|סוג בדיקה|ליקויים|בטיחותי|מזמין|סכום|בודק","Plate|Date|Make|Model|Type|Defects|Safety|Customer|Amount|Inspector","رقم اللوحة|التاريخ|الصانع|الطراز|النوع|الأعطال|أمان|الزبون|المبلغ|الفاحص","Номер|Дата|Марка|Модель|Тип|Дефекты|Опасные|Заказчик|Сумма|Инспектор","Matrícula|Fecha|Marca|Modelo|Tipo|Defectos|Seguridad|Cliente|Importe|Inspector"],
+sh_title:["סיכום בדיקת רכב","Vehicle inspection summary","ملخص فحص المركبة","Итог проверки автомобиля","Resumen de inspección"],
+sh_found:["ליקויים שנמצאו ({n}):","Defects found ({n}):","الأعطال التي وُجدت ({n}):","Найденные дефекты ({n}):","Defectos encontrados ({n}):"],
+sh_none:["לא נמצאו ליקויים בסעיפים שנבדקו.","No defects were found in the rows inspected.","لم توجد أعطال في البنود المفحوصة.","В проверенных пунктах дефектов нет.","No se encontraron defectos en lo inspeccionado."],
+sh_safety:["⚠ נמצא ליקוי בטיחותי המחייב תיקון מיידי.","⚠ A safety defect requiring immediate repair was found.","⚠ وُجد عطل أمان يتطلب إصلاحاً فورياً.","⚠ Найден опасный дефект, требующий немедленного ремонта.","⚠ Se encontró un defecto de seguridad que exige reparación inmediata."],
+sh_warranty:["האחריות על הבדיקה: 3 חודשים או 6,000 ק״מ, לפי המוקדם.","Inspection warranty: 3 months or 6,000 km, whichever comes first.","ضمان الفحص: 3 أشهر أو 6,000 كم، أيهما أسبق.","Гарантия на проверку: 3 месяца или 6 000 км.","Garantía de la inspección: 3 meses o 6.000 km, lo que ocurra antes."],
+sh_fullsep:["הדוח המלא נמסר בנפרד.","The full report is delivered separately.","التقرير الكامل يُسلَّم على حدة.","Полный отчёт передаётся отдельно.","El informe completo se entrega aparte."],
+sh_to:["שליחת סיכום: {x}","Send summary: {x}","إرسال الملخص: {x}","Отправить итог: {x}","Enviar resumen: {x}"],
+sh_customer:["לקוח","customer","الزبون","клиент","cliente"],
+sh_textonly:["זהו סיכום טקסט בלבד. את הדוח המלא הפק בכפתור ״{x}״ ושמור כ-PDF.","This is a text summary only. Produce the full report with “{x}” and save it as PDF.","هذا ملخص نصي فقط. أصدر التقرير الكامل بزر «{x}» واحفظه PDF.","Это только текстовый итог. Полный отчёт создаётся кнопкой «{x}» и сохраняется в PDF.","Es solo un resumen de texto. Genera el informe completo con «{x}» y guárdalo en PDF."],
+sh_wa:["שליחה בוואטסאפ","Send by WhatsApp","إرسال عبر واتساب","Отправить в WhatsApp","Enviar por WhatsApp"],
+sh_mail:["שליחה במייל","Send by email","إرسال بالبريد","Отправить по почте","Enviar por correo"],
+sh_copy:["העתקה","Copy","نسخ","Копировать","Copiar"]
+});
+
+/* שמות הסעיפים וקוביות הצילום: בעברית הם הנוסח הרשמי (וכך הם נדפסים). בשפה אחרת מוצג תרגום לממשק בלבד. */
+const ROWX={
+"מנוע":["Engine","المحرك","Двигатель","Motor"],
+"מערכת ניהול המנוע":["Engine management system","نظام إدارة المحرك","Система управления двигателем","Gestión del motor"],
+"מערכת הקירור":["Cooling system","نظام التبريد","Система охлаждения","Refrigeración"],
+"מערכת דלק":["Fuel system","نظام الوقود","Топливная система","Sistema de combustible"],
+"מערכת הצתה / הזרקה":["Ignition / injection","الإشعال / الحقن","Зажигание / впрыск","Encendido / inyección"],
+"מערכת הצתה":["Ignition system","نظام الإشعال","Система зажигания","Encendido"],
+"מערכת גדוש מנוע":["Forced induction","نظام الشحن التوربيني","Наддув","Sobrealimentación"],
+"מערכת גידוש המנוע":["Forced induction","نظام الشحن التوربيني","Наддув","Sobrealimentación"],
+"מערכות הנעה של רכב היברידי / חשמלי":["Hybrid / electric drive systems","أنظمة الدفع الهجينة / الكهربائية","Гибридный / электрический привод","Propulsión híbrida / eléctrica"],
+"מערכות הנעה":["Drive systems","أنظمة الدفع","Привод","Sistemas de tracción"],
+"מערכת טעינה":["Charging system","نظام الشحن","Система зарядки","Sistema de carga"],
+"מערכת הטעינה":["Charging system","نظام الشحن","Система зарядки","Sistema de carga"],
+"מערכת ההתנעה (כולל מצבר)":["Starting system (incl. battery)","نظام بدء التشغيل (مع البطارية)","Система пуска (с АКБ)","Arranque (con batería)"],
+"מצמד":["Clutch","القابض","Сцепление","Embrague"],
+"תיבת הילוכים":["Gearbox","علبة السرعة","Коробка передач","Caja de cambios"],
+"תיבת העברת הכוח":["Transfer case","علبة نقل الحركة","Раздаточная коробка","Caja de transferencia"],
+"ציריות / גל הינע":["Drive shafts","أعمدة الدفع","Приводные валы","Palieres / transmisión"],
+"סרן הנעה":["Drive axle","محور الدفع","Ведущий мост","Eje motriz"],
+"מערכת מתלה קדמי / אקטיבית":["Front suspension / active","التعليق الأمامي / النشط","Передняя подвеска / активная","Suspensión delantera / activa"],
+"מערכת מתלה אחורי / אקטיבית":["Rear suspension / active","التعليق الخلفي / النشط","Задняя подвеска / активная","Suspensión trasera / activa"],
+"מערכת מתלה קדמי":["Front suspension","التعليق الأمامي","Передняя подвеска","Suspensión delantera"],
+"מערכת מתלה אחורי":["Rear suspension","التعليق الخلفي","Задняя подвеска","Suspensión trasera"],
+"מערכת ההיגוי (חשמלי / הידראולי)":["Steering (electric / hydraulic)","التوجيه (كهربائي / هيدروليكي)","Рулевое (электро / гидро)","Dirección (eléctrica / hidráulica)"],
+"מערכת ההיגוי":["Steering","نظام التوجيه","Рулевое управление","Dirección"],
+"מערכת הבלמים (ללא פירוק גלגלים) כולל ABS, ESP":["Brakes (wheels not removed) incl. ABS, ESP","الفرامل (دون فك العجلات) مع ABS و ESP","Тормоза (без снятия колёс), ABS, ESP","Frenos (sin desmontar ruedas), ABS, ESP"],
+"מערכת הבלמים (ללא פירוק גלגלים)":["Brakes (wheels not removed)","الفرامل (دون فك العجلات)","Тормоза (без снятия колёс)","Frenos (sin desmontar ruedas)"],
+"צמיגים וחישוקים (כולל TPMS)":["Tyres and rims (incl. TPMS)","الإطارات والجنوط (مع TPMS)","Шины и диски (с TPMS)","Neumáticos y llantas (con TPMS)"],
+"צמיגים וחישוקים":["Tyres and rims","الإطارات والجنوط","Шины и диски","Neumáticos y llantas"],
+"מערכת הפליטה ומערכות למניעת זיהום אוויר":["Exhaust and emission control","العادم وأنظمة منع التلوث","Выпуск и контроль выбросов","Escape y control de emisiones"],
+"מערכות בטיחות פסיביות לסוגיהן":["Passive safety systems","أنظمة الأمان السلبي","Пассивная безопасность","Seguridad pasiva"],
+"שילדת מרכב או שילדה נפרדת":["Unibody or separate frame","هيكل موحد أو شاسيه منفصل","Несущий кузов или рама","Monocasco o chasis independiente"],
+"מערכת התאורה ומחוונים":["Lighting and gauges","الإضاءة والعدادات","Освещение и приборы","Alumbrado e indicadores"],
+"מערכת תאורה":["Lighting","الإضاءة","Освещение","Alumbrado"],
+"מערכות ממוחשבות ואלקטרוניות כלליות":["General electronic systems","الأنظمة الإلكترونية العامة","Общие электронные системы","Sistemas electrónicos generales"],
+"הערות כלליות":["General remarks","ملاحظات عامة","Общие примечания","Observaciones generales"]
+};
+const SLOTX={
+lic_veh:["Original vehicle licence","رخصة المركبة الأصلية","Оригинал лицензии ТС","Permiso original"],
+lic_drv:["ID / driving licence","هوية / رخصة قيادة","Удостоверение / права","Documento / carnet"],
+doc_other:["Other document","مستند آخر","Другой документ","Otro documento"],
+e_front:["Front","الأمام","Спереди","Frontal"],e_roof:["Roof","السقف","Крыша","Techo"],
+e_rf:["Right side, front","الجانب الأيمن الأمامي","Правый бок, перед","Lateral derecho delantero"],
+e_lf:["Left side, front","الجانب الأيسر الأمامي","Левый бок, перед","Lateral izquierdo delantero"],
+e_rr:["Right side, rear","الجانب الأيمن الخلفي","Правый бок, зад","Lateral derecho trasero"],
+e_lr:["Left side, rear","الجانب الأيسر الخلفي","Левый бок, зад","Lateral izquierdo trasero"],
+e_rear:["Rear","الخلف","Сзади","Trasera"],e_trunk:["Boot","صندوق الأمتعة","Багажник","Maletero"],
+i_dash:["Instrument panel","لوحة العدادات","Панель приборов","Cuadro de instrumentos"],
+i_front:["Front seat","المقعد الأمامي","Переднее сиденье","Asiento delantero"],
+i_rear:["Rear seat","المقعد الخلفي","Заднее сиденье","Asiento trasero"],
+i_extra:["Extra detail","تفصيل إضافي","Доп. деталь","Detalle extra"],
+t_rf:["Front right tyre","الإطار الأمامي الأيمن","Переднее правое колесо","Neumático delantero derecho"],
+t_lf:["Front left tyre","الإطار الأمامي الأيسر","Переднее левое колесо","Neumático delantero izquierdo"],
+t_rr:["Rear right tyre","الإطار الخلفي الأيمن","Заднее правое колесо","Neumático trasero derecho"],
+t_lr:["Rear left tyre","الإطار الخلفي الأيسر","Заднее левое колесо","Neumático trasero izquierdo"],
+t_spare:["Spare wheel","العجلة الاحتياطية","Запасное колесо","Rueda de repuesto"],
+x_cyl:["Engine compression","ضغط المحرك","Компрессия двигателя","Compresión del motor"],
+x_emis:["Emissions","الانبعاثات","Выбросы","Emisiones"],
+x_batt:["Battery","البطارية","АКБ","Batería"],x_chg:["Charging","الشحن","Зарядка","Carga"],
+x_bc:["Battery and charging","البطارية والشحن","АКБ и зарядка","Batería y carga"],
+x_mini:["Miniline","Miniline","Miniline","Miniline"],
+x_l1:["Fault scan 1","مسح الأعطال 1","Сканирование ошибок 1","Escaneo de fallos 1"],
+x_l2:["Fault scan 2","مسح الأعطال 2","Сканирование ошибок 2","Escaneo de fallos 2"],
+x_l3:["Fault scan 3","مسح الأعطال 3","Сканирование ошибок 3","Escaneo de fallos 3"],
+x_scan4:["Fault scan 4","مسح الأعطال 4","Сканирование ошибок 4","Escaneo de fallos 4"],
+x_scan5:["Fault scan 5","مسح الأعطال 5","Сканирование ошибок 5","Escaneo de fallos 5"],
+x_scan6:["Fault scan 6","مسح الأعطال 6","Сканирование ошибок 6","Escaneo de fallos 6"],
+x_align:["Wheel alignment","زوايا العجلات","Углы установки колёс","Alineación"],
+x_brake:["Brake tester","جهاز قياس الفرامل","Тормозной стенд","Frenómetro"],
+x_other:["Other printout","مطبوعة أخرى","Другая распечатка","Otra impresión"],
+n_free:["Inspector's general notes","ملاحظات الفاحص العامة","Общие заметки инспектора","Notas generales del inspector"]
+};
+const LIDX=()=>["en","ar","ru","es"].indexOf(S.lang);
+const rowT=row=>{const i=LIDX();return i<0?row.t:((ROWX[row.t]||[])[i]||row.t)};
+const slotT=sl=>{const i=LIDX();return i<0?sl.t:((SLOTX[sl.k]||[])[i]||sl.t)};
+const SEVK={"משמעות גבוהה":"sev_high","משמעות נמוכה":"sev_low","ליקויים שוליים":"sev_minor"};
+const grpT=g=>SEVK[g]?T(SEVK[g]):g;
+["he","en","ar","ru","es"].forEach((l,i)=>{for(const k in LX)LANG[l][k]=LX[k][i]});
+const kindName=k=>T(k==="full"?"kind_full":k==="basic"?"kind_basic":k==="engine"?"kind_engine":"kind_chassis");
 const TF=(k,o)=>T(k).replace(/\{(\w+)\}/g,(m,x)=>o[x]!==undefined?o[x]:m);
 function T(k){const L=LANG[S.lang]||LANG.he;return L[k]!==undefined?L[k]:(LANG.en[k]!==undefined?LANG.en[k]:k)}
 
@@ -658,7 +952,7 @@ const K="bdk_";
 const store={
   get(k,d){try{const v=localStorage.getItem(K+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
   set(k,v){try{localStorage.setItem(K+k,JSON.stringify(v));return true}
-    catch(e){toast("השמירה נכשלה — ייתכן שהאחסון מלא. ייצא גיבוי ומחק בדיקות ישנות.",5000);return false}},
+    catch(e){toast(T('s_fail'),5000);return false}},
   del(k){localStorage.removeItem(K+k)}
 };
 let S={
@@ -673,14 +967,51 @@ let S={
   cur:null, tab:0, screen:"home", seen:store.get("seen",false), locked:false
 };
 function hash(x){let h=5381;for(let i=0;i<x.length;i++)h=((h<<5)+h+x.charCodeAt(i))>>>0;return String(h)}
+const hasSubtle=!!(window.crypto&&crypto.subtle);
+const b64=buf=>{let o="";const a=new Uint8Array(buf);for(let i=0;i<a.length;i++)o+=String.fromCharCode(a[i]);return btoa(o)};
+const unb64=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0));
+async function pinHash(pin,salt){
+  if(!hasSubtle)return "d:"+hash(salt+":"+pin);
+  return "s:"+b64(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(salt+":"+pin)))}
+async function pinStore(pin,after){
+  const salt=b64(crypto.getRandomValues(new Uint8Array(12)));
+  S.pin={h:await pinHash(pin,salt),salt,after:after==null?5:after};store.set("pin",S.pin)}
+async function pinCheck(pin){
+  const p=S.pin;if(!p)return true;
+  if(typeof p==="string"){                      /* קוד מגרסה ישנה — מאמתים ומסבים לגיבוב החדש */
+    if(hash(pin)!==p)return false;await pinStore(pin,5);return true}
+  return (await pinHash(pin,p.salt))===p.h}
+/* מפתח הבינה: מוצפן במנוחה. מפתח ההצפנה אינו ניתן לייצוא ונשמר ב-IndexedDB.
+   מגן על המפתח כשהוא שמור — לא מפני קוד זדוני שרץ באותו אתר בזמן השימוש. */
+async function vaultKey(){
+  let k=await kvGet("vault");
+  if(!k){k=await crypto.subtle.generateKey({name:"AES-GCM",length:256},false,["encrypt","decrypt"]);await kvPut("vault",k)}
+  return k}
+async function encText(t){const iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},await vaultKey(),new TextEncoder().encode(t));
+  return {iv:b64(iv),ct:b64(ct)}}
+async function decText(o){const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:unb64(o.iv)},await vaultKey(),unb64(o.ct));
+  return new TextDecoder().decode(pt)}
+function saveAi(){const o=Object.assign({},S.ai);if(o.enc)delete o.key;store.set("ai",o)}
+async function setAiKey(v){
+  S.ai.key=v;S.ai.enc=null;
+  if(v&&hasSubtle){try{S.ai.enc=await encText(v)}catch(e){S.ai.enc=null}}
+  saveAi()}
+async function loadAiKey(){
+  const a=S.ai;
+  if(a.enc){try{a.key=await decText(a.enc)}catch(e){a.key="";a.enc=null;saveAi()}}
+  else if(a.key&&hasSubtle){await setAiKey(a.key)}     /* מפתח גלוי מגרסה ישנה — מוצפן עכשיו */
+}
 function persist(){store.set("recs",S.recs);store.set("appts",S.appts);store.set("km",S.km)}
 
 /* --- IndexedDB for photos (blobs are far too big for localStorage) --- */
 let _db=null;
 function db(){return new Promise((res,rej)=>{
   if(_db)return res(_db);
-  const r=indexedDB.open("bdk_photos",1);
-  r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains("ph"))d.createObjectStore("ph")};
+  const r=indexedDB.open("bdk_photos",2);
+  r.onupgradeneeded=e=>{const d=e.target.result;
+    if(!d.objectStoreNames.contains("ph"))d.createObjectStore("ph");
+    if(!d.objectStoreNames.contains("kv"))d.createObjectStore("kv")};
   r.onsuccess=e=>{_db=e.target.result;res(_db)}; r.onerror=()=>rej(r.error);
 })}
 async function phPut(id,dataUrl){const d=await db();return new Promise((res,rej)=>{
@@ -689,6 +1020,12 @@ async function phGet(id){const d=await db();return new Promise(res=>{
   const t=d.transaction("ph","readonly");const q=t.objectStore("ph").get(id);q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)})}
 async function phDel(id){const d=await db();return new Promise(res=>{
   const t=d.transaction("ph","readwrite");t.objectStore("ph").delete(id);t.oncomplete=res;t.onerror=res})}
+async function phKeys(){const d=await db();return new Promise(res=>{
+  const q=d.transaction("ph","readonly").objectStore("ph").getAllKeys();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>res([])})}
+async function kvGet(k){const d=await db();return new Promise(res=>{
+  const q=d.transaction("kv","readonly").objectStore("kv").get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>res(undefined)})}
+async function kvPut(k,v){const d=await db();return new Promise((res,rej)=>{
+  const t=d.transaction("kv","readwrite");t.objectStore("kv").put(v,k);t.oncomplete=res;t.onerror=()=>rej(t.error)})}
 async function phAll(ids){const out={};for(const i of ids)out[i]=await phGet(i);return out}
 
 /* compress before storing — a raw phone photo is 4–8 MB */
@@ -705,14 +1042,33 @@ function compress(file,max=1400,q=.72){return new Promise((res,rej)=>{
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const APP_VER="1.4.0";
+const APP_VER="1.6.0";
 /* תאריך מקומי — toISOString מזיז את היום אחורה בישראל בשעות הלילה */
 const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 const today=()=>ymd(new Date());
 const dmy=x=>{const m=String(x||"").match(/^(\d{4})-(\d{2})(?:-(\d{2}))?/);return m?(m[3]?m[3]+"/":"")+m[2]+"/"+m[1]:String(x||"")};
 const nowTime=()=>new Date().toTimeString().slice(0,5);
-function toast(m,ms=2200){const e=document.createElement("div");e.className="toast";e.textContent=m;
-  document.body.appendChild(e);setTimeout(()=>e.remove(),ms)}
+function toast(m,ms=2200){
+  document.querySelectorAll(".toast").forEach(x=>x.remove());           /* תמיד רק הודעה אחת */
+  const e=document.createElement("div");e.className="toast"+(undoState?" above":"");e.textContent=m;
+  e.setAttribute("role","status");document.body.appendChild(e);setTimeout(()=>e.remove(),ms)}
+/* ביטול במקום "האם אתה בטוח?": הפעולה מתבצעת מיד, ו-5.5 שניות אפשר לבטל */
+let undoState=null;
+function undoBar(msg,undo,commit){
+  flushUndo();
+  const el=document.createElement("div");el.className="undo";el.setAttribute("role","status");
+  el.innerHTML=`<span>${esc(msg)}</span><button data-act="undo">${esc(T('undo'))}</button>`;
+  document.body.appendChild(el);
+  undoState={undo,commit,el,timer:setTimeout(flushUndo,5500)}}
+function flushUndo(){
+  const u=undoState;if(!u)return;undoState=null;clearTimeout(u.timer);u.el.remove();
+  if(u.commit)Promise.resolve().then(u.commit).catch(()=>{})}
+/* אישור בתוך האפליקציה — רק לפעולות שאי אפשר לבטל */
+let cfRes=null;
+function askConfirm(msg,yes,danger){
+  return new Promise(res=>{closeSheet();cfRes=res;
+    sheet(T('ok')+"?",`<div style="line-height:1.7;margin-bottom:6px">${esc(msg)}</div>
+      <button class="btn ${danger?"danger":"solid"}" data-act="cfyes">${esc(yes||T('ok'))}</button>`,T('cancel'))})}
 function applyChrome(){
   document.body.dataset.theme=S.theme; document.body.dataset.mode=S.mode;
   const L=LANG[S.lang]||LANG.he;
@@ -789,19 +1145,19 @@ const AI_PROVIDERS={
  claude:{name:"Claude (Anthropic)",tag:"API",tagk:"ai_api",key:1,
    models:["claude-haiku-5-5","claude-sonnet-5-5","claude-opus-5-5"],
    get:"https://console.anthropic.com",
-   howto:"היכנס ל-console.anthropic.com ← API Keys ← Create Key ← העתק והדבק כאן. הכי מדויק לעברית."},
+   howk:"ai_how_claude"},
  gemini:{name:"Gemini (Google)",tag:"FREE",tagk:"ai_free",key:1,
    models:["gemini-flash-latest","gemini-3.6-flash","gemini-3.5-flash"],
    get:"https://aistudio.google.com/app/apikey",
    video:"https://www.youtube.com/watch?v=Cl4XKgz6EJQ",
-   howto:"יש שכבה חינמית ללא כרטיס אשראי. aistudio.google.com/app/apikey ← Create API key ← העתק."},
+   howk:"ai_how_gemini"},
  openai:{name:"ChatGPT (OpenAI)",tag:"API",tagk:"ai_api",key:1,
    models:["gpt-4o-mini","gpt-4o"],
    get:"https://platform.openai.com/api-keys",
-   howto:"platform.openai.com ← API Keys ← Create ← העתק. דורש כרטיס אשראי."},
- local:{name:"מודל מקומי (Ollama / LM Studio)",tag:"LOCAL",tagk:"ai_local",url:1,
+   howk:"ai_how_openai"},
+ local:{name:"Local",namek:"ai_local_name",tag:"LOCAL",tagk:"ai_local",url:1,
    models:[],get:"https://ollama.ai",
-   howto:"התקן Ollama או LM Studio, הפעל מודל, והזן את הכתובת המקומית. פרטי לגמרי, בלי עלות ובלי אינטרנט."}
+   howk:"ai_how_local"}
 };
 const alive=m=>m&&!DEAD_MODELS.includes(m);
 function aiModels(p){const pv=AI_PROVIDERS[p]||{},live=(S.ai.live&&S.ai.live[p])||[];
@@ -873,7 +1229,7 @@ async function aiCall(prompt){
   let last;
   for(const m of chain){
     try{const out=await aiOnce(m,prompt);
-      if(S.ai.okModel!==m){S.ai.okModel=m;store.set("ai",S.ai)}
+      if(S.ai.okModel!==m){S.ai.okModel=m;saveAi()}
       return out}
     catch(e){last=e;if(e.status===401||e.status===403)break}
   }
@@ -1084,7 +1440,7 @@ function render(){applyChrome();const a=$("#app");
   if(S.locked){document.body.classList.remove("tabs-on");a.innerHTML=vLock();return}
   if(!S.seen){document.body.classList.remove("tabs-on");a.innerHTML=vGuide();return}
   const m={home:vHome,gate:vGate,rec:vRec,archive:vArchive,diary:vDiary,dash:vDash,more:vMore,
-    settings:vSettings,editor:vEditor,about:vAbout}[S.screen]||vHome;
+    settings:vSettings,editor:vEditor,about:vAbout,diag:vDiag}[S.screen]||vHome;
   const nav=navHTML();
   document.body.classList.toggle("tabs-on",!!nav);
   a.className="fade";a.innerHTML=m()+nav;
@@ -1114,6 +1470,9 @@ function vHome(){
     ${S.updated?`<div class="alert info">${esc(T('upd_ready'))}
       <button class="btn sm" data-act="reload">${esc(T('upd_reload'))}</button></div>`:""}
     ${location.protocol==="file:"?`<div class="alert warn">${esc(T('file_warn'))}</div>`:""}
+    ${(k=>k?`<div class="alert warn">${esc(T(k))}<br>
+      <button class="btn sm" data-act="bkfull">${esc(T('bk_full'))}</button>
+      <button class="btn sm" data-act="bklater">${esc(T('bk_later'))}</button></div>`:"")(backupDue())}
     <div class="tiles">
       <button class="tile wide go" data-act="new"><div class="ic">＋</div>
         <div><div class="t">${esc(T('newins'))}</div><div class="d">${esc(T('newins_d'))}</div></div></button>
@@ -1142,7 +1501,8 @@ function vMore(){
   return bar(T('more'))+`<div class="wrap"><div class="list">
     ${it("settings","⚙",T('settings'),S.user.name||T('username'))}
     ${it("editor","✎",T('editlists'))}
-    ${it("export","⬇",T('backup')+" (JSON)")}
+    ${it("bkfull","⬇",T('bk_full'),lastBackupText())}
+    ${it("diag","🩺",T('diag'))}
     ${it("theme","◑",T('theme'))}
     ${it("langmenu","⌘",T('lang'),(LANG[S.lang]||LANG.he).lname)}
     ${it("guideagain","📘",T('guide'))}
@@ -1159,20 +1519,20 @@ function vGate(){
       .map(([v,k])=>`<label class="chk"><input type="radio" name="kd" value="${v}" ${gate.kind===v?"checked":""}>
       <span>${esc(T(k))}</span></label>`).join("")}
     ${gate.kind==="engine"||gate.kind==="chassis"?`<div class="alert info">
-      כל הסעיפים שאינם ב${gate.kind==="engine"?"מנוע":"שילדה"} יסומנו אוטומטית:
+      ${esc(T(gate.kind==="engine"?'g_auto_e':'g_auto_c'))}
       <b>${esc(gate.kind==="engine"?T('ns_engine'):T('ns_chassis'))}</b>.
-      אפשר לשנות אילו סעיפים נכללים בהגדרות ← ${esc(T('editlists'))}.</div>`:
-      `<div class="tiny">הבחירה נדפסת מודגשת בראש טופס הסיכום ומשנה את רשימת המערכות הנבדקות.</div>`}
+      ${esc(TF('g_change',{x:T('editlists')}))}</div>`:
+      `<div class="tiny">${esc(T('g_kindnote'))}</div>`}
   </div>
 
-  <div class="sec">2 · צילומי חובה</div>
+  <div class="sec">2 · ${esc(T('g_must'))}</div>
   <div class="card tight">
-    <div class="tiny" style="margin-bottom:8px">סעיף ה.4 לנוהל מחייב צילום רישיון הרכב המקורי ותעודה מזהה של מביא הרכב.</div>
+    <div class="tiny" style="margin-bottom:8px">${esc(T('g_mustnote'))}</div>
     <div class="photos">
       <div class="ph ${gate.lic?"":"add"}" data-act="gph" data-k="lic">${gate.lic?`<img src="${gate.lic}">`:"＋"}
-        <div class="cap">${esc(T('vin')?"רישיון רכב":"")}</div></div>
+        <div class="cap">${esc(T('g_lic'))}</div></div>
       <div class="ph ${gate.drv?"":"add"}" data-act="gph" data-k="drv">${gate.drv?`<img src="${gate.drv}">`:"＋"}
-        <div class="cap">תעודה מזהה</div></div>
+        <div class="cap">${esc(T('g_id'))}</div></div>
     </div>
   </div>
 
@@ -1182,11 +1542,12 @@ function vGate(){
       <b>${gate.kind==="full"?"בדיקה כללית הכוללת בדיקה מכנית וממוחשבת":gate.kind==="basic"?"בדיקה מכנית בלבד, ללא מערכות אלקטרוניות וממוחשבות":gate.kind==="engine"?"בדיקת מנוע בלבד":"בדיקת שילדה ומרכב בלבד"}</b>.
       ידוע לי כי האחריות על הבדיקה היא לשלושה חודשים או 6,000 ק״מ, לפי המוקדם. ידוע לי כי מכון הבדיקה אינו אחראי
       לזיופים או שינויים בנתוני הרכב ובמסמכיו.</div>
+    ${T('decl_he')?`<div class="tiny" style="margin-top:6px;color:var(--gold-soft)">${esc(T('decl_he'))}</div>`:""}
     <canvas class="sig" id="gsig"></canvas>
     <button class="btn sm" data-act="gsigclear">${esc(T('clearsig'))}</button>
   </div>
   <button class="btn solid" data-act="gstart">${esc(T('next'))}</button>
-  <div class="tiny" style="text-align:center">בלי שני הצילומים והחתימה אי אפשר להמשיך.</div>
+  <div class="tiny" style="text-align:center">${esc(T('g_need'))}</div>
   </div>`}
 function afterGate(){
   document.querySelectorAll('input[name=kd]').forEach(r=>r.onchange=()=>{gate.kind=r.value;render()});
@@ -1226,25 +1587,21 @@ function vLock(){
       <button class="btn" data-act="pind" data-n="0" style="margin:0;font-size:22px;padding:16px">0</button>
       <button class="btn primary" data-act="pinok" style="margin:0;padding:16px">✓</button>
     </div>
-    <div class="tiny" id="pinmsg">נעילת מסך מקומית. אינה מצפינה את הנתונים על המכשיר.</div></div>`}
-const GUIDE=[
- {i:"🚗",t:"בדיקה מתחילה במספר רכב",d:"הזן מספר ולחץ שליפה — תוצר, דגם, שנה, שלדה, צבע ומידות צמיגים נטענים ממשרד התחבורה, יחד עם היסטוריית ק״מ, ריקולים ושינוי מבנה."},
- {i:"⚖",t:"רשום ברישיון מול נמצא בפועל",d:"שדות הזיהוי כפולים. אי-התאמה במספר שלדה עוצרת את הבדיקה; אי-התאמה בצבע, בצמיגים או במספר מנוע נרשמת לבד בהערות הכלליות."},
- {i:"🔧",t:"ליקויים בלשון הנוהל",d:"כל אבחנה נבחרת מרשימת נספח 5 בניסוח המחייב. אפשר להוסיף הערת בוחן חופשית וצילומים — הם נדפסים בנספח נפרד, לא בטופס האחיד."},
- {i:"✎",t:"הרשימות בשליטתך",d:"הגדרות ← עריכת רשימות ליקויים: העבר אבחנה לסעיף אחר, שנה סדר, הוסף אבחנות משלך, וקבע מה נכלל בבדיקת מנוע או שילדה בלבד."},
- {i:"📵",t:"עובד בלי רשת",d:"הכול נשמר על המכשיר. בבור אין קליטה — פתח את ההזמנה מראש והנתונים כבר יהיו שמורים."}
-];
+    <div class="tiny" id="pinmsg" role="status">${esc(pinWait()>0?TF('pin_wait',{n:pinWait()}):T('pin_note'))}</div>
+    <div class="tiny" style="margin-top:8px;opacity:.7">${esc(T('pin_forgot'))}</div></div>`}
+function pinWait(){const f=store.get("pinfail",null);return f&&f.until>Date.now()?Math.ceil((f.until-Date.now())/1000):0}
+const GUIDE=["🚗","⚖","🔧","✎","📵"].map(i=>({i}));
 let gStep=0;
 function vGuide(){const g=GUIDE[gStep],last=gStep===GUIDE.length-1;
   return `<div class="wrap" style="padding-top:9vh">
     <div style="text-align:center;font-size:52px">${g.i}</div>
-    <h2 style="text-align:center;font-size:21px;margin:14px 0 8px">${esc(g.t)}</h2>
-    <div class="muted" style="text-align:center;line-height:1.7">${esc(g.d)}</div>
+    <h2 style="text-align:center;font-size:21px;margin:14px 0 8px">${esc(T("gd"+(gStep+1)+"t"))}</h2>
+    <div class="muted" style="text-align:center;line-height:1.7">${esc(T("gd"+(gStep+1)+"d"))}</div>
     <div style="display:flex;gap:6px;justify-content:center;margin:26px 0">
       ${GUIDE.map((_,i)=>`<span style="width:7px;height:7px;border-radius:50%;background:${
         i===gStep?"var(--gold)":"var(--line)"}"></span>`).join("")}</div>
     <button class="btn solid" data-act="gnext">${last?esc(T('ok')):esc(T('next'))}</button>
-    ${last?"":`<button class="btn" data-act="gskip">דלג</button>`}</div>`}
+    ${last?"":`<button class="btn" data-act="gskip">${esc(T('skip'))}</button>`}</div>`}
 
 /* תזכורות: פועלות כל עוד האפליקציה פתוחה */
 function scheduleNotes(){
@@ -1252,7 +1609,7 @@ function scheduleNotes(){
   const now=Date.now();
   S.appts.filter(a=>a.date===today()).forEach(a=>{
     const t=new Date(a.date+"T"+(a.time||"09:00")).getTime()-15*60000;
-    if(t>now&&t-now<12*3600e3)setTimeout(()=>{try{new Notification("בדיקה בעוד 15 דקות",
+    if(t>now&&t-now<12*3600e3)setTimeout(()=>{try{new Notification(T('note_title'),
       {body:(a.plate||"")+" · "+(a.name||""),icon:"icon-192.png"})}catch(e){}},t-now)});
 }
 /* ---------- רשומת בדיקה ---------- */
@@ -1289,18 +1646,18 @@ function vTVeh(r){
   return `<div class="card">
     <div class="f"><label>${esc(T('plate'))}</label>
       <input data-p="veh.plate" value="${esc(r.veh.plate)}" inputmode="numeric" placeholder="12-345-67">
-      <div class="hint">הזן מספר ולחץ שליפה — שאר השדות יתמלאו לבד.</div></div>
+      <div class="hint">${esc(T('v_hint'))}</div></div>
     <button class="btn primary" data-act="lookup">${esc(T('fetch'))}</button>
     ${mo?moPanel(mo,r):""}
   </div>
-  <div class="sec">נתוני זיהוי</div>
+  <div class="sec">${esc(T('v_ident'))}</div>
   ${dual(T('vin'),"veh.vinLic","veh.vinAct",true)}
   <div style="height:10px"></div>
   ${dual(T('engno'),"veh.engLic","veh.engAct",false)}
   <div style="height:10px"></div>
   ${dual(T('color'),"veh.colorLic","veh.colorAct",false)}
   <div style="height:10px"></div>
-  ${dual("מידות צמיגים","veh.tireLic","veh.tireAct",false)}
+  ${dual(T('v_tires'),"veh.tireLic","veh.tireAct",false)}
   <div class="card">
     <div class="f2">${fld(T('make'),"veh.make")}${fld(T('model'),"veh.model")}</div>
     <div class="f2">${fld(T('year'),"veh.year")}${fld(T('vtype'),"veh.vtype")}</div>
@@ -1309,7 +1666,7 @@ function vTVeh(r){
       <select data-p="veh.chassis">
         <option value="body" ${r.veh.chassis==="body"?"selected":""}>${esc(T('ch_body'))}</option>
         <option value="separate" ${r.veh.chassis==="separate"?"selected":""}>${esc(T('ch_sep'))}</option>
-      </select><div class="hint">קובע איזו רשימת ליקויי שלדה תיפתח בסעיף השלדה.</div></div>
+      </select><div class="hint">${esc(T('v_chhint'))}</div></div>
   </div>`}
 function moPanel(mo,r){
   if(mo.v!==2)return `<div class="alert info" style="margin-top:12px">${esc(T('mo_old'))}</div>`;
@@ -1349,7 +1706,7 @@ function vTIns(r){return `
   <div class="f"><label>${esc(T('orderer'))}</label><select data-p="orderer">
     <option value="buyer" ${r.orderer==="buyer"?"selected":""}>${esc(T('t_buy'))}</option>
     <option value="seller" ${r.orderer==="seller"?"selected":""}>${esc(T('t_sel'))}</option></select>
-    <div class="hint">שמו מודפס בטופס כמזמין הבדיקה.</div></div></div>
+    <div class="hint">${esc(T('i_ordhint'))}</div></div></div>
 
   <div class="sec">${esc(T('sec_buyer'))}</div>${person("buyer")}
   <div class="sec">${esc(T('sec_seller'))}</div>${person("seller")}
@@ -1357,7 +1714,7 @@ function vTIns(r){return `
   <div class="card">
     <div class="f2">${fld(T('amount'),"pay.amount","number")}${fld(T('method'),"pay.method")}</div>
     <label class="chk"><input type="checkbox" data-chk="pay.paid" ${r.pay.paid?"checked":""}><span>${esc(T('paid'))}</span></label>
-    <div class="tiny">פנימי בלבד — לא מודפס בטופס הסיכום.</div></div>`}
+    <div class="tiny">${esc(T('i_payhint'))}</div></div>`}
 
 /* --- טאב: תעודות וצילומים (מחולק לקטגוריות) --- */
 let phTab="docs";
@@ -1370,21 +1727,20 @@ function vTPho(r){
   const cells=g.slots.map(sl=>{const ids=r.photos[sl.k]||[];
     const shots=ids.map(id=>`<div class="ph"><img data-ph="${id}">
       <button class="x" data-act="phdel" data-slot="${sl.k}" data-id="${id}">✕</button>
-      <div class="cap">${esc(sl.t)}</div></div>`).join("");
+      <div class="cap">${esc(slotT(sl))}</div></div>`).join("");
     const canAdd=sl.multi||!ids.length;
     return shots+(canAdd?`<div class="ph add" data-act="phadd" data-slot="${sl.k}">＋
-      <div class="cap">${esc(sl.t)}${sl.req?" *":""}</div></div>`:"")}).join("");
+      <div class="cap">${esc(slotT(sl))}${sl.req?" *":""}</div></div>`:"")}).join("");
   return `<div class="tabs" style="position:static;border:none;padding-top:0">${subs}</div>
     <div class="card"><div class="tiny">${g.k==="notes"
-      ?"צילומים חופשיים של הבוחן. נדפסים בנספח הממצאים, לא בטופס האחיד."
-      :"כל צילום נדחס אוטומטית לפני שמירה ונשמר על המכשיר בלבד."}</div>
+      ?esc(T('p_free')):esc(T('p_auto'))}</div>
     <div class="photos" style="margin-top:12px">${cells}</div></div>`}
 
 /* --- טאב 7: ליקויים --- */
 let openRow=null,dq="";
 function vTDef(r){
   const c=counts(r);
-  return `<div class="card tight"><div class="row">
+  return (T('official_he')?`<div class="alert info" style="font-size:12.5px">${esc(T('official_he'))}</div>`:"")+`<div class="card tight"><div class="row">
       <div><div class="tiny">${esc(T('st_ok'))}</div><b style="color:var(--ok)">${c.ok}</b></div>
       <div><div class="tiny">${esc(T('st_bad'))}</div><b style="color:var(--bad)">${c.bad}</b></div>
       <div><div class="tiny">${esc(T('safety'))}</div><b style="color:var(--bad)">${c.safety}</b></div>
@@ -1397,7 +1753,7 @@ function sysRow(r,row){
     `<span class="pill">—</span>`;
   return `<div class="sysrow ${d.st==="bad"?"isbad":""} ${d.safety?"safety":""}" ${d.st==="ns"?'style="opacity:.55"':""}>
     <button class="head" data-act="sys" data-n="${row.n}">
-      <span class="num">${row.n}</span><span class="nm">${esc(row.t)}</span>
+      <span class="num">${row.n}</span><span class="nm">${esc(rowT(row))}</span>
       ${d.items.length?`<span class="pill">${d.items.length}</span>`:""}
       ${d.photos.length?`<span class="pill">📷${d.photos.length}</span>`:""}${st}</button>
     ${on?sysBody(r,row,d):""}</div>`}
@@ -1408,23 +1764,23 @@ function sysBody(r,row,d){
     return `<label class="ditem ${on?"on":""}"><input type="checkbox" data-act="pick" data-n="${row.n}"
       data-v="${esc(x)}" ${on?"checked":""}><span>${esc(x)}</span></label>`}).join("");
   const list=pool.flat?mk(pool.flat):Object.entries(pool.grouped).map(([g,items])=>{
-    const inner=mk(items,g);return inner.trim()?`<div class="dgroup">${esc(g)}</div>`+inner:""}).join("");
+    const inner=mk(items,g);return inner.trim()?`<div class="dgroup">${esc(grpT(g))}</div>`+inner:""}).join("");
   return `<div class="sysbody">
     ${d.st==="ns"?`<div class="alert info">${esc(nsText(r))}<br>
-      <button class="btn sm" data-act="unlock" data-n="${row.n}">בכל זאת לבדוק סעיף זה</button></div>`:""}
+      <button class="btn sm" data-act="unlock" data-n="${row.n}">${esc(T('d_unlock'))}</button></div>`:""}
     ${row.notesonly||d.st==="ns"?"":`<div class="statepick">
       ${["ok","bad","na","rec"].map(s=>`<button data-act="st" data-n="${row.n}" data-s="${s}"
         class="${d.st===s?"on":""}">${esc(T("st_"+s))}</button>`).join("")}</div>`}
     ${d.st==="bad"||row.notesonly?`
       <input class="dsearch" data-act="dq" placeholder="${esc(T('searchdef'))}" value="${esc(dq)}">
-      <div class="dlist">${list||`<div class="ditem"><span class="tiny">אין התאמה לחיפוש</span></div>`}</div>
+      <div class="dlist">${list||`<div class="ditem"><span class="tiny">${esc(T('d_nomatch'))}</span></div>`}</div>
       ${d.items.length?`<div class="chips">${d.items.map(x=>`<span class="chip">${esc(x)}
         <b data-act="unpick" data-n="${row.n}" data-v="${esc(x)}">✕</b></span>`).join("")}</div>`:""}
       <label class="chk"><input type="checkbox" data-act="safety" data-n="${row.n}" ${d.safety?"checked":""}>
         <span style="color:var(--bad);font-weight:700">${esc(T('safety'))}</span></label>
       ${d.safety?`<div class="alert bad">${esc(T('safety_w'))}</div>`:""}`:""}
     <div class="f"><label>${esc(T('notes'))}</label>
-      <textarea data-act="dnote" data-n="${row.n}" placeholder="תיאור חופשי — נדפס בנספח הממצאים">${esc(d.notes)}</textarea>
+      <textarea data-act="dnote" data-n="${row.n}" placeholder="${esc(T('d_noteph'))}">${esc(d.notes)}</textarea>
       <div class="row"><button class="btn sm" data-act="aisug" data-n="${row.n}">✨ ${esc(T('aihelp'))}</button>
       <button class="btn sm" data-act="dphoto" data-n="${row.n}">📷 ${esc(T('addphoto'))}</button></div></div>
     ${d.photos.length?`<div class="photos">${d.photos.map(id=>`<div class="ph"><img data-ph="${id}">
@@ -1437,37 +1793,37 @@ function vTSum(r){
   const head=`<div class="card tight">
     <label class="chk"><input type="checkbox" data-chk="ins.roadtest" ${r.ins.roadtest?"checked":""}>
       <span style="font-weight:700">${esc(T('roadtest'))}</span></label>
-    <div class="tiny">הנוהל מחייב מבחן דרך לפני חתימה על טופס הסיכום.</div></div>`;
+    <div class="tiny">${esc(T('s_roadnote'))}</div></div>`;
   if(!r.veh.plate)miss.push(T('plate'));
   if(!r.ins.inspector||!r.ins.cert)miss.push(T('inspector')+" / "+T('certno'));
   if(!r.ins.roadtest)miss.push(T('roadtest'));
-  if(c.done<c.total)miss.push(`${c.total-c.done} מערכות ללא סימון`);
-  if(!(r.photos.lic_veh||[]).length)miss.push("צילום רישיון רכב");
-  if(!(r.photos.lic_drv||[]).length)miss.push("צילום תעודה מזהה");
+  if(c.done<c.total)miss.push(TF('s_unmarked',{n:c.total-c.done}));
+  if(!(r.photos.lic_veh||[]).length)miss.push(T('s_m_lic'));
+  if(!(r.photos.lic_drv||[]).length)miss.push(T('s_m_id'));
   if(!r.sigIns)miss.push(T('sig_ins'));
   if(!r.sigOrd)miss.push(T('sig_ord'));
   const vinBad=r.veh.vinLic&&r.veh.vinAct&&r.veh.vinLic!==r.veh.vinAct;
   return `${head}${vinBad?`<div class="alert bad"><b>${esc(T('vinblock'))}</b></div>`:""}
-  ${c.safety?`<div class="alert bad"><b>נמצאו ${c.safety} ליקויים בטיחותיים.</b> חובה ליידע את מזמין הבדיקה מיידית ולציין זאת בטופס.</div>`:""}
+  ${c.safety?`<div class="alert bad"><b>${esc(TF('s_safety',{n:c.safety}))}</b> ${esc(T('s_safety2'))}</div>`:""}
   <div class="stat">
     <div class="b"><div class="n">${c.bad}</div><div class="l">${esc(T('st_bad'))}</div></div>
     <div class="b"><div class="n">${c.ok}</div><div class="l">${esc(T('st_ok'))}</div></div>
     <div class="b"><div class="n">${c.done}/${c.total}</div><div class="l">${esc(T('complete'))}${
       c.ns?` · ${c.ns} ${esc(T('st_ns'))}`:""}</div></div>
-    <div class="b"><div class="n">${sc===null?"—":sc}</div><div class="l">ציון פנימי (לא בטופס)</div></div>
+    <div class="b"><div class="n">${sc===null?"—":sc}</div><div class="l">${esc(T('s_score'))}</div></div>
   </div>
   ${miss.length?`<div class="alert warn"><b>${esc(T('missing'))}:</b><br>${miss.map(esc).join(" · ")}</div>`
-    :`<div class="alert ok">כל הפרטים הנדרשים מולאו.</div>`}
+    :`<div class="alert ok">${esc(T('s_allok'))}</div>`}
   <div class="sec">${esc(T('sig_ins'))}</div>
   <div class="card tight"><canvas class="sig" id="sig1"></canvas>
     <button class="btn sm" data-act="sigclear" data-w="1">${esc(T('clearsig'))}</button></div>
   <div class="sec">${esc(T('sig_ord'))}</div>
-  <div class="card tight"><div class="tiny">סעיף ה.11 מחייב להחתים את מזמין הבדיקה על הממצאים.</div>
+  <div class="card tight"><div class="tiny">${esc(T('s_signnote'))}</div>
     <canvas class="sig" id="sig2"></canvas>
     <button class="btn sm" data-act="sigclear" data-w="2">${esc(T('clearsig'))}</button></div>
   <button class="btn solid" data-act="print">${esc(T('pdf'))}</button>
-  <button class="btn primary" data-act="share">שליחת סיכום ללקוח</button>
-  <button class="btn" data-act="finish">${r.status==="done"?"בדיקה סגורה":"סגירת הבדיקה"}</button>
+  <button class="btn primary" data-act="share">${esc(T('s_share'))}</button>
+  <button class="btn" data-act="finish">${esc(T(r.status==="done"?'s_closed':'s_close'))}</button>
   <button class="btn danger" data-act="delrec">${esc(T('del'))}</button>`}
 function afterRec(){
   loadImgs();
@@ -1488,12 +1844,12 @@ function vArchive(){
   const list=S.recs.filter(r=>!q||[r.veh.plate,r.veh.make,r.veh.model,r.buyer.name,r.seller.name,r.ins.date]
     .some(x=>normalize(x||"").includes(q)));
   return bar(T('archive'))+`<div class="wrap">
-   <div class="f"><input data-act="aq" placeholder="${esc(T('search'))} — מספר רכב, שם, תאריך" value="${esc(aq)}"></div>
-   <div class="tiny">הנוהל מחייב שמירת עותקי טפסים 24 חודשים לפחות. ייצא גיבוי בקביעות.</div>
+   <div class="f"><input data-act="aq" placeholder="${esc(T('search')+" — "+T('a_ph'))}" value="${esc(aq)}"></div>
+   <div class="tiny">${esc(T('a_note'))}</div>
    <div class="list">${list.length?list.map(r=>{const c=counts2(r);
      return `<button class="it" data-act="open" data-id="${esc(r.id)}" data-lp="${esc(r.id)}">
-       <div class="main"><div class="t">${esc(r.veh.plate||"ללא מספר")} · ${esc(r.veh.make||"")} ${esc(r.veh.model||"")}</div>
-       <div class="d">${esc(r.ins.date)} · ${esc(r.buyer.name||r.seller.name||"")} · ${c.bad} ליקויים</div></div>
+       <div class="main"><div class="t"><bdi>${esc(r.veh.plate||T('noplate'))}</bdi> · <bdi>${esc(((r.veh.make||"")+" "+(r.veh.model||"")).trim())}</bdi></div>
+       <div class="d">${esc(dmy(r.ins.date))} · ${esc(r.buyer.name||r.seller.name||"")} · ${c.bad} ${esc(T('n_defects'))}</div></div>
        <span class="pill ${r.status==="done"?"ok":""}">${esc(r.status==="done"?T('complete'):T('inprog'))}</span></button>`}).join("")
      :`<div class="empty"><div class="ic">🗂</div>${esc(T('nodata'))}</div>`}</div></div>`}
 
@@ -1508,7 +1864,7 @@ function vDiary(){
      <button class="btn sm" data-act="apptgo" data-id="${esc(a.id)}">${esc(T('newins'))}</button>
      <button class="iconbtn" data-act="apptdel" data-id="${esc(a.id)}">✕</button></div>`).join("")
     :`<div class="empty"><div class="ic">🗓</div>${esc(T('nodata'))}</div>`}</div>
-   <div class="tiny">טיפ: פתח את ההזמנה מראש כדי שנתוני משרד התחבורה יישלפו בזמן שיש רשת — בבור הם כבר יהיו שמורים.</div></div>`}
+   <div class="tiny">${esc(T('dy_tip'))}</div></div>`}
 
 /* ---------- דשבורד ---------- */
 function vDash(){
@@ -1519,12 +1875,12 @@ function vDash(){
   const income=mon.reduce((s,r)=>s+(parseFloat(r.pay.amount)||0),0);
   return bar(T('dash'))+`<div class="wrap">
    <div class="stat">
-     <div class="b"><div class="n">${S.recs.length}</div><div class="l">סה״כ בדיקות</div></div>
-     <div class="b"><div class="n">${mon.length}</div><div class="l">החודש</div></div>
-     <div class="b"><div class="n">${S.recs.filter(r=>r.kind==="full").length}</div><div class="l">בדיקות מלאות</div></div>
-     <div class="b"><div class="n">${income?"₪"+income.toLocaleString():"—"}</div><div class="l">הכנסות החודש</div></div>
+     <div class="b"><div class="n">${S.recs.length}</div><div class="l">${esc(T('ds_total'))}</div></div>
+     <div class="b"><div class="n">${mon.length}</div><div class="l">${esc(T('ds_month'))}</div></div>
+     <div class="b"><div class="n">${S.recs.filter(r=>r.kind==="full").length}</div><div class="l">${esc(T('ds_full'))}</div></div>
+     <div class="b"><div class="n">${income?"₪"+income.toLocaleString():"—"}</div><div class="l">${esc(T('ds_income'))}</div></div>
    </div>
-   <div class="sec">הליקויים הנפוצים אצלך</div>
+   <div class="sec">${esc(T('ds_top'))}</div>
    <div class="card tight">${top.length?top.map(([k,v])=>`<div style="display:flex;gap:10px;padding:6px 0;font-size:14px">
      <span style="flex:1">${esc(k)}</span><b style="color:var(--gold-soft)">${v}</b></div>`).join("")
      :`<div class="tiny">${esc(T('nodata'))}</div>`}</div></div>`}
@@ -1532,7 +1888,6 @@ function vDash(){
 
 /* ---------- עורך רשימות הליקויים ---------- */
 let edForm="full",edRow=null;
-const SEV={high:"משמעות גבוהה",low:"משמעות נמוכה",minor:"ליקויים שוליים"};
 function rowsOf(f){return f==="basic"?FORM_BASIC:FORM_FULL}
 function buckets(f,n){
   const e=(S.map[f]||{})[n]; if(!e)return [];
@@ -1540,7 +1895,7 @@ function buckets(f,n){
   if(e.type==="groups")return Object.keys(e.groups).map(g=>({path:["groups",g],label:g,items:e.groups[g]}));
   const out=[];
   ["body","separate"].forEach(ct=>["high","low","minor"].forEach(sv=>{
-    if(e[ct]&&e[ct][sv])out.push({path:[ct,sv],label:(ct==="body"?"שלדת מרכב":"שלדה נפרדת")+" · "+SEV[sv],items:e[ct][sv]})}));
+    if(e[ct]&&e[ct][sv])out.push({path:[ct,sv],label:(ct==="body"?T('ch_body'):T('ch_sep'))+" · "+T('sev_'+sv),items:e[ct][sv]})}));
   return out;
 }
 function bucketAt(f,n,path){return path.reduce((a,k)=>a[k],S.map[f][n])}
@@ -1551,14 +1906,13 @@ function vEditor(){
     <div class="f"><label>${esc(T('kind'))}</label><select data-act="edform">
       <option value="full" ${edForm==="full"?"selected":""}>${esc(T('kind_full'))}</option>
       <option value="basic" ${edForm==="basic"?"selected":""}>${esc(T('kind_basic'))}</option></select></div>
-    <div class="tiny">גע בסעיף כדי לפתוח את רשימת האבחנות שלו. אפשר להעביר אבחנה לסעיף אחר, לשנות סדר,
-      למחוק ולהוסיף אבחנות משלך. השינויים נשמרים מיד ומשפיעים על כל בדיקה חדשה.</div>
+    <div class="tiny">${esc(T('e_note'))}</div>
   </div>
   ${rows.map(row=>{
     const bs=buckets(edForm,row.n),tot=bs.reduce((a,b)=>a+b.items.length,0),on=edRow===row.n;
     return `<div class="sysrow">
       <button class="head" data-act="edrow" data-n="${row.n}">
-        <span class="num">${row.n}</span><span class="nm">${esc(row.t)}</span>
+        <span class="num">${row.n}</span><span class="nm">${esc(rowT(row))}</span>
         <span class="pill">${tot}</span></button>
       ${on?`<div class="sysbody">
         ${edForm==="full"&&!row.notesonly?`<div class="row" style="margin-bottom:10px">
@@ -1579,7 +1933,7 @@ function vEditor(){
                 data-n="${row.n}" data-p="${esc(b.path.join('>'))}" data-i="${i}">⇄</button>
               <button class="iconbtn" style="width:30px;height:30px;font-size:13px;color:var(--bad)" data-act="eddel"
                 data-n="${row.n}" data-p="${esc(b.path.join('>'))}" data-i="${i}">✕</button>
-            </div>`).join(""):`<div class="ditem"><span class="tiny">ריק</span></div>`}</div>
+            </div>`).join(""):`<div class="ditem"><span class="tiny">${esc(T('e_empty'))}</span></div>`}</div>
           <div class="row" style="margin-top:6px">
             <input class="dsearch" style="margin:0" placeholder="${esc(T('additem'))}…"
               id="add_${row.n}_${b.path.join('_')}">
@@ -1588,12 +1942,124 @@ function vEditor(){
       </div>`:""}</div>`}).join("")}
   <div class="sec">${esc(T('backup'))}</div>
   <div class="card">
-    <button class="btn primary" data-act="edexport">⬇ ייצוא הרשימות (JSON)</button>
-    <button class="btn" data-act="edimport">⬆ ייבוא רשימות</button>
+    <button class="btn primary" data-act="edexport">⬇ ${esc(T('e_export'))}</button>
+    <button class="btn" data-act="edimport">⬆ ${esc(T('e_import'))}</button>
     <button class="btn danger" data-act="edreset">${esc(T('resetdef'))}</button>
   </div></div>`}
 function saveMap(){store.set("map",S.map);store.set("scope",S.scope)}
 
+
+/* ---------- גיבוי, שחזור ומחיקה ---------- */
+function recPhotoIds(r){const a=[];
+  Object.values(r.photos||{}).forEach(x=>(x||[]).forEach(id=>a.push(id)));
+  Object.values(r.defects||{}).forEach(d=>((d&&d.photos)||[]).forEach(id=>a.push(id)));return a}
+function allPhotoIds(){return [...new Set(S.recs.flatMap(recPhotoIds))]}
+function lastBackupText(){const b=store.get("lastbackup",null);
+  return b&&b.t?T('bk_last')+": "+dmy(ymd(new Date(b.t))):T('bk_never')}
+function backupDue(){
+  if(!S.recs.length)return "";
+  if(Date.now()-store.get("bksnooze",0)<3*864e5)return "";
+  const b=store.get("lastbackup",null);
+  if(!b||!b.t)return "bk_remind0";
+  return Date.now()-b.t>7*864e5?"bk_remind":""}
+function dlBlob(name,blob){const u=URL.createObjectURL(blob);
+  const a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),4000)}
+/* הקובץ נבנה חלק-חלק (Blob) כדי שגם מאות צילומים לא ימלאו את הזיכרון.
+   קוד הנעילה ומפתח הבינה לעולם לא נכנסים לגיבוי. */
+async function exportBackup(full){
+  const data={v:3,app:"bdk",ver:APP_VER,kind:full?"full":"data",exported:new Date().toISOString(),
+    user:S.user,inst:S.inst,recs:S.recs,appts:S.appts,km:S.km,map:S.map,scope:S.scope};
+  const parts=[JSON.stringify(data).slice(0,-1)];let n=0,missing=0;
+  if(full){
+    const ids=allPhotoIds(),out=$("#bkout");
+    parts.push(',"photos":{');
+    for(let i=0;i<ids.length;i++){
+      const d=await phGet(ids[i]);
+      if(!d){missing++;continue}
+      parts.push((n?",":"")+JSON.stringify(ids[i])+":"+JSON.stringify(d));n++;
+      if(out&&i%5===0)out.textContent=TF('bk_building',{n:i+1,t:ids.length})}
+    parts.push("}")}
+  parts.push("}");
+  dlBlob("bdk-"+(full?"full":"data")+"-"+today()+".json",new Blob(parts,{type:"application/json"}));
+  if(full){store.set("lastbackup",{t:Date.now(),n});store.del("bksnooze")}
+  render();
+  toast(missing?TF('bk_missing',{n:missing}):TF('bk_done',{r:S.recs.length,n}),missing?5000:3000)}
+function normRec(r){
+  const base=newRec(r&&r.kind);
+  r=Object.assign(base,r||{});
+  ["veh","ins","buyer","seller","pay"].forEach(k=>{r[k]=Object.assign({},newRec()[k],r[k]||{})});
+  if(!r.photos||typeof r.photos!=="object")r.photos={};
+  if(!r.defects||typeof r.defects!=="object")r.defects={};
+  Object.keys(r.defects).forEach(n=>{const d=r.defects[n]||{};
+    r.defects[n]={st:d.st||"",items:Array.isArray(d.items)?d.items:[],notes:d.notes||"",safety:!!d.safety,photos:Array.isArray(d.photos)?d.photos:[]}});
+  if(!r.id)r.id=uid();
+  return r}
+/* סדר מחייב: קודם כותבים את הצילומים, ורק אחרי שהכול הצליח מחליפים את הנתונים.
+   כישלון באמצע משאיר את המצב הקיים כמו שהוא. */
+async function restoreBackup(d){
+  const recs=d.recs.map(normRec), photos=d.photos||null;
+  if(photos)for(const id of Object.keys(photos)){
+    if(typeof photos[id]!=="string"||photos[id].indexOf("data:image/")!==0)continue;
+    await phPut(id,photos[id])}
+  S.recs=recs;S.appts=Array.isArray(d.appts)?d.appts:[];S.km=(d.km&&typeof d.km==="object")?d.km:{};
+  if(d.user)S.user=Object.assign({name:"",cert:""},d.user);
+  if(d.inst)S.inst=Object.assign({name:"",lic:"",addr:"",phone:""},d.inst);
+  if(d.map&&d.map.full&&d.map.basic){S.map=d.map;if(d.scope&&d.scope.engine&&d.scope.chassis)S.scope=d.scope;saveMap()}
+  store.set("user",S.user);store.set("inst",S.inst);persist();S.cur=null;
+  if(photos){                                  /* גיבוי מלא: מנקים צילומים שכבר לא שייכים לאף בדיקה */
+    const keep=new Set(allPhotoIds());
+    for(const k of await phKeys())if(!keep.has(k))await phDel(k)}
+}
+function deleteRec(id){
+  const i=S.recs.findIndex(x=>x.id===id);if(i<0)return;
+  const rec=S.recs.splice(i,1)[0];persist();
+  undoBar(T('rec_deleted'),()=>{S.recs.splice(Math.min(i,S.recs.length),0,rec);persist()},
+    async()=>{for(const pid of recPhotoIds(rec))await phDel(pid)})}
+
+/* ---------- אבחון ---------- */
+let diagData=null;
+async function loadDiag(){
+  const d={ver:APP_VER,sw:!!(navigator.serviceWorker&&navigator.serviceWorker.controller),
+    installed:!!(window.matchMedia&&matchMedia("(display-mode: standalone)").matches),
+    recs:S.recs.length,appts:S.appts.length,lang:S.lang,theme:S.theme+"/"+S.mode,pin:!!S.pin,
+    ai:S.ai.provider||"-",keyenc:S.ai.key?(S.ai.enc?"yes":"no"):"none",
+    proto:location.protocol,ua:navigator.userAgent,online:navigator.onLine,photos:"?",usage:"?",persist:"?",caches:"?"};
+  try{d.photos=(await phKeys()).length}catch(e){}
+  try{const e=await navigator.storage.estimate();d.usage=(e.usage/1048576).toFixed(1)+" / "+(e.quota/1048576).toFixed(0)+" MB"}catch(e){}
+  try{d.persist=await navigator.storage.persisted()}catch(e){}
+  try{d.caches=(await caches.keys()).join(", ")||"-"}catch(e){}
+  let errs=[];try{errs=JSON.parse(localStorage.getItem("bdk_errlog")||"[]")}catch(e){}
+  d.errs=errs;diagData=d;if(S.screen==="diag")render()}
+function diagReport(){const d=diagData||{};
+  return ["BDK "+d.ver,"sw: "+d.sw+" · caches: "+d.caches,"installed: "+d.installed+" · "+d.proto+" · online: "+d.online,
+    "storage: "+d.usage+" · persistent: "+d.persist,"recs: "+d.recs+" · appts: "+d.appts+" · photos: "+d.photos,
+    "lang: "+d.lang+" · theme: "+d.theme+" · pin: "+d.pin,"ai: "+d.ai+" · key encrypted: "+d.keyenc,"ua: "+d.ua,
+    "errors:"].concat((d.errs||[]).map(e=>"  "+e.t+" "+e.s+":"+e.l+" "+e.m)).join("\n")}
+function vDiag(){
+  const d=diagData;
+  const yn=v=>v===true?T('dg_yes'):v===false?T('dg_no'):String(v);
+  const kv=(k,v)=>`<div class="kv-row"><span class="muted">${esc(k)}</span><b><bdi>${esc(v)}</bdi></b></div>`;
+  return bar(T('diag'))+`<div class="wrap">${!d?`<div class="empty"><span class="spin"></span></div>`:`
+    <div class="card">
+      ${kv(T('ver'),d.ver)}
+      ${kv(T('dg_sw'),d.sw?T('dg_on'):T('dg_off'))}
+      ${kv(T('dg_installed'),yn(d.installed))}
+      ${kv(T('dg_storage'),d.usage)}
+      ${kv(T('dg_persist'),yn(d.persist))}
+      ${kv(T('dg_recs'),String(d.recs))}
+      ${kv(T('dg_photos'),String(d.photos))}
+      ${kv(T('pin'),yn(d.pin))}
+      ${kv(T('dg_keyenc'),d.keyenc==="none"?T('dg_nokey'):yn(d.keyenc==="yes"))}
+      ${kv(T('bk_last'),lastBackupText().split(": ")[1]||T('bk_never'))}
+    </div>
+    <div class="sec">${esc(T('dg_errors'))}</div>
+    <div class="card tight">${d.errs.length?d.errs.map(e=>`<div class="tiny" style="padding:5px 0;border-bottom:1px solid var(--line);direction:ltr;text-align:left">
+      ${esc(e.t.slice(0,16).replace("T"," "))} · ${esc(e.s)}:${esc(e.l)}<br>${esc(e.m)}</div>`).join("")
+      :`<div class="tiny">${esc(T('dg_noerr'))}</div>`}</div>
+    <button class="btn primary" data-act="dgcopy">${esc(T('dg_copy'))}</button>
+    ${d.errs.length?`<button class="btn" data-act="dgclear">${esc(T('dg_clear'))}</button>`:""}
+    <div class="tiny" style="text-align:center">${esc(T('dg_note'))}</div>`}</div>`}
 
 /* ---------- אודות ---------- */
 const STORE_URL="https://appnest-store.pages.dev";
@@ -1622,13 +2088,13 @@ function vAbout(){
   </div>`}
 /* ---------- הגדרות ---------- */
 function vSettings(){
-  const th=[["black","שחור וזהב"],["blue","כחול כהה"],["green","ירוק"],["steel","פלדה"],["rust","חלודה"]];
+  const th=["black","blue","green","steel","rust"].map(k=>[k,T('th_'+k)]);
   return bar(T('settings'))+`<div class="wrap">
   <div class="sec">${esc(T('username'))}</div>
   <div class="card"><div class="f2">
     <div class="f"><label>${esc(T('inspector'))}</label><input data-s="user.name" value="${esc(S.user.name)}"></div>
     <div class="f"><label>${esc(T('certno'))}</label><input data-s="user.cert" value="${esc(S.user.cert)}"></div>
-  </div><div class="tiny">מופיע בכל דוח, ייצוא ושיתוף.</div></div>
+  </div><div class="tiny">${esc(T('st_usernote'))}</div></div>
 
   <div class="sec">${esc(T('inst'))}</div>
   <div class="card">
@@ -1639,8 +2105,7 @@ function vSettings(){
     </div>
     <div class="f"><label>${esc(T('addr'))}</label><input data-s="inst.addr" value="${esc(S.inst.addr)}"></div>
     <div class="alert ${S.inst.lic?"ok":"warn"}">${S.inst.lic
-      ?"פרטי מכון מולאו — הדוח יופק כטופס סיכום."
-      :"בלי מספר רישיון מפעל הדוח מסומן כטיוטה. הטופס האחיד מחייב לוגו ומספר רישיון של מכון מורשה."}</div>
+      ?esc(T('st_inst_ok')):esc(T('st_inst_no'))}</div>
   </div>
 
   <div class="sec">${esc(T('lang'))} · ${esc(T('theme'))}</div>
@@ -1654,12 +2119,12 @@ function vSettings(){
       <option value="light" ${S.mode==="light"?"selected":""}>${esc(T('light'))}</option></select></div>
   </div>
 
-  <div class="sec">משרד התחבורה</div>
+  <div class="sec">${esc(T('st_mo'))}</div>
   <div class="card">
     <div class="f"><label>${esc(T('proxy'))}</label><input data-s="mo.proxy" value="${esc(S.mo.proxy)}"
-      placeholder="ריק = פנייה ישירה"></div>
+      placeholder="${esc(T('st_proxy_ph'))}"></div>
     <button class="btn primary" data-act="motest">${esc(T('motest'))}</button>
-    <div class="tiny" id="motestout">בדוק פעם אחת מהטלפון. אם הפנייה הישירה נחסמת, הזן כתובת proxy כאן.</div>
+    <div class="tiny" id="motestout" role="status">${esc(T('st_mo_note'))}</div>
   </div>
 
   <div class="sec">${esc(T('aiconn'))} ${aiConnected()
@@ -1667,61 +2132,61 @@ function vSettings(){
     :`<span style="color:var(--tx3)">● ${esc(T('ai_status_off'))}</span>`}</div>
   <div class="card">
     <div class="f"><label>${esc(T('provider'))}</label><select data-s="ai.provider">
-      <option value="">${esc(T('ai_free'))} — מנוע חוקים (אופליין)</option>
+      <option value="">${esc(T('ai_free'))} — ${esc(T('st_rules'))}</option>
       ${Object.entries(AI_PROVIDERS).map(([k,v])=>`<option value="${k}" ${S.ai.provider===k?"selected":""}>
-        ${esc(v.name)} · ${esc(T(v.tagk))}</option>`).join("")}
+        ${esc(v.namek?T(v.namek):v.name)} · ${esc(T(v.tagk))}</option>`).join("")}
     </select></div>
     ${(()=>{const pv=AI_PROVIDERS[S.ai.provider];if(!pv)return `<div class="tiny">${esc(T('ai_sends'))}</div>`;
       return `${pv.key?`<div class="f"><label>${esc(T('apikey'))}</label>
         <input type="password" data-s="ai.key" value="${esc(S.ai.key)}" placeholder="••••••••"></div>`:""}
-      ${pv.url?`<div class="f"><label>כתובת מקומית</label>
+      ${pv.url?`<div class="f"><label>${esc(T('st_localurl'))}</label>
         <input data-s="ai.url" value="${esc(S.ai.url)}" placeholder="http://localhost:11434/v1/chat/completions"></div>`:""}
       ${!pv.url?`<div class="f"><label>${esc(T('ai_model'))}</label>
         <select data-s="ai.model"><option value="">${esc(T('ai_auto'))}</option>${aiModels(S.ai.provider).map(m=>
           `<option value="${esc(m)}" ${S.ai.model===m?"selected":""}>${esc(m)}</option>`).join("")}</select></div>`:
         pv.url?`<div class="f"><label>${esc(T('ai_model'))}</label>
           <input data-s="ai.model" value="${esc(S.ai.model)}" placeholder="llama3"></div>`:""}
-      <div class="alert info" style="font-size:12.5px">${esc(pv.howto)}</div>
-      <div class="row">
-        <a class="btn sm" style="flex:none" href="${pv.get}" target="_blank">${esc(T('ai_getkey'))} ↗</a>
+      <div class="alert info" style="font-size:12.5px">${esc(T(pv.howk))}</div>
+      <div class="row" style="flex-wrap:wrap;gap:0">
+        <a class="btn sm" style="flex:none" href="${pv.get}" target="_blank" rel="noopener">${esc(T('ai_getkey'))} ↗</a>
         ${pv.video?`<a class="btn sm" style="flex:none" href="${pv.video}" target="_blank">${esc(T('ai_video'))} ▶</a>`:""}
         <button class="btn sm" style="flex:none" data-act="aitest">${esc(T('ai_test'))}</button>
         ${aiConnected()?`<button class="btn sm" style="flex:none" data-act="aidisc">${esc(T('ai_disconnect'))}</button>`:""}
       </div>
-      <div class="tiny" id="aitestout" style="margin-top:6px">${esc(T('ai_sends'))}</div>`})()}
+      <div class="tiny" id="aitestout" style="margin-top:6px">${esc(T('ai_sends'))}</div>
+      ${pv.key?`<div class="tiny" style="margin-top:4px">${esc(T('key_enc_note'))}</div>`:""}`})()}
   </div>
 
   <div class="sec">${esc(T('pin'))}</div>
   <div class="card">
-    <button class="btn ${S.pin?"":"primary"}" data-act="setpin">${S.pin?"שינוי או ביטול הקוד":"קביעת קוד נעילה"}</button>
-    <div class="alert ${S.pin?"ok":"warn"}">${S.pin
-      ?"נעילה פעילה. שים לב: זו נעילת מסך בלבד, לא הצפנה של הנתונים."
-      :"האפליקציה מחזיקה תעודות זהות של לקוחות וצילומי רישיונות. מומלץ לקבוע קוד."}</div>
-    <button class="btn" data-act="notify">${S.notify?"התראות מופעלות ✓":"הפעלת תזכורות ליומן"}</button>
-    <div class="tiny">התזכורת קופצת 15 דקות לפני מועד, כל עוד האפליקציה פתוחה ברקע.</div>
-    <button class="btn" data-act="guideagain">הצגת המדריך שוב</button>
+    <button class="btn ${S.pin?"":"primary"}" data-act="setpin">${esc(T(S.pin?'pin_change':'pin_set'))}</button>
+    <div class="alert ${S.pin?"ok":"warn"}">${esc(T(S.pin?'pin_on':'pin_off'))}</div>
+    <button class="btn" data-act="notify">${esc(T(S.notify?'st_notif_on':'st_notif_off'))}</button>
+    <div class="tiny">${esc(T('st_notif_note'))}</div>
+    <button class="btn" data-act="guideagain">${esc(T('st_guide'))}</button>
   </div>
 
   <div class="sec">${esc(T('t_def'))}</div>
   <div class="card">
     <button class="btn primary" data-act="editor">✎ ${esc(T('editlists'))}</button>
-    <div class="tiny">שינוי מיקום האבחנות, סדר הרשימות, ואילו סעיפים נכללים בבדיקת מנוע/שילדה בלבד.</div>
+    <div class="tiny">${esc(T('st_ednote'))}</div>
   </div>
 
   <div class="sec">${esc(T('backup'))}</div>
   <div class="card">
-    <button class="btn primary" data-act="export">⬇ ${esc(T('backup'))} (JSON)</button>
-    <button class="btn" data-act="csv">⬇ ייצוא רשימת בדיקות (CSV)</button>
+    <button class="btn primary" data-act="bkfull">⬇ ${esc(T('bk_full'))}</button>
+    <button class="btn" data-act="export">⬇ ${esc(T('bk_data'))}</button>
+    <button class="btn" data-act="csv">⬇ ${esc(T('bk_csv'))}</button>
     <button class="btn" data-act="import">⬆ ${esc(T('restore'))}</button>
+    <div class="tiny" id="bkout" role="status">${esc(lastBackupText())}<br>${esc(T('bk_note'))}</div>
     <button class="btn danger" data-act="wipe">${esc(T('wipe'))}</button>
   </div>
 
   <div class="sec">${esc(T('about'))}</div>
   <div class="card tight"><div class="tiny">
-    ${esc(T('app'))} · ${esc(T('ver'))} ${APP_VER}<br>בנוי לפי הוראת נוהל 127 של משרד התחבורה (עדכון 1.10.2014).<br>
+    ${esc(T('app'))} · ${esc(T('ver'))} ${APP_VER}<br>${esc(T('st_about1'))}<br>
     Barak Aflalo · © AppNest 2026<br><br>
-    כל הנתונים נשמרים על המכשיר בלבד ואינם עוברים לשום שרת. פניות למשרד התחבורה ולספק הבינה
-    יוצאות רק כשאתה מבקש זאת.</div></div></div>`}
+    ${esc(T('st_about2'))}</div></div></div>`}
 
 /* ---------- הדפסה: טופס אחיד + נספח ממצאים ---------- */
 async function buildPrint(){
@@ -1807,7 +2272,7 @@ let pickTarget=null;
 $("#picker").addEventListener("change",async e=>{
   const f=e.target.files&&e.target.files[0]; e.target.value="";
   if(!f||!pickTarget)return;
-  let data; try{data=await compress(f)}catch(err){return toast("הצילום נכשל")}
+  let data; try{data=await compress(f)}catch(err){return toast(T('t_photo_fail'))}
   const t=pickTarget; pickTarget=null;
   if(t.kind==="gate"){gate[t.k]=data;return render()}
   const id=uid(); await phPut(id,data);
@@ -1841,8 +2306,8 @@ document.addEventListener("click",async e=>{
     case "gph":pick({kind:"gate",k:t.dataset.k});break;
     case "gsigclear":{const g=$("#gsig");if(g&&g._clear)g._clear();gate.sig=null;break}
     case "gstart":{
-      if(!gate.lic||!gate.drv)return toast("נדרשים שני הצילומים");
-      if(!gate.sig)return toast("נדרשת חתימת מזמין הבדיקה");
+      if(!gate.lic||!gate.drv)return toast(T('t_need2'));
+      if(!gate.sig)return toast(T('t_needsig'));
       const rec=startRec(gate.kind);rec.decl=true;
       const a1=uid(),a2=uid();await phPut(a1,gate.lic);await phPut(a2,gate.drv);
       rec.photos.lic_veh=[a1];rec.photos.lic_drv=[a2];rec.sigOrd=gate.sig;
@@ -1855,17 +2320,19 @@ document.addEventListener("click",async e=>{
     case "unpick":{const d=dget(r,+t.dataset.n);d.items=d.items.filter(x=>x!==t.dataset.v);saveCur();render();break}
     case "safety":break;
     case "dphoto":pick({kind:"def",n:+t.dataset.n});break;
-    case "dphdel":{const d=dget(r,+t.dataset.n);d.photos=d.photos.filter(x=>x!==t.dataset.id);
-      await phDel(t.dataset.id);saveCur();render();break}
+    case "dphdel":{const d=dget(r,+t.dataset.n),id=t.dataset.id,i=d.photos.indexOf(id);if(i<0)break;
+      d.photos.splice(i,1);saveCur();render();
+      undoBar(T('photo_deleted'),()=>{d.photos.splice(i,0,id);persist()},()=>phDel(id));break}
     case "phadd":pick({kind:"slot",slot:t.dataset.slot});break;
-    case "phdel":{e.stopPropagation();const s=t.dataset.slot;
-      r.photos[s]=(r.photos[s]||[]).filter(x=>x!==t.dataset.id);await phDel(t.dataset.id);saveCur();render();break}
+    case "phdel":{e.stopPropagation();const s=t.dataset.slot,id=t.dataset.id,arr=r.photos[s]||[],i=arr.indexOf(id);if(i<0)break;
+      arr.splice(i,1);saveCur();render();
+      undoBar(T('photo_deleted'),()=>{(r.photos[s]=r.photos[s]||[]).splice(i,0,id);persist()},()=>phDel(id));break}
     case "aisug":{const n=+t.dataset.n,row=form().find(x=>x.n===n),d=dget(r,n);
-      if(!d.notes.trim())return toast("כתוב תיאור חופשי ואז לחץ");
+      if(!d.notes.trim())return toast(T('t_writefirst'));
       t.innerHTML='<span class="spin"></span>';
       const sug=await aiSuggest(d.notes,flatPool(row,r));
-      if(!sug.length){render();return toast("לא נמצאה אבחנה מתאימה")}
-      sheet("אבחנות מוצעות",`<div class="tiny">בחר מה להוסיף. הניסוח קבוע לפי נספח 5.</div>
+      if(!sug.length){render();return toast(T('t_nosug'))}
+      sheet(T('sug_title'),`<div class="tiny">${esc(T('sug_note'))}</div>
         <div class="dlist" style="margin-top:10px">${sug.map(x=>`<label class="ditem">
         <input type="checkbox" data-sug="${esc(x)}" checked><span>${esc(x)}</span></label>`).join("")}</div>
         <button class="btn solid" data-act="sugok" data-n="${n}">${esc(T('add'))}</button>`);
@@ -1889,7 +2356,7 @@ document.addEventListener("click",async e=>{
         saveCur();render();toast(T('loaded'));
       }catch(err){render();toast(T('e_net'))}
       break}
-    case "motest":{const o=$("#motestout");o.innerHTML='<span class="spin"></span> בודק…';
+    case "motest":{const o=$("#motestout");o.innerHTML='<span class="spin"></span> '+esc(T('ai_checking'));
       try{const rec=await moFetch(RES.veh,{mispar_rechev:"1"},1);
         o.innerHTML='<span style="color:var(--ok)">'+esc(T('mo_ok'))+'</span>'}
       catch(err){o.innerHTML='<span style="color:var(--bad)">'+esc(T('mo_fail'))+' ('+esc(err.message)+')</span>'}
@@ -1898,8 +2365,8 @@ document.addEventListener("click",async e=>{
       if(t.dataset.w==="1")r.sigIns=null;else r.sigOrd=null;saveCur();break}
     case "print":await buildPrint();setTimeout(()=>window.print(),120);break;
     case "finish":r.status=r.status==="done"?"open":"done";saveCur();render();
-      toast(r.status==="done"?"הבדיקה נסגרה":"הבדיקה נפתחה מחדש");break;
-    case "delrec":if(confirm(T('confirm'))){S.recs=S.recs.filter(x=>x.id!==r.id);persist();home();toast(T('deleted'))}break;
+      toast(T(r.status==="done"?'t_closed':'t_reopened'));break;
+    case "delrec":deleteRec(r.id);home();break;
     case "apptnew":{
       sheet(T('add'),`<div class="f"><label>${esc(T('plate'))}</label><input id="ap"></div>
         <div class="f"><label>${esc(T('name'))}</label><input id="an"></div>
@@ -1910,48 +2377,60 @@ document.addEventListener("click",async e=>{
         <button class="btn solid" data-act="apptsave">${esc(T('save'))}</button>`);break}
     case "apptsave":{S.appts.push({id:uid(),plate:$("#ap").value,name:$("#an").value,
       date:$("#ad").value,time:$("#at").value,kind:$("#ak").value});persist();closeSheet();render();break}
-    case "apptdel":S.appts=S.appts.filter(x=>x.id!==t.dataset.id);persist();render();break;
+    case "apptdel":{const i=S.appts.findIndex(x=>x.id===t.dataset.id);if(i<0)break;
+      const ap=S.appts.splice(i,1)[0];persist();render();
+      undoBar(T('appt_deleted'),()=>{S.appts.splice(i,0,ap);persist()});break}
     case "apptgo":{const ap=S.appts.find(x=>x.id===t.dataset.id);
       gate={kind:ap.kind,lic:null,drv:null,sig:null};go("gate");break}
-    case "export":{const data={v:2,app:"bdk",ver:APP_VER,exported:new Date().toISOString(),user:S.user,inst:S.inst,
-        recs:S.recs,appts:S.appts,km:S.km,map:S.map,scope:S.scope};
-      dl("bdk-backup-"+today()+".json",JSON.stringify(data),"application/json");break}
-    case "csv":{const rows=[["מספר רכב","תאריך","תוצר","דגם","סוג בדיקה","ליקויים","בטיחותי","מזמין","סכום","בודק"]];
+    case "export":await exportBackup(false);break;
+    case "bkfull":await exportBackup(true);break;
+    case "bklater":store.set("bksnooze",Date.now());render();break;
+    case "csv":{const rows=[T('csv_head').split("|")];
       S.recs.forEach(x=>{const c=counts2(x);rows.push([x.veh.plate,x.ins.date,x.veh.make,x.veh.model,
-        x.kind==="full"?"מלאה":"ללא אלקטרוניקה",c.bad,c.safety,(x.orderer==="seller"?x.seller:x.buyer).name,
+        kindName(x.kind),c.bad,c.safety,(x.orderer==="seller"?x.seller:x.buyer).name,
         x.pay.amount,x.ins.inspector])});
       dl("bdk-"+today()+".csv","\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"').join(",")).join("\n"),"text/csv");break}
-    case "import":{const i=document.createElement("input");i.type="file";i.accept=".json";
-      i.onchange=()=>{const f=i.files[0];const fr=new FileReader();
-        fr.onload=()=>{try{const d=JSON.parse(fr.result);
-          if(!confirm("השחזור יחליף את כל הנתונים הקיימים. להמשיך?"))return;
-          S.recs=d.recs||[];S.appts=d.appts||[];S.km=d.km||{};
-          if(d.user)S.user=d.user;if(d.inst)S.inst=d.inst;
-          if(d.map&&d.map.full&&d.map.basic){S.map=d.map;if(d.scope&&d.scope.engine&&d.scope.chassis)S.scope=d.scope;saveMap()}
-          store.set("user",S.user);store.set("inst",S.inst);persist();render();toast("שוחזר")}
-          catch(e){toast("הקובץ אינו תקין")}};
-        fr.readAsText(f)};i.click();break}
-    case "wipe":if(confirm("למחוק את כל הבדיקות, ההזמנות והצילומים? אין דרך חזרה.")){
-      if(confirm("אישור אחרון — ייצאת גיבוי?")){
-        S.recs=[];S.appts=[];persist();indexedDB.deleteDatabase("bdk_photos");_db=null;home();toast(T('deleted'))}}break;
+    case "import":{const i=document.createElement("input");i.type="file";i.accept=".json,application/json";
+      i.onchange=async()=>{const f=i.files[0];if(!f)return;
+        let d;try{d=JSON.parse(await f.text())}catch(e){return toast(T('rs_bad'),3500)}
+        if(!d||!Array.isArray(d.recs))return toast(T('rs_bad'),3500);
+        const np=d.photos?Object.keys(d.photos).length:0;
+        const msg=TF('rs_sum',{r:d.recs.length,p:np,d:dmy(String(d.exported||"").slice(0,10))})+" "+T('rs_warn')+(np?"":" "+T('rs_nophoto'));
+        if(!await askConfirm(msg,T('rs_go'),true))return;
+        try{await restoreBackup(d);render();toast(T('rs_done'))}
+        catch(e){toast(T('rs_fail'),4000)}};
+      i.click();break}
+    case "wipe":{
+      if(!await askConfirm(T('wipe_q1'),T('wipe_yes'),true))break;
+      if(!await askConfirm(T('wipe_q2'),T('wipe_yes'),true))break;
+      /* איפוס מלא: כל המפתחות של האפליקציה, הצילומים ומפתח ההצפנה — חזרה למצב התקנה ראשונה */
+      Object.keys(localStorage).filter(k=>k.indexOf(K)===0).forEach(k=>localStorage.removeItem(k));
+      try{if(_db){_db.close();_db=null}}catch(e){}
+      await new Promise(res=>{const q=indexedDB.deleteDatabase("bdk_photos");q.onsuccess=q.onerror=q.onblocked=()=>res()});
+      location.reload();break}
+    case "cfyes":{const r2=cfRes;cfRes=null;closeSheet();if(r2)r2(true);break}
+    case "undo":{const u=undoState;if(!u)break;undoState=null;clearTimeout(u.timer);u.el.remove();u.undo();render();break}
+    case "diag":go("diag");loadDiag();break;
+    case "dgcopy":try{await navigator.clipboard.writeText(diagReport());toast(T('dg_copied'))}catch(e){toast(diagReport().slice(0,80))}break;
+    case "dgclear":localStorage.removeItem("bdk_errlog");loadDiag();break;
     case "editor":go("editor");break;
     case "about":go("about");break;
     case "a_share":{const u=location.href;
       if(navigator.share)navigator.share({title:T('app'),text:T('tag'),url:u}).catch(()=>{});
-      else{try{navigator.clipboard.writeText(u);toast("הקישור הועתק")}catch(e){toast(u)}}break}
-    case "a_fb":window.location.href="mailto:"+FEEDBACK+"?subject="+encodeURIComponent(T('app')+" — משוב");break;
+      else{try{navigator.clipboard.writeText(u);toast(T('t_linkcopied'))}catch(e){toast(u)}}break}
+    case "a_fb":window.location.href="mailto:"+FEEDBACK+"?subject="+encodeURIComponent(T('app')+" — "+T('fb_subj'));break;
     case "aitest":{const o=$("#aitestout");
       if(!aiConnected()){o.innerHTML='<span style="color:var(--warn)">'+esc(T('ai_nokey'))+'</span>';break}
       o.innerHTML='<span class="spin"></span> '+esc(T('ai_checking'));
       try{const ids=await aiListModels();
         S.ai.live=S.ai.live||{};S.ai.live[S.ai.provider]=ids;
         if(!alive(S.ai.model))S.ai.model="";
-        store.set("ai",S.ai);render();
+        saveAi();render();
         const o2=$("#aitestout");if(o2)o2.innerHTML='<span style="color:var(--ok)">'+esc(TF('ai_ok',{n:ids.length}))+'</span>'}
       catch(err){const o2=$("#aitestout")||o;
         o2.innerHTML='<span style="color:var(--bad)">'+esc(T('ai_fail'))+' ('+esc(err.message)+')</span>'}
       break}
-    case "aidisc":{S.ai={provider:"",key:"",url:"",model:""};store.set("ai",S.ai);render();toast(T('ai_disconnect'));break}
+    case "aidisc":{S.ai={provider:"",key:"",url:"",model:"",enc:null};saveAi();render();toast(T('ai_disconnect'));break}
 
     case "phtab":phTab=t.dataset.k;render();break;
     case "unlock":{const d=dget(r,+t.dataset.n);d.st="";saveCur();render();break}
@@ -1961,8 +2440,9 @@ document.addEventListener("click",async e=>{
         i=+t.dataset.i,j=a==="edup"?i-1:i+1;
       if(j<0||j>=arr.length)break;
       [arr[i],arr[j]]=[arr[j],arr[i]];saveMap();render();break}
-    case "eddel":{const arr=bucketAt(edForm,+t.dataset.n,t.dataset.p.split(">"));
-      arr.splice(+t.dataset.i,1);saveMap();render();break}
+    case "eddel":{const arr=bucketAt(edForm,+t.dataset.n,t.dataset.p.split(">")),i=+t.dataset.i;
+      const it=arr.splice(i,1)[0];saveMap();render();
+      undoBar(T('item_deleted'),()=>{arr.splice(i,0,it);saveMap()});break}
     case "edadd":{const n=+t.dataset.n,path=t.dataset.p.split(">");
       const el=document.getElementById("add_"+n+"_"+path.join("_"));
       const v=(el&&el.value||"").trim(); if(!v)break;
@@ -1970,7 +2450,7 @@ document.addEventListener("click",async e=>{
     case "edmove":{const n=+t.dataset.n,path=t.dataset.p.split(">"),i=+t.dataset.i;
       const item=bucketAt(edForm,n,path)[i];
       const opts=rowsOf(edForm).flatMap(row=>buckets(edForm,row.n).map(b=>
-        `<option value="${esc(row.n+"|"+b.path.join(">"))}">${esc(row.n+". "+row.t+(b.label?" · "+b.label:""))}</option>`)).join("");
+        `<option value="${esc(row.n+"|"+b.path.join(">"))}">${esc(row.n+". "+rowT(row)+(b.label?" · "+grpT(b.label):""))}</option>`)).join("");
       sheet(T('moveto'),`<div class="tiny">${esc(item)}</div>
         <div class="f"><select id="mvsel">${opts}</select></div>
         <button class="btn solid" data-act="edmoveok" data-n="${n}" data-p="${esc(path.join(">"))}"
@@ -1981,74 +2461,90 @@ document.addEventListener("click",async e=>{
       const [tn,tp]=v.split("|");
       const src=bucketAt(edForm,n,path),item=src.splice(i,1)[0];
       bucketAt(edForm,+tn,tp.split(">")).push(item);
-      saveMap();closeSheet();render();toast("הועבר");break}
+      saveMap();closeSheet();render();toast(T('e_moved'));break}
     case "edform":break;
     case "edexport":dl("bdk-lists-"+today()+".json",JSON.stringify({v:1,map:S.map,scope:S.scope}),"application/json");break;
     case "edimport":{const inp=document.createElement("input");inp.type="file";inp.accept=".json";
       inp.onchange=()=>{const fr=new FileReader();fr.onload=()=>{try{const d=JSON.parse(fr.result);
-        if(!d.map)return toast("הקובץ אינו קובץ רשימות");
-        S.map=d.map;if(d.scope)S.scope=d.scope;saveMap();render();toast("יובא")}
-        catch(e){toast("הקובץ אינו תקין")}};fr.readAsText(inp.files[0])};inp.click();break}
-    case "edreset":if(confirm("לאפס את כל רשימות הליקויים לברירת המחדל של נספח 5?")){
-      S.map=defaultMap();S.scope=JSON.parse(JSON.stringify(SCOPE_DEF));saveMap();render();toast("אופס")}break;
+        if(!d.map)return toast(T('e_notlists'));
+        S.map=d.map;if(d.scope)S.scope=d.scope;saveMap();render();toast(T('e_imported'))}
+        catch(e){toast(T('e_badfile'))}};fr.readAsText(inp.files[0])};inp.click();break}
+    case "edreset":if(await askConfirm(T('reset_q'),T('reset_yes'),true)){
+      S.map=defaultMap();S.scope=JSON.parse(JSON.stringify(SCOPE_DEF));saveMap();render();toast(T('reset_yes')+" ✓")}break;
     case "pind":pinBuf=(pinBuf+t.dataset.n).slice(0,8);render();break;
     case "pinback":pinBuf=pinBuf.slice(0,-1);render();break;
-    case "pinok":{if(hash(pinBuf)===S.pin){S.locked=false;pinBuf="";render();scheduleNotes()}
-      else{pinBuf="";render();const m=$("#pinmsg");if(m){m.textContent="קוד שגוי";m.style.color="var(--bad)"}}break}
+    case "pinok":{
+      if(pinWait()>0){render();break}
+      const tryPin=pinBuf;pinBuf="";
+      if(await pinCheck(tryPin)){store.del("pinfail");S.locked=false;render();scheduleNotes();syncHistory()}
+      else{const f=store.get("pinfail",{n:0,until:0});f.n++;
+        if(f.n>=5){f.n=0;f.until=Date.now()+30000}                /* 5 טעויות — המתנה של 30 שניות */
+        store.set("pinfail",f);render();
+        const m=$("#pinmsg");if(m){m.textContent=pinWait()>0?TF('pin_wait',{n:pinWait()}):T('pin_wrong');m.style.color="var(--bad)"}}
+      break}
     case "gnext":if(gStep<GUIDE.length-1){gStep++;render()}else{S.seen=true;store.set("seen",true);render()}break;
     case "gskip":S.seen=true;store.set("seen",true);render();break;
     case "guideagain":S.seen=false;gStep=0;render();break;
-    case "setpin":{const v=prompt("קוד חדש (4–8 ספרות). ריק = ביטול הנעילה:");
-      if(v===null)break;
-      if(!v.trim()){S.pin=null;store.del("pin");toast("הנעילה בוטלה")}
-      else if(/^\d{4,8}$/.test(v.trim())){S.pin=hash(v.trim());store.set("pin",S.pin);toast("הקוד נקבע")}
-      else toast("נדרשות 4–8 ספרות");
-      render();break}
-    case "notify":{if(!("Notification" in window))return toast("הדפדפן לא תומך בהתראות");
+    case "setpin":{
+      const cur=(S.pin&&typeof S.pin==="object"&&S.pin.after!=null)?S.pin.after:5;
+      sheet(T(S.pin?'pin_change':'pin_set'),`
+        <div class="f"><label>${esc(T('pin_new'))}</label>
+          <input id="pn1" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"></div>
+        <div class="f"><label>${esc(T('pin_again'))}</label>
+          <input id="pn2" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8"></div>
+        <div class="f"><label>${esc(T('pin_after'))}</label><select id="pnafter">
+          ${[0,1,5,15].map(n=>`<option value="${n}" ${cur===n?"selected":""}>${esc(n?TF('pin_min',{n}):T('pin_now'))}</option>`).join("")}
+        </select></div>
+        <div class="tiny" id="pnmsg" role="status">${esc(T('pin_forgot'))}</div>
+        <button class="btn solid" data-act="pinsave">${esc(T('save'))}</button>
+        ${S.pin?`<button class="btn danger" data-act="pinremove">${esc(T('pin_remove'))}</button>`:""}`,T('cancel'));
+      break}
+    case "pinsave":{const a=$("#pn1").value.trim(),b=$("#pn2").value.trim(),m=$("#pnmsg");
+      const bad=x=>{m.textContent=x;m.style.color="var(--bad)"};
+      if(!/^\d{4,8}$/.test(a)){bad(T('pin_digits'));break}
+      if(a!==b){bad(T('pin_nomatch'));break}
+      await pinStore(a,+$("#pnafter").value);store.del("pinfail");closeSheet();render();toast(T('pin_saved'));break}
+    case "pinremove":S.pin=null;store.del("pin");store.del("pinfail");closeSheet();render();toast(T('pin_removed'));break;
+    case "notify":{if(!("Notification" in window))return toast(T('t_nonotif'));
       const p=await Notification.requestPermission();
       S.notify=p==="granted";store.set("notify",S.notify);
-      toast(S.notify?"התראות הופעלו":"ההרשאה נדחתה");scheduleNotes();render();break}
+      toast(T(S.notify?'t_notif_on':'t_notif_denied'));scheduleNotes();render();break}
     case "share":{const rec=S.cur,c=counts(rec);
       const ord=rec.orderer==="seller"?rec.seller:rec.buyer;
       const bad=form().filter(x=>(rec.defects[x.n]||{}).st==="bad")
-        .map(x=>"• "+x.t+": "+((rec.defects[x.n].items||[]).join(", ")||"—")).join("\n");
-      const txt=["סיכום בדיקת רכב — "+(S.inst.name||T('draft')),
-        "מספר רכב: "+rec.veh.plate+"  |  "+rec.veh.make+" "+rec.veh.model+" "+rec.veh.year,
-        "תאריך: "+rec.ins.date+"  |  בודק: "+rec.ins.inspector,
-        "סוג בדיקה: "+(rec.kind==="full"?T('kind_full'):rec.kind==="basic"?T('kind_basic'):
-          rec.kind==="engine"?T('kind_engine'):T('kind_chassis')),
-        "",c.bad?"ליקויים שנמצאו ("+c.bad+"):\n"+bad:"לא נמצאו ליקויים בסעיפים שנבדקו.",
-        c.safety?"\n⚠ נמצא ליקוי בטיחותי המחייב תיקון מיידי.":"",
-        "\nהאחריות על הבדיקה: 3 חודשים או 6,000 ק״מ, לפי המוקדם.",
-        "הדוח המלא נמסר בנפרד."].filter(x=>x!=="").join("\n");
-      sheet("שליחת סיכום ל"+(ord.name||"לקוח"),
+        .map(x=>"• "+rowT(x)+": "+((rec.defects[x.n].items||[]).join(", ")||"—")).join("\n");
+      const txt=[T('sh_title')+" — "+(S.inst.name||T('draft')),
+        T('plate')+": "+rec.veh.plate+"  |  "+rec.veh.make+" "+rec.veh.model+" "+rec.veh.year,
+        T('insdate')+": "+dmy(rec.ins.date)+"  |  "+T('inspector')+": "+rec.ins.inspector,
+        T('kind')+": "+kindName(rec.kind),
+        "",c.bad?TF('sh_found',{n:c.bad})+"\n"+bad:T('sh_none'),
+        c.safety?"\n"+T('sh_safety'):"",
+        "\n"+T('sh_warranty'),
+        T('sh_fullsep')].filter(x=>x!=="").join("\n");
+      sheet(TF('sh_to',{x:ord.name||T('sh_customer')}),
         `<div class="tiny" style="white-space:pre-wrap;max-height:220px;overflow:auto;
           border:1px solid var(--line);border-radius:10px;padding:10px">${esc(txt)}</div>
-         <div class="tiny" style="margin:8px 0">זהו סיכום טקסט בלבד. את הדוח המלא הפק בכפתור ״${esc(T('pdf'))}״ ושמור כ-PDF.</div>
+         <div class="tiny" style="margin:8px 0">${esc(TF('sh_textonly',{x:T('pdf')}))}</div>
          <button class="btn solid" data-act="shwa" data-t="${esc(encodeURIComponent(txt))}"
-           data-ph="${esc((ord.phone||"").replace(/\D/g,""))}">שליחה בוואטסאפ</button>
+           data-ph="${esc((ord.phone||"").replace(/\D/g,""))}">${esc(T('sh_wa'))}</button>
          <button class="btn" data-act="shmail" data-t="${esc(encodeURIComponent(txt))}"
-           data-p="${esc(rec.veh.plate)}">שליחה במייל</button>
-         <button class="btn" data-act="shcopy" data-t="${esc(encodeURIComponent(txt))}">העתקה</button>`);
+           data-p="${esc(rec.veh.plate)}">${esc(T('sh_mail'))}</button>
+         <button class="btn" data-act="shcopy" data-t="${esc(encodeURIComponent(txt))}">${esc(T('sh_copy'))}</button>`);
       break}
     case "shwa":{let ph=t.dataset.ph||"";
       if(ph.startsWith("0"))ph="972"+ph.slice(1);
       {const u="https://wa.me/"+ph+"?text="+t.dataset.t;
        /* באפליקציה מותקנת window.open יכול להחזיר null */
        const w=window.open(u,"_blank");if(!w)location.href=u}break}
-    case "shmail":window.location.href="mailto:?subject="+encodeURIComponent("סיכום בדיקת רכב "+t.dataset.p)+
+    case "shmail":window.location.href="mailto:?subject="+encodeURIComponent(T('sh_title')+" "+t.dataset.p)+
       "&body="+t.dataset.t;break;
-    case "shcopy":try{await navigator.clipboard.writeText(decodeURIComponent(t.dataset.t));toast("הועתק")}
-      catch(e){toast("ההעתקה נכשלה")}break;
+    case "shcopy":try{await navigator.clipboard.writeText(decodeURIComponent(t.dataset.t));toast(T('dg_copied'))}
+      catch(e){toast(T('t_copyfail'))}break;
     case "recmenu":{const rec=S.recs.find(x=>x.id===t.dataset.id);if(!rec)break;
       sheet(rec.veh.plate||T('archive'),
         `<button class="btn primary" data-act="open" data-id="${esc(rec.id)}">${esc(T('edit'))}</button>
          <button class="btn danger" data-act="killrec" data-id="${esc(rec.id)}">${esc(T('del'))}</button>`);break}
-    case "killrec":if(confirm(T('confirm'))){
-      const rec=S.recs.find(x=>x.id===t.dataset.id);
-      if(rec){for(const ids of Object.values(rec.photos||{}))for(const id of ids)await phDel(id);
-        for(const d of Object.values(rec.defects||{}))for(const id of (d.photos||[]))await phDel(id)}
-      S.recs=S.recs.filter(x=>x.id!==t.dataset.id);persist();closeSheet();render();toast(T('deleted'))}break;
+    case "killrec":closeSheet();deleteRec(t.dataset.id);render();break;
     case "sheetclose":closeSheet();break;
   }
 });
@@ -2068,8 +2564,9 @@ document.addEventListener("change",e=>{
     arr.sort((a,b)=>a-b);saveMap();return}
   if(el.dataset.s){const p=el.dataset.s,v=el.value;
     if(p==="ai.provider"){const pv=AI_PROVIDERS[v];
-      S.ai.provider=v;S.ai.model="";S.ai.okModel="";store.set("ai",S.ai);render();return}
-    if(p.includes(".")){const[a,b]=p.split(".");S[a][b]=v;store.set(a,S[a])}
+      S.ai.provider=v;S.ai.model="";S.ai.okModel="";saveAi();render();return}
+    if(p==="ai.key"){setAiKey(v.trim()).then(render);return}
+    if(p.includes(".")){const[a,b]=p.split(".");S[a][b]=v;if(a==="ai")saveAi();else store.set(a,S[a])}
     else{S[p]=v;store.set(p,v)}
     render();return}
 });
@@ -2090,20 +2587,35 @@ document.addEventListener("pointerdown",e=>{const el=e.target.closest("[data-lp]
   document.addEventListener(ev,()=>{if(lpT){clearTimeout(lpT);lpT=null}},{passive:true}));
 function dl(name,content,type){const b=new Blob([content],{type});const u=URL.createObjectURL(b);
   const a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)}
-function sheet(title,html){const d=document.createElement("div");d.className="sheet";d.id="sheet";
+function sheet(title,html,closeLabel){const d=document.createElement("div");d.className="sheet";d.id="sheet";
+  d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");
   d.innerHTML=`<div class="inner"><h3>${esc(title)}</h3>${html}
-    <button class="btn" data-act="sheetclose">${esc(T('close'))}</button></div>`;
+    <button class="btn" data-act="sheetclose">${esc(closeLabel||T('close'))}</button></div>`;
   const born=Date.now();
   d.addEventListener("click",e=>{if(Date.now()-born<350){e.preventDefault();e.stopPropagation()}},true);
   d.onclick=e=>{if(e.target===d)closeSheet()};document.body.appendChild(d)}
-function closeSheet(){const s=$("#sheet");if(s)s.remove()}
+function closeSheet(){const s=$("#sheet");if(s)s.remove();
+  if(cfRes){const r=cfRes;cfRes=null;r(false)}}
 
 /* ===================== התחלה ===================== */
 S.map=store.get("map",null)||defaultMap();
 if(!S.scope)S.scope=JSON.parse(JSON.stringify(SCOPE_DEF));
 if(S.pin)S.locked=true;
+if(!S.ai||typeof S.ai!=="object")S.ai={provider:"",key:"",url:"",model:""};
+if(S.ai.enc)S.ai.key="";
 applyChrome();render();
 if(!S.locked)scheduleNotes();
+loadAiKey().then(()=>{if(S.screen==="settings"&&!S.locked)render()}).catch(()=>{});
+/* ברקע: המסך מטושטש; בחזרה אחרי הזמן שנקבע — נעילה */
+let awayAt=0;
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){awayAt=Date.now();flushUndo();if(S.pin)document.body.classList.add("away");return}
+  document.body.classList.remove("away");
+  if(S.pin&&!S.locked&&awayAt){
+    const after=(typeof S.pin==="object"&&S.pin.after!=null)?S.pin.after:5;
+    if(Date.now()-awayAt>=after*60000){closeSheet();pinBuf="";S.locked=true;render()}}
+  awayAt=0});
+window.addEventListener("pagehide",flushUndo);
 if("serviceWorker" in navigator&&location.protocol!=="file:"){
   const had=!!navigator.serviceWorker.controller;
   navigator.serviceWorker.register("sw.js").catch(()=>{});

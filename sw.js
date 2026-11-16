@@ -22,7 +22,7 @@
   CacheStorage.prototype.match=function(){return sm.apply(this,arguments).then(clean);};
 })();
 
-const VERSION = "1.4.0";
+const VERSION = "1.6.0";
 const PREFIX = "bdk-";
 const CACHE = PREFIX + VERSION;
 /* "./" ולא "./index.html" — ראה ההערה למעלה */
